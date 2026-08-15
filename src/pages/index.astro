@@ -1,0 +1,242 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import JsonLd from '../components/JsonLd.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { ArrowDownIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import { LINKS, PORTRAIT } from '../lib/constants';
+import { FEATURED_SLUGS, pubPath } from '../lib/research';
+import { getWritings, writingPath } from '../lib/blogs';
+
+const papers = (await getCollection('research')).sort(
+  (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime()
+);
+
+const featured = FEATURED_SLUGS.map((slug) => papers.find((entry) => entry.slug === slug)).filter(
+  (entry): entry is (typeof papers)[number] => Boolean(entry)
+);
+
+const latestWritings = (await getWritings()).slice(0, 3);
+
+const updates = [
+  ['Aug 2026', 'Joined Northwestern University’s Machine and Hybrid Intelligence Lab.'],
+  ['Aug 2026', 'Presented ICFD-31k at IJCAI–ECAI 2026 in Bremen.'],
+  [
+    'Aug 2026',
+    'Received the Best Paper Presentation Award and placed runner-up in the GlobalSouthAI 3MT competition.',
+  ],
+  ['Aug 2026', 'Presented ScopeBench-PR at GlobalSouthAI, IJCAI–ECAI 2026.'],
+  ['Jul 2026', 'ScopeBench-PR accepted at GlobalSouthAI, IJCAI–ECAI 2026.'],
+  ['Jun 2026', 'Awarded a $1,000 IJCAI–AIJ grant.'],
+  ['Apr 2026', 'ICFD-31k accepted to the IJCAI–ECAI 2026 main conference.'],
+  [
+    'Apr 2026',
+    'Presented retrieval-augmented time-series forecasting research at the ICLR 2026 TSALM Workshop.',
+  ],
+  ['Mar 2026', 'Awarded a $2,025 ICLR grant.'],
+  ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Rishi Ahuja',
+  url: 'https://rishia.in',
+  image: new URL(PORTRAIT, Astro.site).toString(),
+  jobTitle: 'Undergraduate Researcher',
+  affiliation: [
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'Northwestern University',
+    },
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'Dr. B.R. Ambedkar National Institute of Technology Jalandhar',
+    },
+  ],
+  sameAs: [LINKS.GITHUB, LINKS.LINKEDIN, LINKS.GOOGLE_SCHOLAR, LINKS.OPENREVIEW, LINKS.TWITTER],
+  knowsAbout: ['Trustworthy AI', 'Time Series Forecasting', 'Retrieval-Augmented Systems', 'Fraud Detection'],
+};
+---
+
+<BaseLayout
+  title="Rishi Ahuja"
+  description="Undergraduate researcher at Northwestern and NIT Jalandhar, working on trustworthy AI evaluation, temporal retrieval, and conversational fraud detection."
+  image={PORTRAIT}
+  imageWidth={1268}
+  imageHeight={1241}
+  imageType="image/jpeg"
+>
+  <JsonLd data={schema} />
+
+  <main>
+    <section class="hero wrap" id="home">
+      <div class="hero-intro">
+        <div>
+          <h1>Hello 👋</h1>
+          <p>
+            I am Rishi Ahuja, an Undergraduate Researcher at the Machine and Hybrid
+            Intelligence Lab, Northwestern University, and a B.Tech. with Research
+            student at NIT Jalandhar.
+          </p>
+          <p class="hero-note">
+            My research focuses on building and evaluating reliable AI systems across
+            language-model evaluation, temporal retrieval and conversational fraud
+            detection.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <a class="button" href="#research">
+            View research
+            <ArrowUpRightIcon />
+          </a>
+          <a class="button" href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
+            CV
+            <ArrowDownIcon />
+          </a>
+        </div>
+      </div>
+      <div class="hero-profile">
+        <img
+          class="hero-photo"
+          src={PORTRAIT}
+          alt="Rishi Ahuja"
+          width="1268"
+          height="1241"
+        />
+      </div>
+    </section>
+
+    <section class="section wrap-wide" id="research">
+      <h2 class="section-title">Featured research</h2>
+      <div class="project-grid">
+        {featured.map((paper) => (
+          <article class="project-tile">
+            <a class="project-cover-link" href={pubPath(paper.slug)}>
+              <div class={`project-cover ${paper.data.cover}`}>
+                {paper.data.awards[0] && (
+                  <span class="project-award">★ {paper.data.awards[0].label}</span>
+                )}
+                <strong>{paper.data.short_name}</strong>
+              </div>
+            </a>
+            <h3>
+              <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
+            </h3>
+            <p class="project-desc">{paper.data.blurb}</p>
+            <p class="project-venue">{paper.data.venue}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/*
+    <section class="section section-soft" id="experience">
+      <div class="wrap">
+        <h2 class="section-title">Research experience</h2>
+        <div class="info-list">
+          <article class="info-row">
+            <p class="info-label">01 / Northwestern</p>
+            <div>
+              <h3>Undergraduate Researcher</h3>
+              <p>Machine and Hybrid Intelligence Lab, Northwestern University</p>
+              <p>Advisor: Prof. Ulaş Bağcı</p>
+            </div>
+          </article>
+          <article class="info-row">
+            <p class="info-label">02 / Annam.AI</p>
+            <div>
+              <h3>Research Intern, AI Systems</h3>
+              <p>IIT Ropar</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    */}
+
+    <section class="section wrap" id="updates">
+      <h2 class="section-title">Updates and awards</h2>
+      <ul class="update-list">
+        {updates.map(([date, text]) => (
+          <li>
+            <time>{date}</time>
+            <span>{text}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="section wrap-wide" id="writings">
+      <h2 class="section-title">Writings</h2>
+      <div class="project-grid writing-grid">
+        {latestWritings.map((post) => (
+          <article class="project-tile">
+            <a class="project-cover-link" href={writingPath(post.slug)}>
+              <div class={`project-cover ${post.data.cover}`}>
+                <strong>{post.data.title}</strong>
+              </div>
+            </a>
+            <h3>
+              <a class="project-name" href={writingPath(post.slug)}>{post.data.title}</a>
+            </h3>
+            <p class="project-desc">{post.data.brief}</p>
+            <p class="project-venue">
+              {post.data.dateAdded.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+            </p>
+          </article>
+        ))}
+      </div>
+      <p class="writing-more">
+        <a class="button" href="/writings">
+          All writings
+          <ArrowUpRightIcon />
+        </a>
+      </p>
+    </section>
+
+    <section class="section section-soft" id="about">
+      <div class="wrap">
+        <h2 class="section-title">About</h2>
+        <div class="info-list">
+          <article class="info-row">
+            <p class="info-label">01 / Background</p>
+            <div>
+              <p>
+                I am a B.Tech. with Research student at NIT Jalandhar, and an
+                undergraduate researcher at Northwestern University. I work on AI
+                systems that have to be judged against the claims they actually make.
+              </p>
+            </div>
+          </article>
+          <article class="info-row">
+            <p class="info-label">02 / Research</p>
+            <div>
+              <p>
+                My current work sits across three projects:
+                <a class="inline-tag blue" href={pubPath('ahuja2026icfd31k')}>ICFD-31k</a> for conversational fraud
+                detection,
+                <a class="inline-tag rose" href={pubPath('ahuja2026scopebenchpr')}>ScopeBench-PR</a> for scope fairness
+                in LLM peer review, and
+                <a class="inline-tag" href={pubPath('ahuja2026retrieval')}>temporal retrieval</a> for time-series
+                models. I care about evaluation that stays honest to stated scope.
+              </p>
+            </div>
+          </article>
+          <article class="info-row">
+            <p class="info-label">03 / Beyond research</p>
+            <div>
+              <p>
+                I write about systems and machine learning when a result is easier to
+                see than to summarise. The full set lives in
+                <a href="/writings">Writings</a>. Everything else stays in the CV.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>
