@@ -1,0 +1,171 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import { isResourceLink, pubPath, resourceLabel } from '../../lib/research';
+
+export async function getStaticPaths() {
+  const papers = await getCollection('research');
+  return papers.map((paper) => ({
+    params: { slug: paper.slug },
+    props: { paper },
+  }));
+}
+
+const { paper } = Astro.props as { paper: CollectionEntry<'research'> };
+const { Content } = await render(paper);
+const hasBody = Boolean(paper.body?.trim());
+
+const related = (await getCollection('research'))
+  .filter((entry) => entry.slug !== paper.slug)
+  .sort((a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime());
+
+const resources = paper.data.links.filter((link) => isResourceLink(link.label, link.primary));
+const pageUrl = new URL(pubPath(paper.slug), Astro.site).toString();
+const awardMarks = [
+  ...paper.data.awards.map((award) => `${award.result} · ${award.label}`),
+  paper.data.award,
+].filter(Boolean);
+---
+
+<BaseLayout
+  title={`${paper.data.short_name} · Rishi Ahuja`}
+  description={paper.data.description}
+  cover={paper.data.cover}
+>
+  <JsonLd
+    data={{
+      '@context': 'https://schema.org',
+      '@type': paper.data.status === 'published' ? 'ScholarlyArticle' : 'CreativeWork',
+      headline: paper.data.title,
+      description: paper.data.description,
+      abstract: paper.data.abstract,
+      author: paper.data.authors.map((author) => ({
+        '@type': 'Person',
+        name: author.name,
+        ...(author.profile ? { url: author.profile } : {}),
+      })),
+      url: pageUrl,
+      sameAs: paper.data.same_as,
+    }}
+  />
+
+  <main>
+    <section class="project-hero">
+      <div class="wrap project-hero-grid">
+        <div class="project-intro">
+          <div>
+            <div class="page-path">
+              <Breadcrumbs
+                items={[
+                  { label: 'Home', href: '/' },
+                  { label: 'Research', href: '/#research' },
+                ]}
+              />
+              <h1>{paper.data.title}</h1>
+            </div>
+            <p class="project-authors">
+              {paper.data.authors.map((author, index) => (
+                <span class="author-item"
+                  >{author.profile ? (
+                    <a
+                      class={author.is_me ? 'author-me' : undefined}
+                      href={author.profile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >{author.name}</a>
+                  ) : (
+                    <span class={author.is_me ? 'author-me' : undefined}>{author.name}</span>
+                  )}{index < paper.data.authors.length - 1 && <span class="author-comma">, </span>}</span>
+              ))}
+            </p>
+            <p class="project-lede">{paper.data.lede}</p>
+            {awardMarks.length > 0 && (
+              <ul class="hero-awards">
+                {awardMarks.map((mark) => (
+                  <li>
+                    <span class="hero-award-star" aria-hidden="true">★</span>
+                    {mark}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div class="project-hero-meta">
+            {resources.length > 0 && (
+              <div class="hero-actions">
+                {resources.map((link) => (
+                  <a class="button" href={link.url} target="_blank" rel="noopener noreferrer">
+                    {resourceLabel(link.label)}
+                    <ArrowUpRightIcon />
+                  </a>
+                ))}
+              </div>
+            )}
+            <p class="project-info">{paper.data.venue}</p>
+          </div>
+        </div>
+        <div class={`project-hero-cover ${paper.data.cover}`}>
+          <strong>{paper.data.short_name}</strong>
+        </div>
+      </div>
+    </section>
+
+    <article class="project-body wrap">
+      {hasBody ? (
+        <div class="project-prose">
+          <Content />
+        </div>
+      ) : (
+        <div class="project-prose">
+          <p>{paper.data.abstract}</p>
+        </div>
+      )}
+
+      {paper.data.bibtex && (
+        <section class="project-cite">
+          <div class="project-cite-head">
+            <h2>Cite</h2>
+            <button class="button" type="button" id="copy-bibtex">Copy</button>
+          </div>
+          <pre><code id="bibtex-code">{paper.data.bibtex}</code></pre>
+        </section>
+      )}
+    </article>
+
+    {related.length > 0 && (
+      <section class="section wrap">
+        <h2 class="section-title">More research</h2>
+        <div class="related-grid">
+          {related.map((entry) => (
+            <a class="related-card" href={pubPath(entry.slug)}>
+              <p class="project-venue">{entry.data.venue}</p>
+              <h3>{entry.data.short_name}</h3>
+              <p>{entry.data.blurb}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <SiteFooter />
+</BaseLayout>
+
+{paper.data.bibtex && (
+  <script>
+    const copyBtn = document.getElementById('copy-bibtex');
+    const bibtexCode = document.getElementById('bibtex-code');
+    copyBtn?.addEventListener('click', async () => {
+      if (!bibtexCode?.textContent) return;
+      await navigator.clipboard.writeText(bibtexCode.textContent);
+      copyBtn.textContent = 'Copied';
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+      }, 1600);
+    });
+  </script>
+)}
