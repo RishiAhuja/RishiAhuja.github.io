@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import { getWritings, writingPath } from '../../lib/blogs';
+
+const posts = await getWritings();
+---
+
+<BaseLayout
+  title="Writings · Rishi Ahuja"
+  description="Technical writing on systems, machine learning, and the machinery underneath."
+>
+  <main>
+    <section class="section wrap">
+      <div class="page-path">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
+        <h1 class="page-title">Writings</h1>
+      </div>
+      <p class="page-lede">
+        Notes on systems, protocols, and models. Full posts, rendered here from the original markdown.
+      </p>
+      <div class="project-grid writing-grid">
+        {posts.map((post) => (
+          <article class="project-tile">
+            <a class="project-cover-link" href={writingPath(post.slug)}>
+              <div class={`project-cover ${post.data.cover}`}>
+                <strong>{post.data.title}</strong>
+              </div>
+            </a>
+            <h3>
+              <a class="project-name" href={writingPath(post.slug)}>{post.data.title}</a>
+            </h3>
+            <p class="project-desc">{post.data.brief}</p>
+            <p class="project-venue">{post.data.dateAdded.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} · {post.data.readTimeInMinutes} min</p>
+          </article>
+        ))}
+      </div>
+      <p class="writing-hashnode">
+        <a class="button" href="https://rishi2220.hashnode.dev" target="_blank" rel="noopener noreferrer">
+          Hashnode
+          <ArrowUpRightIcon />
+        </a>
+      </p>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
