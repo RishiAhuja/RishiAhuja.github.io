@@ -1,0 +1,120 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import { renderBlogMarkdown } from '../../lib/blogMarkdown';
+import { formatPostDate, writingPath } from '../../lib/blogs';
+import TableOfContents from '../../components/TableOfContents.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blogs');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<'blogs'> };
+const { html: htmlContent, headings } = await renderBlogMarkdown(post.body ?? '');
+const pageUrl = new URL(writingPath(post.slug), Astro.site).toString();
+const tocSections = headings.filter((item) => item.depth === 2);
+
+const related = (await getCollection('blogs'))
+  .filter((entry) => entry.slug !== post.slug)
+  .sort((a, b) => b.data.dateAdded.getTime() - a.data.dateAdded.getTime())
+  .slice(0, 2);
+---
+
+<BaseLayout title={`${post.data.title} · Rishi Ahuja`} description={post.data.brief} cover={post.data.cover}>
+  <link
+    slot="head"
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+    crossorigin="anonymous"
+  />
+  <link
+    slot="head"
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+  />
+
+  <JsonLd
+    data={{
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.data.title,
+      description: post.data.brief,
+      datePublished: post.data.dateAdded.toISOString(),
+      author: { '@type': 'Person', name: post.data.author },
+      url: pageUrl,
+      sameAs: [post.data.hashnodeUrl],
+    }}
+  />
+
+  <main>
+    <section class={`writing-hero ${post.data.cover}`}>
+      <div class="wrap project-hero-grid">
+        <div class="project-intro">
+          <div>
+            <div class="page-path">
+              <Breadcrumbs
+                items={[
+                  { label: 'Home', href: '/' },
+                  { label: 'Writings', href: '/writings' },
+                ]}
+              />
+              <h1>{post.data.title}</h1>
+            </div>
+            <p class="project-authors">{post.data.author}</p>
+            <p class="project-lede">{post.data.brief}</p>
+          </div>
+          <div class="project-hero-meta">
+            <div class="hero-actions">
+              <a class="button" href={post.data.hashnodeUrl} target="_blank" rel="noopener noreferrer">
+                Hashnode
+                <ArrowUpRightIcon />
+              </a>
+            </div>
+            <p class="project-info">
+              {formatPostDate(post.data.dateAdded)} · {post.data.readTimeInMinutes} min read
+            </p>
+          </div>
+        </div>
+        <div class="project-hero-cover">
+          <strong>{post.data.title}</strong>
+        </div>
+      </div>
+    </section>
+
+    <article class={`project-body wrap writing-with-toc${tocSections.length >= 2 ? ' has-toc' : ''}`}>
+      <div class="blog-main">
+        {post.data.coverImage && (
+          <img class="blog-image blog-cover-photo" src={post.data.coverImage} alt="" />
+        )}
+        <div class="blog-content" set:html={htmlContent} />
+      </div>
+      <TableOfContents items={headings} />
+    </article>
+
+    {related.length > 0 && (
+      <section class="section wrap">
+        <h2 class="section-title">More writings</h2>
+        <div class="related-grid">
+          {related.map((entry) => (
+            <a class="related-card" href={writingPath(entry.slug)}>
+              <p class="project-venue">{formatPostDate(entry.data.dateAdded)}</p>
+              <h3>{entry.data.title}</h3>
+              <p>{entry.data.brief}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <SiteFooter />
+</BaseLayout>
