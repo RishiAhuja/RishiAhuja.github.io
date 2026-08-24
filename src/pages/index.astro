@@ -21,7 +21,7 @@ const featured = FEATURED_SLUGS.map((slug) => papers.find((entry) => entry.slug 
 const latestWritings = (await getWritings()).slice(0, 3);
 
 const updates = [
-  ['Aug 2026', 'Joined Northwestern University’s Machine and Hybrid Intelligence Lab.'],
+  // ['Aug 2026', 'Joined Northwestern University’s Machine and Hybrid Intelligence Lab.'],
   ['Aug 2026', 'Presented ICFD-31k at IJCAI–ECAI 2026 in Bremen.'],
   [
     'Aug 2026',
@@ -48,10 +48,10 @@ const schema = {
   image: new URL(PORTRAIT, Astro.site).toString(),
   jobTitle: 'Undergraduate Researcher',
   affiliation: [
-    {
-      '@type': 'CollegeOrUniversity',
-      name: 'Northwestern University',
-    },
+    // {
+    //   '@type': 'CollegeOrUniversity',
+    //   name: 'Northwestern University',
+    // },
     {
       '@type': 'CollegeOrUniversity',
       name: 'Dr. B.R. Ambedkar National Institute of Technology Jalandhar',
@@ -60,11 +60,12 @@ const schema = {
   sameAs: [LINKS.GITHUB, LINKS.LINKEDIN, LINKS.GOOGLE_SCHOLAR, LINKS.OPENREVIEW, LINKS.TWITTER],
   knowsAbout: ['Trustworthy AI', 'Time Series Forecasting', 'Retrieval-Augmented Systems', 'Fraud Detection'],
 };
+// description="Undergraduate researcher at Northwestern and NIT Jalandhar, working on trustworthy AI evaluation, temporal retrieval, and conversational fraud detection."
 ---
 
 <BaseLayout
   title="Rishi Ahuja"
-  description="Undergraduate researcher at Northwestern and NIT Jalandhar, working on trustworthy AI evaluation, temporal retrieval, and conversational fraud detection."
+  description="Undergraduate researcher at NIT Jalandhar, working on trustworthy AI evaluation, temporal retrieval, and conversational fraud detection."
   image={PORTRAIT}
   imageWidth={1268}
   imageHeight={1241}
@@ -79,9 +80,12 @@ const schema = {
         <div>
           <h1>Hello 👋</h1>
           <p>
+            I am Rishi Ahuja, a B.Tech. with Research student at NIT Jalandhar.
+            {/*
             I am Rishi Ahuja, an Undergraduate Researcher at the Machine and Hybrid
             Intelligence Lab, Northwestern University, and a B.Tech. with Research
             student at NIT Jalandhar.
+            */}
           </p>
           <p class="hero-note">
             My research focuses on building and evaluating reliable AI systems across
@@ -221,9 +225,13 @@ const schema = {
             <p class="info-label">01 / Background</p>
             <div>
               <p>
+                I am a B.Tech. with Research student at NIT Jalandhar. I work on AI
+                systems that have to be judged against the claims they actually make.
+                {/*
                 I am a B.Tech. with Research student at NIT Jalandhar, and an
                 undergraduate researcher at Northwestern University. I work on AI
                 systems that have to be judged against the claims they actually make.
+                */}
               </p>
             </div>
           </article>
