@@ -1,0 +1,28 @@
+---
+import type { CoverSet } from '../lib/artwork';
+
+interface Props {
+  cover?: CoverSet;
+  variant?: 'card' | 'hero';
+}
+
+const { cover, variant = 'hero' } = Astro.props;
+const href = cover ? (variant === 'hero' ? cover.heroAvif : cover.cardAvif) : undefined;
+const imagesrcset = cover ? `${cover.cardAvif} 640w, ${cover.heroAvif} 1086w` : undefined;
+const imagesizes =
+  variant === 'hero'
+    ? '(max-width: 900px) min(88vw, 28rem), min(36vw, 30rem)'
+    : '(max-width: 620px) min(88vw, 26rem), (max-width: 900px) 42vw, 22vw';
+---
+
+{href && (
+  <link
+    rel="preload"
+    as="image"
+    type="image/avif"
+    href={href}
+    imagesrcset={imagesrcset}
+    imagesizes={imagesizes}
+    fetchpriority="high"
+  />
+)}

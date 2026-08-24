@@ -55,5 +55,32 @@ const isInner = Astro.url.pathname !== '/';
   <body class={[isInner ? 'is-inner' : 'is-home', cover && `cover-${cover}`].filter(Boolean).join(' ')}>
     <Header client:load />
     <slot />
+    <script>
+      const warmed = new Set<string>();
+
+      const prefetchCover = (url: string) => {
+        if (!url || warmed.has(url) || document.querySelector(`link[href="${url}"]`)) return;
+        warmed.add(url);
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'image';
+        link.href = url;
+        document.head.appendChild(link);
+      };
+
+      const fromTarget = (target: EventTarget | null) => {
+        if (!(target instanceof Element)) return;
+        const host = target.closest('[data-cover-prefetch]');
+        if (host instanceof HTMLElement) prefetchCover(host.dataset.coverPrefetch ?? '');
+      };
+
+      document.addEventListener('pointerenter', (event) => fromTarget(event.target), true);
+      document.addEventListener('focusin', (event) => fromTarget(event.target));
+      document.addEventListener(
+        'touchstart',
+        (event) => fromTarget(event.target),
+        { capture: true, passive: true },
+      );
+    </script>
   </body>
 </html>

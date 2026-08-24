@@ -21,9 +21,9 @@ authors:
     is_corresponding: true
     profile: "https://openreview.net/profile?id=~Simranjit_Singh4"
 affiliation_note: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
-award: "$1,000 IJCAI grant"
+award: "$1,000 IJCAI–AIJ grant"
 event:
-  announcement: "Accepted to the IJCAI-ECAI 2026 main conference special track. Received a $1,000 IJCAI grant. I will present ICFD-31k in Bremen, Germany."
+  announcement: "Accepted to the IJCAI-ECAI 2026 main conference special track. Received a $1,000 IJCAI–AIJ grant. I will present ICFD-31k in Bremen, Germany."
   label: "To be presented at"
   venue: "IJCAI-ECAI 2026"
   location: "Bremen, Germany"
@@ -56,5 +56,5 @@ The set has a little over 31,000 realistic transcripts across ten fraud umbrella
 
 We fine-tune two RoBERTa baselines on top of the set. M1 is the non-streaming model. M2 is trained to decide as chunks arrive. In-domain M1 reaches 99.40 F1; on unseen scam types it still holds 92.97 F1. The point of the paper is not that these numbers are the last word — it is that the dataset is large and labelled enough for those numbers to mean something.
 
-I presented this work at IJCAI–ECAI 2026 in Bremen, with support from a $1,000 IJCAI grant.
+I presented this work at IJCAI–ECAI 2026 in Bremen, with support from a $1,000 IJCAI–AIJ grant.
 

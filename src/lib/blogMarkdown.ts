@@ -191,5 +191,42 @@ export const renderBlogMarkdown = async (
     .replace(/<table>/g, '<div class="table-wrapper"><table>')
     .replace(/<\/table>/g, '</table></div>');
 
-  return collectHeadings(html);
+  return collectHeadings(wrapKatexDisplay(html));
+};
+
+const wrapKatexDisplay = (html: string): string => {
+  const start = '<span class="katex-display">';
+  let last = 0;
+  let out = '';
+
+  while (last < html.length) {
+    const open = html.indexOf(start, last);
+    if (open === -1) {
+      out += html.slice(last);
+      break;
+    }
+
+    out += html.slice(last, open);
+    let pos = open + start.length;
+    let depth = 1;
+    while (pos < html.length && depth > 0) {
+      const nextOpen = html.indexOf('<span', pos);
+      const nextClose = html.indexOf('</span>', pos);
+      if (nextClose === -1) {
+        pos = html.length;
+        break;
+      }
+      if (nextOpen !== -1 && nextOpen < nextClose) {
+        depth += 1;
+        pos = nextOpen + 5;
+      } else {
+        depth -= 1;
+        pos = nextClose + 7;
+      }
+    }
+    out += `<div class="math-scroll">${html.slice(open, pos)}</div>`;
+    last = pos;
+  }
+
+  return out;
 };

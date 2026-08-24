@@ -8,6 +8,7 @@ import { LINKS, PORTRAIT } from '../lib/constants';
 import { FEATURED_SLUGS, pubPath } from '../lib/research';
 import { getWritings, writingPath } from '../lib/blogs';
 import { paperArtwork, writingArtwork } from '../lib/artwork';
+import CoverArt from '../components/CoverArt.astro';
 
 const papers = (await getCollection('research')).sort(
   (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime()
@@ -69,6 +70,7 @@ const schema = {
   imageHeight={1241}
   imageType="image/jpeg"
 >
+  <link slot="head" rel="preload" as="image" href={PORTRAIT} fetchpriority="high" />
   <JsonLd data={schema} />
 
   <main>
@@ -105,6 +107,8 @@ const schema = {
           alt="Rishi Ahuja"
           width="1268"
           height="1241"
+          fetchpriority="high"
+          decoding="async"
         />
       </div>
     </section>
@@ -114,10 +118,14 @@ const schema = {
       <div class="project-grid">
         {featured.map((paper) => (
           <article class="project-tile">
-            <a class="project-cover-link" href={pubPath(paper.slug)}>
+            <a
+              class="project-cover-link"
+              href={pubPath(paper.slug)}
+              data-cover-prefetch={paperArtwork(paper.slug)?.heroAvif}
+            >
               <div class={`project-cover ${paper.data.cover}`}>
                 {paperArtwork(paper.slug) && (
-                  <img class="cover-art" src={paperArtwork(paper.slug)} alt="" />
+                  <CoverArt cover={paperArtwork(paper.slug)!} variant="card" priority />
                 )}
               </div>
             </a>
@@ -176,10 +184,14 @@ const schema = {
       <div class="project-grid writing-grid">
         {latestWritings.map((post) => (
           <article class="project-tile">
-            <a class="project-cover-link" href={writingPath(post.slug)}>
+            <a
+              class="project-cover-link"
+              href={writingPath(post.slug)}
+              data-cover-prefetch={writingArtwork(post.slug)?.heroAvif}
+            >
               <div class={`project-cover ${post.data.cover}`}>
                 {writingArtwork(post.slug) && (
-                  <img class="cover-art" src={writingArtwork(post.slug)} alt="" />
+                  <CoverArt cover={writingArtwork(post.slug)!} variant="card" />
                 )}
               </div>
             </a>

@@ -5,6 +5,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { getWritings, writingPath } from '../../lib/blogs';
 import { writingArtwork } from '../../lib/artwork';
+import CoverArt from '../../components/CoverArt.astro';
 
 const posts = await getWritings();
 ---
@@ -23,12 +24,16 @@ const posts = await getWritings();
         Notes on systems, protocols, and models. Full posts, rendered here from the original markdown.
       </p>
       <div class="project-grid writing-grid">
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <article class="project-tile">
-            <a class="project-cover-link" href={writingPath(post.slug)}>
+            <a
+              class="project-cover-link"
+              href={writingPath(post.slug)}
+              data-cover-prefetch={writingArtwork(post.slug)?.heroAvif}
+            >
               <div class={`project-cover ${post.data.cover}`}>
                 {writingArtwork(post.slug) && (
-                  <img class="cover-art" src={writingArtwork(post.slug)} alt="" />
+                  <CoverArt cover={writingArtwork(post.slug)!} variant="card" priority={index < 3} />
                 )}
               </div>
             </a>

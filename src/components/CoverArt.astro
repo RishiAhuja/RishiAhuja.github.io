@@ -1,0 +1,35 @@
+---
+import type { CoverSet } from '../lib/artwork';
+
+interface Props {
+  cover: CoverSet;
+  variant?: 'card' | 'hero';
+  priority?: boolean;
+}
+
+const { cover, variant = 'card', priority = false } = Astro.props;
+
+const sizes =
+  variant === 'hero'
+    ? '(max-width: 900px) min(88vw, 28rem), min(36vw, 30rem)'
+    : '(max-width: 620px) min(88vw, 26rem), (max-width: 900px) 42vw, 22vw';
+
+const avifSrcset = `${cover.cardAvif} 640w, ${cover.heroAvif} 1086w`;
+const webpSrcset = `${cover.cardWebp} 640w, ${cover.heroWebp} 1086w`;
+const fallback = variant === 'hero' ? cover.heroWebp : cover.cardWebp;
+---
+
+<picture class="cover-art">
+  <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+  <source type="image/webp" srcset={webpSrcset} sizes={sizes} />
+  <img
+    src={fallback}
+    alt=""
+    width={cover.width}
+    height={cover.height}
+    sizes={sizes}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding="async"
+  />
+</picture>

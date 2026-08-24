@@ -7,6 +7,8 @@ import JsonLd from '../../components/JsonLd.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { isResourceLink, pubPath, resourceLabel } from '../../lib/research';
 import { paperArtwork } from '../../lib/artwork';
+import CoverArt from '../../components/CoverArt.astro';
+import CoverPreload from '../../components/CoverPreload.astro';
 
 export async function getStaticPaths() {
   const papers = await getCollection('research');
@@ -37,6 +39,7 @@ const awardMarks = [
   description={paper.data.description}
   cover={paper.data.cover}
 >
+  <CoverPreload slot="head" cover={paperArtwork(paper.slug)} variant="hero" />
   <JsonLd
     data={{
       '@context': 'https://schema.org',
@@ -111,7 +114,7 @@ const awardMarks = [
         </div>
         <div class={`project-hero-cover ${paper.data.cover}`}>
           {paperArtwork(paper.slug) && (
-            <img class="cover-art" src={paperArtwork(paper.slug)} alt="" />
+            <CoverArt cover={paperArtwork(paper.slug)!} variant="hero" priority />
           )}
         </div>
       </div>
