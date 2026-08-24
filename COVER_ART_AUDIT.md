@@ -20,16 +20,16 @@ These three should replace the generated research covers and serve as the visual
 
 ## Asset-format correction
 
-The three gold references are approximately 4:5 full-card compositions (`1122 × 1402`) and already include a quiet outer margin. The generated batch is 3:4 inner artwork (`1086 × 1448`) with no mat.
+The three gold references are approximately 4:5 full-card compositions (`1122 × 1402`) and already include a quiet outer margin. The final portfolio assets should **not** preserve that margin. The final folder contains only borderless inner artwork, standardized to `1086 × 1448` (3:4).
 
-Use one convention across the website. Recommended convention:
+The website should own the framing deterministically:
 
-- Generate every final cover as a **4:5 full-card image**.
-- Include a quiet outer field or mat inside the image, approximately 7–9% of the width.
-- Display the image at 100% inside the website card.
-- Do not add a second CSS mat around it.
+- Load each borderless 3:4 artwork inside the 4:5 project-card element.
+- Apply the chosen outer mat color in CSS.
+- Apply one fixed inset, for example `background-size: 80% auto`, centered and non-repeating.
+- Keep borders/mats out of the PNGs so every card has exactly the same thickness.
 
-If the implementation instead keeps the existing “3:4 inner artwork inside a CSS mat” approach, crop the three gold references to their inner artwork first. Do not mix the two conventions.
+The gold references were cropped to their inner artwork before being placed in the final folder. Do not add a second baked-in border during future generations.
 
 ## Selection decision
 
@@ -57,7 +57,7 @@ Final tally: **3 generated writing covers selected, 9 generated writing covers r
 
 Use this prefix for every replacement image:
 
-> Create one original 4:5 portrait editorial cover artwork for a research and technology portfolio. The visual language must match the supplied gold references: sophisticated tactile abstraction, layered collage, screen-print or monoprint grain, translucent overlaps, scraped or rolled pigment, irregular repetition, subtle misregistration, and confident negative space. The article topic is semantic inspiration only; do not illustrate or explain its mechanism. Abstraction level 8.5/10: the image should remain compelling if the viewer cannot identify the topic without reading the title. Use one dominant visual gesture, a restrained palette of four or five colors, and enough large-scale contrast to read at approximately 220 × 275 px. Include a quiet outer field or mat occupying roughly 7–9% of the canvas width, as part of the image. No text, letters, numbers, formulas, logos, watermarks, photorealism, 3D rendering, glossy CGI, pixel art, stock iconography, or interface imagery.
+> Create one original borderless 3:4 portrait inner artwork for a research and technology portfolio, exported as an opaque PNG at approximately 1086×1448. The visual language must match the supplied gold references: sophisticated tactile abstraction, layered collage, screen-print or monoprint grain, translucent overlaps, scraped or rolled pigment, irregular repetition, subtle misregistration, and confident negative space. The article topic is semantic inspiration only; do not illustrate or explain its mechanism. Abstraction level 8.5/10: the image should remain compelling if the viewer cannot identify the topic without reading the title. Use one dominant visual gesture, a restrained palette of four or five colors, and enough large-scale contrast to read at approximately 220 × 295 px when inset by the website. Do not add any outer mat, border, frame, or quiet margin; let the artwork reach the canvas edges. No text, letters, numbers, formulas, logos, watermarks, photorealism, 3D rendering, glossy CGI, pixel art, stock iconography, or interface imagery.
 >
 > Forbidden diagram grammar: no arrows, connectors, flowcharts, pipelines, input/output layouts, boxes linked by lines, node graphs, process stages, dashboards, charts, timelines, explicit grids, device silhouettes, central hubs with branches, or literal visualizations of the article’s mechanism. Avoid crisp vector-infographic perfection. Prefer ambiguous material relationships, texture, rhythm, density, interruption, compression, diffusion, layering, and asymmetry.
 
