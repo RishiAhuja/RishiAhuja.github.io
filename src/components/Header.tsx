@@ -7,7 +7,7 @@ const NAV = [
   { id: 'research', label: 'Research', href: '/#research' },
   { id: 'writings', label: 'Writings', href: '/#writings' },
   { id: 'about', label: 'About', href: '/#about' },
-  { id: 'resume', label: 'Resume', href: LINKS.RESUME, external: true },
+  { id: 'resume', label: 'Résumé', href: LINKS.RESUME, external: true },
 ] as const;
 
 const LINKEDIN_PATH =
