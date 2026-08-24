@@ -1,6 +1,6 @@
 ---
 title: "You Don't Know WebSockets. Yet."
-brief: "Deep dive technical blog exploring WebSocket protocol, real-time communication patterns, and bidirectional data flow in modern web applications."
+brief: "The WebSocket protocol, handshake to frames, and how bidirectional sockets actually work."
 dateAdded: 2025-08-25T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/you-dont-know-websockets-yet"
 readTimeInMinutes: 31

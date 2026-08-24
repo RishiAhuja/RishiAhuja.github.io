@@ -1,6 +1,6 @@
 ---
 title: "Your Hardest \"Hello World!\": Text Rasterization #1"
-brief: "Deep technical blog exploring TTF file format and text rendering fundamentals."
+brief: "How TrueType fonts are parsed and pixels get onto the screen."
 dateAdded: 2025-06-14T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/your-hardest-hello-world-text-rasterization-1"
 readTimeInMinutes: 36

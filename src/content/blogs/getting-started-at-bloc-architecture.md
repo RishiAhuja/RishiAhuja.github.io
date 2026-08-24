@@ -1,6 +1,6 @@
 ---
 title: "Getting Started at BLoC Architecture"
-brief: "Beginner-friendly Flutter architecture blog introducing BLoC pattern with practical examples."
+brief: "The BLoC pattern in Flutter, with small examples you can run."
 dateAdded: 2024-12-13T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/getting-started-at-bloc-architecture"
 readTimeInMinutes: 25

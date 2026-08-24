@@ -1,6 +1,6 @@
 ---
 title: "Resource Management with Probabilistic Scheduling in Linux"
-brief: "Deep technical blog exploring Linux kernel scheduling mechanisms and resource management algorithms."
+brief: "How the Linux scheduler allocates CPU, and why probabilistic methods show up."
 dateAdded: 2024-11-01T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/resource-management-with-probabilistic-scheduling-in-the-context-of-linux"
 readTimeInMinutes: 37

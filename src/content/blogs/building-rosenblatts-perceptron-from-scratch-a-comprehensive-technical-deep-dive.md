@@ -1,6 +1,6 @@
 ---
 title: "Building Rosenblatt's Perceptron From Scratch in Flutter"
-brief: "Technical blog implementing classic machine learning perceptron algorithm in Flutter with visual explanations."
+brief: "Building Rosenblatt’s perceptron in Flutter, with the geometry drawn out."
 dateAdded: 2025-02-27T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/building-rosenblatts-perceptron-from-scratch-a-comprehensive-technical-deep-dive"
 readTimeInMinutes: 26

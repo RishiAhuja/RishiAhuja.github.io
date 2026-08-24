@@ -28,15 +28,15 @@ const updates = [
     'Received the Best Paper Presentation Award and placed runner-up in the GlobalSouthAI 3MT competition.',
   ],
   ['Aug 2026', 'Presented ScopeBench-PR at GlobalSouthAI, IJCAI–ECAI 2026.'],
-  ['Jul 2026', 'Served as a reviewer for the FMSD Workshop at ICML 2026.'],
+  ['Jul 2026', 'Served as a reviewer for the FSMD Workshop at ICML 2026.'],
   ['Jul 2026', 'ScopeBench-PR accepted at GlobalSouthAI, IJCAI–ECAI 2026.'],
-  ['Jun 2026', 'Awarded a $1,000 IJCAI–AIJ grant.'],
+  ['Jun 2026', 'Awarded an IJCAI–AIJ grant.'],
   ['Apr 2026', 'ICFD-31k accepted to the IJCAI–ECAI 2026 main conference.'],
   [
     'Apr 2026',
     'Presented retrieval-augmented time-series forecasting research at the ICLR 2026 TSALM Workshop.',
   ],
-  ['Mar 2026', 'Awarded a $2,025 ICLR grant.'],
+  ['Mar 2026', 'Awarded an ICLR 2026 grant.'],
   ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
 ];
 
@@ -80,7 +80,8 @@ const schema = {
         <div>
           <h1>Hello 👋</h1>
           <p>
-            I am Rishi Ahuja, a B.Tech. with Research student at NIT Jalandhar.
+            I’m Rishi Ahuja, pursuing a B.Tech. with Research in Information
+            Technology at NIT Jalandhar.
             {/*
             I am Rishi Ahuja, an Undergraduate Researcher at the Machine and Hybrid
             Intelligence Lab, Northwestern University, and a B.Tech. with Research
@@ -88,9 +89,9 @@ const schema = {
             */}
           </p>
           <p class="hero-note">
-            My research focuses on building and evaluating reliable AI systems across
-            language-model evaluation, temporal retrieval and conversational fraud
-            detection.
+            My research focuses on building and evaluating reliable AI systems, with
+            current work in language-model evaluation, temporal retrieval, and
+            conversational fraud detection.
           </p>
         </div>
         <div class="hero-actions">
@@ -184,7 +185,7 @@ const schema = {
     </section>
 
     <section class="section wrap-wide" id="writings">
-      <h2 class="section-title">Writings</h2>
+      <h2 class="section-title">Writing</h2>
       <div class="project-grid writing-grid">
         {latestWritings.map((post) => (
           <article class="project-tile">
@@ -211,7 +212,7 @@ const schema = {
       </div>
       <p class="writing-more">
         <a class="button" href="/writings">
-          All writings
+          All Writing
           <ArrowUpRightIcon />
         </a>
       </p>
@@ -225,8 +226,9 @@ const schema = {
             <p class="info-label">01 / Background</p>
             <div>
               <p>
-                I am a B.Tech. with Research student at NIT Jalandhar. I work on AI
-                systems that have to be judged against the claims they actually make.
+                I am pursuing a B.Tech. with Research in Information Technology at
+                NIT Jalandhar. I study how AI systems can be evaluated reliably
+                against the claims made about them.
                 {/*
                 I am a B.Tech. with Research student at NIT Jalandhar, and an
                 undergraduate researcher at Northwestern University. I work on AI
@@ -239,23 +241,25 @@ const schema = {
             <p class="info-label">02 / Research</p>
             <div>
               <p>
-                My current work sits across three projects:
-                <a class="inline-tag blue" href={pubPath('ahuja2026icfd31k')}>ICFD-31k</a> for conversational fraud
+                My current work spans three projects:
+                <a class="inline-tag blue" href={pubPath('ahuja2026icfd31k')}>ICFD-31k</a> in conversational fraud
                 detection,
-                <a class="inline-tag rose" href={pubPath('ahuja2026scopebenchpr')}>ScopeBench-PR</a> for scope fairness
-                in LLM peer review, and
-                <a class="inline-tag" href={pubPath('ahuja2026retrieval')}>temporal retrieval</a> for time-series
-                models. I care about evaluation that stays honest to stated scope.
+                <a class="inline-tag rose" href={pubPath('ahuja2026scopebenchpr')}>ScopeBench-PR</a> in scope fairness
+                for LLM-assisted peer review, and
+                <a class="inline-tag" href={pubPath('ahuja2026retrieval')}>selective retrieval</a> for time-series
+                forecasting. Across them, I care about reliable evaluation under
+                realistic conditions.
               </p>
             </div>
           </article>
           <article class="info-row">
-            <p class="info-label">03 / Beyond research</p>
+            <p class="info-label">03 / Beyond Research</p>
             <div>
               <p>
-                I write about systems and machine learning when a result is easier to
-                see than to summarise. The full set lives in
-                <a href="/writings">Writings</a>. Everything else stays in the CV.
+                I write about machine learning, systems, and building software from
+                first principles. The full archive is in
+                <a href="/writings">Writing</a>; other work and experience are in my
+                CV.
               </p>
             </div>
           </article>

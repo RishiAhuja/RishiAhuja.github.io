@@ -1,6 +1,6 @@
 ---
 title: "Comprehensive Arch Linux Blog"
-brief: "In-depth technical guide covering Arch Linux installation, configuration, and advanced system administration."
+brief: "Installing, configuring, and administering Arch Linux from a blank disk."
 dateAdded: 2024-08-16T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/comprehensive-arch-linux-guide"
 readTimeInMinutes: 28

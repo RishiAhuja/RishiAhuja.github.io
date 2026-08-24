@@ -1,6 +1,6 @@
 ---
 title: "Go Beneath the Abstraction: Building Interactive UIs with FernKit"
-brief: "Technical deep dive into FernKit UI toolkit, exploring low-level rendering, widget systems, and building UIs from scratch with C++."
+brief: "Building interactive UIs from scratch in C++ with FernKit’s renderer and widgets."
 dateAdded: 2025-08-03T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/fernkit"
 readTimeInMinutes: 10

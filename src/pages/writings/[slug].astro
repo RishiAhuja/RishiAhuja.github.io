@@ -58,7 +58,7 @@ const related = (await getCollection('blogs'))
               <Breadcrumbs
                 items={[
                   { label: 'Home', href: '/' },
-                  { label: 'Writings', href: '/writings' },
+                  { label: 'Writing', href: '/writings' },
                 ]}
               />
               <h1>{post.data.title}</h1>
@@ -98,7 +98,7 @@ const related = (await getCollection('blogs'))
 
     {related.length > 0 && (
       <section class="section wrap">
-        <h2 class="section-title">More writings</h2>
+        <h2 class="section-title">More writing</h2>
         <div class="related-grid">
           {related.map((entry) => (
             <a class="related-card" href={writingPath(entry.slug)}>

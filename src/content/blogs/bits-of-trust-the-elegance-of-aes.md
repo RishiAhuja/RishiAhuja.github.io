@@ -1,6 +1,6 @@
 ---
 title: "Bits of Trust: The Elegance of AES"
-brief: "Technical blog exploring AES encryption algorithms and cryptographic implementations."
+brief: "How AES encrypts a block, from S-boxes through the last round."
 dateAdded: 2025-04-01T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/bits-of-trust-the-elegance-of-aes"
 readTimeInMinutes: 26

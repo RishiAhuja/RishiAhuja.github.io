@@ -5,7 +5,7 @@ import { LINKS } from '../lib/constants';
 const NAV = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'research', label: 'Research', href: '/#research' },
-  { id: 'writings', label: 'Writings', href: '/#writings' },
+  { id: 'writings', label: 'Writing', href: '/#writings' },
   { id: 'about', label: 'About', href: '/#about' },
   { id: 'resume', label: 'Résumé', href: LINKS.RESUME, external: true },
 ] as const;

@@ -1,6 +1,6 @@
 ---
 title: "State of the Art - ART (Android Runtime)"
-brief: "Technical blog analyzing Android Runtime (ART) and its impact on app performance and development."
+brief: "How Android Runtime compiles, garbage-collects, and changes what apps can assume."
 dateAdded: 2024-09-03T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/art"
 readTimeInMinutes: 6

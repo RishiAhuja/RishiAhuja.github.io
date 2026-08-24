@@ -1,6 +1,6 @@
 ---
 title: "Shamir's Secret Sharing Scheme and Multi Party Computation."
-brief: "Mathematical Blog exploring Shamir's Secret Sharing Scheme and Multi Party Computation for private key management."
+brief: "Shamir’s secret sharing and multi-party computation for splitting a private key."
 dateAdded: 2025-07-05T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/shamirs-secret-sharing-scheme-and-multi-party-computation"
 readTimeInMinutes: 23

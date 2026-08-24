@@ -1,6 +1,6 @@
 ---
 title: "Getting Cracked at Clean and BLoC Architecture"
-brief: "Advanced Flutter architecture blog covering clean architecture principles and BLoC pattern implementation."
+brief: "Clean architecture and BLoC in Flutter, past the introductory examples."
 dateAdded: 2025-01-05T00:00:00.000Z
 hashnodeUrl: "https://rishi2220.hashnode.dev/getting-cracked-at-clean-and-bloc-architecture"
 readTimeInMinutes: 25
