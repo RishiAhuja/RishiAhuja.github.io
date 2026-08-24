@@ -120,12 +120,12 @@ const schema = {
                 )}
               </div>
             </a>
-            {paper.data.awards[0] && (
-              <p class="project-award-line">★ {paper.data.awards[0].label}</p>
-            )}
             <h3>
               <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
             </h3>
+            {paper.data.awards[0] && (
+              <p class="project-award-line">★ {paper.data.awards[0].label}</p>
+            )}
             <p class="project-desc">{paper.data.blurb}</p>
             <p class="project-venue">{paper.data.venue}</p>
           </article>
