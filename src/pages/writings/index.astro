@@ -4,6 +4,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { getWritings, writingPath } from '../../lib/blogs';
+import { writingArtwork } from '../../lib/artwork';
 
 const posts = await getWritings();
 ---
@@ -26,7 +27,9 @@ const posts = await getWritings();
           <article class="project-tile">
             <a class="project-cover-link" href={writingPath(post.slug)}>
               <div class={`project-cover ${post.data.cover}`}>
-                <strong>{post.data.title}</strong>
+                {writingArtwork(post.slug) && (
+                  <img class="cover-art" src={writingArtwork(post.slug)} alt="" />
+                )}
               </div>
             </a>
             <h3>

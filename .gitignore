@@ -2,3 +2,5 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+COVER_ART_AUDIT.md
+COVER_ART_PROMPTS.md

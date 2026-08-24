@@ -6,6 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { isResourceLink, pubPath, resourceLabel } from '../../lib/research';
+import { paperArtwork } from '../../lib/artwork';
 
 export async function getStaticPaths() {
   const papers = await getCollection('research');
@@ -109,7 +110,9 @@ const awardMarks = [
           </div>
         </div>
         <div class={`project-hero-cover ${paper.data.cover}`}>
-          <strong>{paper.data.short_name}</strong>
+          {paperArtwork(paper.slug) && (
+            <img class="cover-art" src={paperArtwork(paper.slug)} alt="" />
+          )}
         </div>
       </div>
     </section>

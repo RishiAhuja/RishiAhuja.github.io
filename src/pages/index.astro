@@ -7,6 +7,7 @@ import { ArrowDownIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { LINKS, PORTRAIT } from '../lib/constants';
 import { FEATURED_SLUGS, pubPath } from '../lib/research';
 import { getWritings, writingPath } from '../lib/blogs';
+import { paperArtwork, writingArtwork } from '../lib/artwork';
 
 const papers = (await getCollection('research')).sort(
   (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime()
@@ -114,12 +115,14 @@ const schema = {
           <article class="project-tile">
             <a class="project-cover-link" href={pubPath(paper.slug)}>
               <div class={`project-cover ${paper.data.cover}`}>
-                {paper.data.awards[0] && (
-                  <span class="project-award">★ {paper.data.awards[0].label}</span>
+                {paperArtwork(paper.slug) && (
+                  <img class="cover-art" src={paperArtwork(paper.slug)} alt="" />
                 )}
-                <strong>{paper.data.short_name}</strong>
               </div>
             </a>
+            {paper.data.awards[0] && (
+              <p class="project-award-line">★ {paper.data.awards[0].label}</p>
+            )}
             <h3>
               <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
             </h3>
@@ -174,7 +177,9 @@ const schema = {
           <article class="project-tile">
             <a class="project-cover-link" href={writingPath(post.slug)}>
               <div class={`project-cover ${post.data.cover}`}>
-                <strong>{post.data.title}</strong>
+                {writingArtwork(post.slug) && (
+                  <img class="cover-art" src={writingArtwork(post.slug)} alt="" />
+                )}
               </div>
             </a>
             <h3>

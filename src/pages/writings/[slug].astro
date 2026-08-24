@@ -7,6 +7,7 @@ import JsonLd from '../../components/JsonLd.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { renderBlogMarkdown } from '../../lib/blogMarkdown';
 import { formatPostDate, writingPath } from '../../lib/blogs';
+import { writingArtwork } from '../../lib/artwork';
 import TableOfContents from '../../components/TableOfContents.astro';
 
 export async function getStaticPaths() {
@@ -84,8 +85,10 @@ const related = (await getCollection('blogs'))
             </p>
           </div>
         </div>
-        <div class="project-hero-cover">
-          <strong>{post.data.title}</strong>
+        <div class={`project-hero-cover ${post.data.cover}`}>
+          {writingArtwork(post.slug) && (
+            <img class="cover-art" src={writingArtwork(post.slug)} alt="" />
+          )}
         </div>
       </div>
     </section>
