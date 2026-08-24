@@ -3,7 +3,7 @@ title: "Retrieval Mechanisms Surpass Long-Context Scaling in Time Series Forecas
 short_name: "Temporal Retrieval"
 cover: "sand"
 blurb: "Selective retrieval for time-series forecasting beyond long-context scaling."
-lede: "Time-series foundation models inherited long context from language models. We tested the premise on ETTh1 and found the opposite: more history made forecasts worse, while pulling back only the relevant segments beat the long-context setup with less compute."
+lede: "Time-series foundation models often inherit the assumption that longer context is inherently useful. On ETTh1, we find that extending the context can instead degrade forecasting performance, while selectively retrieving relevant historical segments improves accuracy with less computation."
 description: "Published at the ICLR 2026 TSALM Workshop. A paper arguing that selective retrieval beats brute-force long context in time-series forecasting."
 tldr: "Long contexts hurt time series forecasting by adding noise (inverse scaling, >68% worse at 3k steps), while selective retrieval (RAFT) beats them with lower MSE (0.379 vs 0.647) and less compute - future TSFMs should embed retrieval instead."
 abstract: "Time Series Foundation Models (TSFMs) have borrowed the long context paradigm from natural language processing under the premise that feeding more history into the model improves forecast quality. But in stochastic domains, distant history is often just high-frequency noise, not signal. Hence, the proposed work tests whether this premise actually holds by running continuous context architectures (PatchTST included) through the ETTh1 benchmark. The obtained results contradict the premise: an inverse scaling law shows up clearly, with forecasting error rising as context gets longer. A 3,000-step window causes performance to drop by over 68%, evidence that attention mechanisms are poor at ignoring irrelevant historical volatility. Retrieval-Augmented Forecasting (RAFT) is evaluated as an alternative. RAFT achieves a mean squared error (MSE) of 0.379 with a fixed 720-step window and selective retrieval, well below the 0.647 MSE of the best long-context configuration despite requiring far less computation. In addition, the retrieval step injects only the most relevant historical segments as dynamic exogenous variables, which gives the model a context-informed inductive bias it cannot build on its own from raw sequences. Therefore, foundation models going forward need to shift architecturally toward selective retrieval."
@@ -70,12 +70,16 @@ same_as:
 
 ## Inverse scaling
 
-The usual TSFM recipe is to feed more history into the same attention stack. In language that often helps. In a stochastic series, distant steps are frequently just volatility. PatchTST and other continuous-context models on ETTh1 get worse as the window grows. At 3,000 steps the drop is more than 68%. Attention is not quietly ignoring the junk; it is mixing it in.
+A common approach to time-series forecasting is to provide the model with increasingly long histories. Unlike language, however, distant observations in a stochastic series may contain volatility or patterns irrelevant to the current forecast.
+
+Across PatchTST and other continuous-context baselines on ETTh1, performance deteriorates as the context window grows. At 3,000 steps, forecasting error increases by more than 68% relative to the shorter-context setting. This degradation suggests that attention alone does not reliably suppress irrelevant historical information.
 
 ## Retrieval instead of a longer window
 
-Retrieval-Augmented Forecasting keeps a fixed 720-step window and fetches only the historical segments that actually resemble the current query. Those segments are injected as exogenous context. RAFT’s MSE is 0.379 against 0.647 for the best long-context run we compared, with a smaller compute bill.
+Retrieval-Augmented Forecasting retains a fixed 720-step input window and retrieves historical segments that resemble the current query. The retrieved segments are then supplied as exogenous context.
 
-The architectural claim is simple. If the useful past is sparse, the model should look it up rather than swallow the entire tape.
+On ETTh1, RAFT reaches an MSE of 0.379, compared with 0.647 for the strongest long-context baseline in our evaluation, while requiring less computation.
 
-This was a poster at the ICLR 2026 TSALM workshop. Code, data, and the poster are linked above.
+The underlying principle is simple: when useful history is sparse, the model should retrieve relevant segments rather than process the entire available history.
+
+I presented this work as a poster at the ICLR 2026 TSALM Workshop. The paper, poster, and code are linked above.
