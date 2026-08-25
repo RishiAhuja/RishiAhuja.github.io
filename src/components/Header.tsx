@@ -4,7 +4,7 @@ import { LINKS } from '../lib/constants';
 
 const NAV = [
   { id: 'home', label: 'Home', href: '/' },
-  { id: 'research', label: 'Research', href: '/#research' },
+  { id: 'research', label: 'Research', href: '/research' },
   { id: 'writings', label: 'Writing', href: '/#writings' },
   { id: 'about', label: 'About', href: '/#about' },
   { id: 'resume', label: 'Résumé', href: LINKS.RESUME, external: true },
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
       setActive('writings');
       return;
     }
-    if (path.startsWith('/pub/')) {
+    if (path.startsWith('/research') || path.startsWith('/pub/')) {
       setActive('research');
       return;
     }

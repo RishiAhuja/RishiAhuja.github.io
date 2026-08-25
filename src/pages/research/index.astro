@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { pubPath } from '../../lib/research';
+import { paperArtwork } from '../../lib/artwork';
+import CoverArt from '../../components/CoverArt.astro';
+
+const papers = (await getCollection('research')).sort(
+  (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime(),
+);
+---
+
+<BaseLayout
+  title="Research · Rishi Ahuja"
+  description="Papers and benchmarks on trustworthy evaluation, temporal retrieval, and conversational fraud detection."
+>
+  <main>
+    <section class="section wrap">
+      <div class="page-path">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
+        <h1 class="page-title">Research</h1>
+      </div>
+      <p class="page-lede">
+        Benchmarks and papers on evaluating AI systems against the claims they actually make.
+      </p>
+      <div class="project-grid writing-grid">
+        {papers.map((paper, index) => (
+          <article class="project-tile">
+            <a
+              class="project-cover-link"
+              href={pubPath(paper.slug)}
+              data-cover-prefetch={paperArtwork(paper.slug)?.heroAvif}
+            >
+              <div class={`project-cover ${paper.data.cover}`}>
+                {paperArtwork(paper.slug) && (
+                  <CoverArt cover={paperArtwork(paper.slug)!} variant="card" priority={index < 3} />
+                )}
+              </div>
+            </a>
+            <h3>
+              <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
+            </h3>
+            {paper.data.awards[0] && (
+              <p class="project-award-line">★ {paper.data.awards[0].label}</p>
+            )}
+            <p class="project-desc">{paper.data.blurb}</p>
+            <p class="project-venue">{paper.data.venue}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

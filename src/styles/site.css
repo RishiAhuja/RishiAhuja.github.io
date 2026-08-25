@@ -381,7 +381,7 @@ img {
 
 .project-cover {
   position: relative;
-  aspect-ratio: 4 / 5;
+  padding: 10%;
   overflow: visible;
   color: var(--text);
   transform: scale(1);
@@ -389,15 +389,12 @@ img {
 }
 
 .cover-art {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  position: relative;
   display: block;
-  width: 80%;
+  width: 100%;
   height: auto;
   aspect-ratio: 3 / 4;
   pointer-events: none;
-  transform: translate(-50%, -50%);
   box-shadow: 0 10px 28px rgba(17, 17, 17, 0.18);
 }
 
@@ -579,7 +576,7 @@ img {
   grid-template-columns: 1fr;
   gap: 2rem;
   padding-block: 2.4rem 2.8rem;
-  align-items: stretch;
+  align-items: start;
 }
 
 .project-intro {
@@ -746,9 +743,10 @@ img {
 
 .project-hero-cover {
   position: relative;
-  aspect-ratio: 4 / 5;
+  padding: 10%;
   overflow: visible;
   min-height: 0;
+  width: 100%;
 }
 
 .writing-hero,
@@ -1380,7 +1378,6 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
   }
   .project-hero-cover {
     min-height: 0;
-    aspect-ratio: 4 / 5;
   }
   .project-hero-meta {
     flex-direction: row;
