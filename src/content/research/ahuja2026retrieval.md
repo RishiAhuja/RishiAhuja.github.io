@@ -24,9 +24,9 @@ authors:
   - name: "Vijay Kumar"
     profile: "https://openreview.net/profile?id=~Dr_Vijay_Kumar1"
 affiliation_note: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
-award: "ICLR 2026 grant"
+award: "Awarded ICLR 2026 grant"
 event:
-  announcement: "Recently presented this work as an ICLR 2026 TSALM Workshop poster. Received an ICLR 2026 grant."
+  announcement: "Recently presented this work as an ICLR 2026 TSALM Workshop poster. Awarded an ICLR 2026 grant."
   label: "Presented poster at"
   venue: "ICLR 2026 Workshop (TSALM)"
   location: "Rio de Janeiro, Brazil"

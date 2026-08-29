@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { pubPath } from '../../lib/research';
+import { paperCardAward, pubPath } from '../../lib/research';
 import { paperArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
 
@@ -26,7 +26,9 @@ const papers = (await getCollection('research')).sort(
         Benchmarks and papers on evaluating AI systems against the claims they actually make.
       </p>
       <div class="project-grid writing-grid">
-        {papers.map((paper, index) => (
+        {papers.map((paper, index) => {
+          const awardLine = paperCardAward(paper.data);
+          return (
           <article class="project-tile">
             <a
               class="project-cover-link"
@@ -42,13 +44,14 @@ const papers = (await getCollection('research')).sort(
             <h3>
               <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
             </h3>
-            {paper.data.awards[0] && (
-              <p class="project-award-line">★ {paper.data.awards[0].label}</p>
+            {awardLine && (
+              <p class="project-award-line">★ {awardLine}</p>
             )}
             <p class="project-desc">{paper.data.blurb}</p>
             <p class="project-venue">{paper.data.venue}</p>
           </article>
-        ))}
+          );
+        })}
       </div>
     </section>
   </main>

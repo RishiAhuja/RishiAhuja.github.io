@@ -30,7 +30,7 @@ const researchCollection = defineCollection({
       .array(
         z.object({
           label: z.string(),
-          result: z.string(),
+          result: z.string().optional(),
         })
       )
       .default([]),
