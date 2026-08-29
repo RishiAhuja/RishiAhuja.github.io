@@ -4,6 +4,32 @@ export const FEATURED_SLUGS = [
   'ahuja2026retrieval',
 ] as const;
 
+type AwardEntry = {
+  label: string;
+  result?: string;
+};
+
+type AwardFields = {
+  awards: AwardEntry[];
+  award?: string;
+  award_amount?: string;
+};
+
+export const formatAwardMark = (award: AwardEntry) =>
+  award.result ? `${award.result} · ${award.label}` : award.label;
+
+const formatGrantMark = (paper: AwardFields) => {
+  if (!paper.award) return undefined;
+  return paper.award_amount ? `${paper.award} · ${paper.award_amount}` : paper.award;
+};
+
+export const paperAwardMarks = (paper: AwardFields) =>
+  [...paper.awards.map(formatAwardMark), formatGrantMark(paper)].filter(
+    (mark): mark is string => Boolean(mark),
+  );
+
+export const paperCardAward = (paper: AwardFields) => paper.awards[0]?.label ?? paper.award;
+
 export const pubPath = (slug: string) => `/pub/${slug}`;
 
 export const resourceLabel = (label: string) => {

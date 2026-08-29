@@ -5,7 +5,7 @@ import JsonLd from '../components/JsonLd.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { ArrowDownIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { LINKS, PORTRAIT } from '../lib/constants';
-import { FEATURED_SLUGS, pubPath } from '../lib/research';
+import { FEATURED_SLUGS, paperCardAward, pubPath } from '../lib/research';
 import { getWritings, writingPath } from '../lib/blogs';
 import { paperArtwork, writingArtwork } from '../lib/artwork';
 import CoverArt from '../components/CoverArt.astro';
@@ -121,7 +121,9 @@ const schema = {
     <section class="section wrap-wide" id="research">
       <h2 class="section-title">Featured research</h2>
       <div class="project-grid">
-        {featured.map((paper) => (
+        {featured.map((paper) => {
+          const awardLine = paperCardAward(paper.data);
+          return (
           <article class="project-tile">
             <a
               class="project-cover-link"
@@ -137,13 +139,14 @@ const schema = {
             <h3>
               <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
             </h3>
-            {paper.data.awards[0] && (
-              <p class="project-award-line">★ {paper.data.awards[0].label}</p>
+            {awardLine && (
+              <p class="project-award-line">★ {awardLine}</p>
             )}
             <p class="project-desc">{paper.data.blurb}</p>
             <p class="project-venue">{paper.data.venue}</p>
           </article>
-        ))}
+          );
+        })}
       </div>
       <p class="writing-more">
         <a class="button" href="/research">

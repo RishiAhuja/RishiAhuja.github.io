@@ -5,7 +5,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
-import { isResourceLink, pubPath, resourceLabel } from '../../lib/research';
+import { isResourceLink, paperAwardMarks, pubPath, resourceLabel } from '../../lib/research';
 import { paperArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
 import CoverPreload from '../../components/CoverPreload.astro';
@@ -28,10 +28,7 @@ const related = (await getCollection('research'))
 
 const resources = paper.data.links.filter((link) => isResourceLink(link.label, link.primary));
 const pageUrl = new URL(pubPath(paper.slug), Astro.site).toString();
-const awardMarks = [
-  ...paper.data.awards.map((award) => `${award.result} · ${award.label}`),
-  paper.data.award,
-].filter(Boolean);
+const awardMarks = paperAwardMarks(paper.data);
 ---
 
 <BaseLayout
