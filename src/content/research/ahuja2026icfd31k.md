@@ -22,6 +22,7 @@ authors:
     profile: "https://openreview.net/profile?id=~Simranjit_Singh4"
 affiliation_note: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
 award: "Awarded IJCAI–AIJ grant"
+award_amount: "$1,000"
 event:
   announcement: "Accepted to the IJCAI-ECAI 2026 main conference special track. Awarded an IJCAI–AIJ grant. I will present ICFD-31k in Bremen, Germany."
   label: "To be presented at"
