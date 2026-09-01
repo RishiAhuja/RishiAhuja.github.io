@@ -972,6 +972,7 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
   color: var(--page-accent);
   text-decoration: underline;
   text-underline-offset: 0.16em;
+  pointer-events: auto !important;
 }
 
 .blog-content a:hover {

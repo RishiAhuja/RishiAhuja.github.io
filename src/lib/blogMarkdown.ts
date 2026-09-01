@@ -3,6 +3,20 @@ import markedKatex from 'marked-katex-extension';
 import hljs from 'highlight.js';
 import katex from 'katex';
 
+const isExternalHref = (href: string) => /^(https?:)?\/\//i.test(href);
+
+const rewriteImportedHref = (href: string) =>
+  href.replace(/^http:\/\/(fernkit\.in\/)/i, 'https://$1');
+
+const sanitizeImportedHtml = (html: string) =>
+  html.replace(/<a\b([^>]*)>/gi, (tag, attrs: string) => {
+    const hrefMatch = /\bhref="([^"]*)"/i.exec(attrs);
+    if (!hrefMatch) return tag;
+    const href = rewriteImportedHref(hrefMatch[1]);
+    const extra = isExternalHref(href) ? ' target="_blank" rel="noopener noreferrer"' : '';
+    return `<a href="${href}"${extra}>`;
+  });
+
 marked.use(
   markedKatex({
     throwOnError: false,
@@ -150,7 +164,7 @@ const renderLatexPreview = (latex: string): string => {
 export const preprocessHashnodeMarkdown = (
   markdown: string,
 ): { content: string; placeholders: string[] } => {
-  let content = markdown;
+  let content = sanitizeImportedHtml(markdown);
   const placeholders: string[] = [];
   const stash = (html: string) => {
     const token = `@@BLOG_HTML_${placeholders.length}@@`;
@@ -167,7 +181,7 @@ export const preprocessHashnodeMarkdown = (
       .replace(/\s+isuploading="[^"]*"/gi, '')
       .replace(/\s+align="[^"]*"/gi, '')
       .replace(/<img\b([^>]*?)>/gi, '<img$1 class="blog-image" loading="lazy">');
-    return stash(cleaned);
+    return stash(sanitizeImportedHtml(cleaned));
   });
 
   content = content.replace(

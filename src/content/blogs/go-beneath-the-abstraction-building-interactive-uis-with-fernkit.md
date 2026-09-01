@@ -30,7 +30,7 @@ FernKit is my attempt to make the machinery visible, to replace the black box wi
 
 <div data-node-type="callout">
 <div data-node-type="callout-emoji">💡</div>
-<div data-node-type="callout-text">Just a heads-up: think of this blog post as a quick tour to give you a feel for the project. It’s a starting guide, but it barely scratches the surface. There’s a ton of detailed documentation covering every widget, the layout system, the scene manager, and more over at <a target="_self" rel="noopener noreferrer nofollow" class="text-primary underline underline-offset-2 hover:text-primary/80 cursor-pointer" href="http://fernkit.in/docs" style="pointer-events: none;"><strong>fernkit.in/docs</strong></a>.</div>
+<div data-node-type="callout-text">Just a heads-up: think of this blog post as a quick tour to give you a feel for the project. It’s a starting guide, but it barely scratches the surface. There’s a ton of detailed documentation covering every widget, the layout system, the scene manager, and more over at <a href="https://fernkit.in/docs" target="_blank" rel="noopener noreferrer"><strong>fernkit.in/docs</strong></a>.</div>
 </div>
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991863011/70c15491-afac-4d90-9624-afff0a241cf7.png align="center")
@@ -320,7 +320,7 @@ I wrote a full getting-started guide, but here are the essential steps to get yo
     ```
     
 
-For the complete guide with prerequisites and advanced topics, please check out the official documentation and the getting started guide at [**fernkit.in/docs**](http://fernkit.in/docs).
+For the complete guide with prerequisites and advanced topics, please check out the official documentation and the getting started guide at [**fernkit.in/docs**](https://fernkit.in/docs).
 
 * * *
 
