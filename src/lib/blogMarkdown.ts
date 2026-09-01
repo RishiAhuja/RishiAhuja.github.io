@@ -66,15 +66,30 @@ export type TocNode = {
 
 export const nestToc = (items: TocItem[]): TocNode[] => {
   const roots: TocNode[] = [];
+  let currentSection: TocNode | undefined;
+
   for (const item of items) {
-    if (item.depth === 3 && roots.length > 0) {
-      roots[roots.length - 1].children.push(item);
+    if (item.depth <= 2) {
+      const node: TocNode = { item, children: [] };
+      roots.push(node);
+      currentSection = item.depth === 2 ? node : undefined;
+    } else if (currentSection) {
+      currentSection.children.push(item);
     } else {
       roots.push({ item, children: [] });
     }
   }
+
+  // A wrapping H2 (often the title repeated) with several H3s should not
+  // hide the sidebar. Promote the subsections so they become the TOC.
+  if (roots.length === 1 && roots[0].children.length >= 2) {
+    return roots[0].children.map((child) => ({ item: child, children: [] }));
+  }
+
   return roots;
 };
+
+export const hasWritingToc = (items: TocItem[]) => nestToc(items).length >= 2;
 
 const stripTags = (value: string) => value.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 

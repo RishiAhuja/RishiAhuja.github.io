@@ -5,7 +5,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
-import { renderBlogMarkdown } from '../../lib/blogMarkdown';
+import { hasWritingToc, renderBlogMarkdown } from '../../lib/blogMarkdown';
 import { formatPostDate, writingPath } from '../../lib/blogs';
 import { writingArtwork } from '../../lib/artwork';
 import TableOfContents from '../../components/TableOfContents.astro';
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props as { post: CollectionEntry<'blogs'> };
 const { html: htmlContent, headings } = await renderBlogMarkdown(post.body ?? '');
 const pageUrl = new URL(writingPath(post.slug), Astro.site).toString();
-const tocSections = headings.filter((item) => item.depth === 2);
+const showToc = hasWritingToc(headings);
 
 const related = (await getCollection('blogs'))
   .filter((entry) => entry.slug !== post.slug)
@@ -86,7 +86,7 @@ const related = (await getCollection('blogs'))
       </div>
     </section>
 
-    <article class={`project-body wrap writing-with-toc${tocSections.length >= 2 ? ' has-toc' : ''}`}>
+    <article class={`project-body wrap writing-with-toc${showToc ? ' has-toc' : ''}`}>
       <div class="blog-main">
         {post.data.coverImage && (
           <img class="blog-image blog-cover-photo" src={post.data.coverImage} alt="" />
