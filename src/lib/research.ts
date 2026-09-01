@@ -28,7 +28,7 @@ export const paperAwardMarks = (paper: AwardFields) =>
     (mark): mark is string => Boolean(mark),
   );
 
-export const paperCardAward = (paper: AwardFields) => paper.awards[0]?.label ?? paper.award;
+export const paperCardAward = (paper: AwardFields) => paper.awards[0]?.label;
 
 export const pubPath = (slug: string) => `/pub/${slug}`;
 
