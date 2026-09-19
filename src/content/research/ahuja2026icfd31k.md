@@ -23,7 +23,6 @@ authors:
     profile: "https://openreview.net/profile?id=~Simranjit_Singh4"
 affiliation_note: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
 award: "Awarded IJCAI–AIJ grant"
-award_amount: "$1,000"
 event:
   announcement: "Presented at IJCAI–ECAI 2026 in Bremen. Now published in the IJCAI proceedings."
   label: "Presented at"
