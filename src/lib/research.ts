@@ -35,6 +35,7 @@ export const pubPath = (slug: string) => `/pub/${slug}`;
 export const resourceLabel = (label: string) => {
   const value = label.toLowerCase();
   if (value.includes('openreview') || value.includes('paper')) return 'Paper';
+  if (value.includes('pdf')) return 'PDF';
   if (value.includes('github') || value.includes('code')) return 'Code';
   if (value.includes('data')) return 'Dataset';
   if (value.includes('poster')) return 'Poster';
@@ -47,5 +48,5 @@ export const resourceLabel = (label: string) => {
 export const isResourceLink = (label: string, primary?: boolean) => {
   if (primary) return true;
   const value = label.toLowerCase();
-  return /paper|openreview|github|code|data|poster|arxiv|blog/.test(value);
+  return /paper|openreview|github|code|data|poster|arxiv|blog|pdf/.test(value);
 };
