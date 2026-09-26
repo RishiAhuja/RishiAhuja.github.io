@@ -8,5 +8,5 @@ export const LINKS = {
   GOOGLE_SCHOLAR: 'https://scholar.google.com/citations?hl=en&user=EZff3KsAAAAJ',
   OPENREVIEW: 'https://openreview.net/profile?id=~Rishi_Ahuja1',
   EMAIL: 'mailto:rishia2220@gmail.com',
-  MHI: 'https://bagcilab.com/people/rishi-ahuja/',
+  // MHI: 'https://bagcilab.com/people/rishi-ahuja/',
 } as const;
