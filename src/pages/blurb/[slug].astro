@@ -1,0 +1,64 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import BlurbContentRenderer from '../../components/blurb/BlurbContentRenderer';
+import TableOfContents from '../../components/TableOfContents.astro';
+import { blurbPosts, type BlurbPost } from '../../data/blurb';
+import { formatPostDate } from '../../lib/blogs';
+import { hasWritingToc } from '../../lib/blogMarkdown';
+import { blurbHeadings } from '../../lib/blurbToc.ts';
+import '../../styles/blurb-utilities.css';
+
+export const getStaticPaths = (() => {
+  return blurbPosts
+    .filter((post) => post.status === 'published')
+    .map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props as { post: BlurbPost };
+const shareImage = post.socialImage?.startsWith('http')
+  ? post.socialImage
+  : post.coverImage?.startsWith('http')
+    ? post.coverImage
+    : undefined;
+const shareImageType = shareImage?.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
+const published = formatPostDate(new Date(`${post.publishedDate}T00:00:00`));
+const headings = blurbHeadings(post.content);
+const showToc = hasWritingToc(headings);
+---
+
+<BaseLayout
+  title={`${post.title} · Rishi Ahuja`}
+  description={post.description}
+  image={shareImage}
+  imageType={shareImage ? shareImageType : undefined}
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <script is:inline slot="head" async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <main>
+    <article class={`wrap writing-with-toc${showToc ? ' has-toc' : ''}`}>
+      <div class="blog-main blurb-page">
+        <header class="blurb-hero">
+          <h1 class="page-title">{post.title}</h1>
+          {post.subtitle && <p class="blurb-subtitle">{post.subtitle}</p>}
+          <p class="project-info">
+            <time datetime={post.publishedDate}>{published}</time>
+            {post.readTime && <span> · {post.readTime} min read</span>}
+          </p>
+        </header>
+
+        <div class="blurb-content">
+          <BlurbContentRenderer content={post.content} client:load />
+        </div>
+      </div>
+      <TableOfContents items={headings} />
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

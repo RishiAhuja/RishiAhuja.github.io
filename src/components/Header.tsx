@@ -33,6 +33,10 @@ const Header: React.FC = () => {
       setActive('research');
       return;
     }
+    if (path.startsWith('/blurb/')) {
+      setActive('');
+      return;
+    }
 
     const nodes = NAV.filter((item) => !('external' in item && item.external))
       .map((item) => document.getElementById(item.id))

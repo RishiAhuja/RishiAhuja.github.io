@@ -1422,3 +1422,138 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
 @media screen and (min-width: 3200px) {
   :root { --page-gutter: 28vw; }
 }
+
+.blurb-page {
+  max-width: 42em;
+  padding-top: 0.4rem;
+  padding-bottom: 2.5rem;
+}
+
+.blurb-hero {
+  margin-bottom: 1.6rem;
+}
+
+.blurb-subtitle {
+  margin: 0 0 0.85em;
+  max-width: 38em;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.blurb-content {
+  color: var(--text);
+}
+
+.blurb-content h2,
+.blurb-content h3 {
+  scroll-margin-top: 1.5rem;
+}
+
+.blurb-page .font-ptMono {
+  font-family: inherit;
+}
+
+.blurb-page .text-quillGray,
+.blurb-page .text-gunSmoke {
+  color: var(--text);
+}
+
+.blurb-page figcaption,
+.blurb-page .italic {
+  color: var(--text-muted);
+}
+
+.blurb-page .text-accent,
+.blurb-page .text-accent-light,
+.blurb-page a {
+  color: var(--accent);
+}
+
+.blurb-page a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.blurb-page .bg-darkGrey\/10,
+.blurb-page .bg-darkGrey\/20,
+.blurb-page .bg-darkGrey\/30,
+.blurb-page .bg-darkGrey\/50 {
+  background-color: var(--bg-soft);
+}
+
+.blurb-page .border-darkGrey,
+.blurb-page .border-darkGrey\/30,
+.blurb-page .border-darkGrey\/60 {
+  border-color: var(--rule);
+}
+
+.blurb-page .bg-codGray\/85 {
+  background-color: #fff;
+  color: var(--text);
+}
+
+.blurb-page .bg-accent-light {
+  background-color: var(--accent);
+}
+
+.blurb-page .bg-darkGrey {
+  background-color: #cfcfcf;
+}
+
+.blurb-page .bg-darkGrey:hover,
+.blurb-page .hover\:bg-gunSmoke:hover {
+  background-color: #b5b5b5;
+}
+
+.blurb-page blockquote {
+  border-color: var(--accent);
+  background: var(--bg-soft);
+}
+
+.blurb-page .blurb-code,
+.blurb-page .blurb-code .text-quillGray,
+.blurb-page .blurb-code .text-gunSmoke,
+.blurb-page pre,
+.blurb-page pre .text-quillGray,
+.blurb-page pre .text-gunSmoke {
+  color: #e8e8e4;
+}
+
+.blurb-page .blurb-code .bg-darkGrey\/50 {
+  background-color: #2a2a2a;
+}
+
+.blurb-page pre {
+  background-color: transparent;
+}
+
+.blurb-page pre {
+  margin: 0;
+}
+
+.blurb-page img,
+.blurb-page video {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.blurb-page .blurb-media-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+}
+
+.blurb-page figure .blurb-media-image {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.blurb-page .object-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
