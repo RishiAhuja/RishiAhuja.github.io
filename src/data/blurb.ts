@@ -1451,6 +1451,9 @@ int main() {
       "type": "carousel",
       "images": [
         {
+          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975355116_WhatsApp_Image_2026-10-03_at_02.38.11.jpeg"
+        },
+        {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975350217_WhatsApp_Image_2026-10-03_at_02.38.11_1_.jpeg"
         },
         {
@@ -1461,9 +1464,6 @@ int main() {
         },
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975354092_WhatsApp_Image_2026-10-03_at_02.38.11_4_.jpeg"
-        },
-        {
-          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975355116_WhatsApp_Image_2026-10-03_at_02.38.11.jpeg"
         }
       ]
     },
@@ -1480,6 +1480,9 @@ int main() {
       "type": "carousel",
       "images": [
         {
+          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975663030_WhatsApp_Image_2026-10-03_at_02.43.04.jpeg"
+        },
+        {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975659745_WhatsApp_Image_2026-10-03_at_02.43.04_1_.jpeg"
         },
         {
@@ -1487,9 +1490,6 @@ int main() {
         },
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975662081_WhatsApp_Image_2026-10-03_at_02.43.04_3_.jpeg"
-        },
-        {
-          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975663030_WhatsApp_Image_2026-10-03_at_02.43.04.jpeg"
         }
       ]
     },
@@ -1541,10 +1541,10 @@ int main() {
       "type": "carousel",
       "images": [
         {
-          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790976648586_WhatsApp_Image_2026-10-03_at_02.59.07_1_.jpeg"
+          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790976650098_WhatsApp_Image_2026-10-03_at_02.59.07.jpeg"
         },
         {
-          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790976650098_WhatsApp_Image_2026-10-03_at_02.59.07.jpeg"
+          "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790976648586_WhatsApp_Image_2026-10-03_at_02.59.07_1_.jpeg"
         }
       ]
     },
