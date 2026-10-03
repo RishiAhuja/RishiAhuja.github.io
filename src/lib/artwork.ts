@@ -48,3 +48,12 @@ const WRITING_ARTWORK: Record<string, CoverSet> = {
 export const paperArtwork = (slug: string) => RESEARCH_ARTWORK[slug];
 
 export const writingArtwork = (slug: string) => WRITING_ARTWORK[slug];
+
+const BLURB_ARTWORK: Record<string, CoverSet> = {
+  'fern': coverSet('blurb-fern'),
+  'iclr-2026-rio-de-janeiro': coverSet('blurb-rio-iclr-2026'),
+  'cisco-interview': coverSet('blurb-cisco-interview'),
+  'my-ijcai-ecai-2026-and-germany-experience-in-bremen': coverSet('blurb-ijcai-ecai-2026-bremen'),
+};
+
+export const blurbArtwork = (slug: string) => BLURB_ARTWORK[slug];

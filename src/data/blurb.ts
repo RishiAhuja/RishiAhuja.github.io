@@ -29,6 +29,7 @@ export interface BlurbPost {
   slug: string;
   publishedDate: string;
   readTime?: number; // in minutes - auto-calculated if not provided
+  cover?: 'sky' | 'peach' | 'mist' | 'mint' | 'prismer' | 'rose' | 'sand' | 'reco' | 'lilac' | 'clay' | 'sage' | 'blue';
   coverImage?: string;
   socialImage?: string;
   tags: string[];
@@ -58,6 +59,7 @@ const rawBlurbPosts: BlurbPost[] = [
   subtitle: 'The complete journey of developing a modern web graphics library',
   description: 'A deep dive into the development of Fern — a zero-dependency, Wasm-powered graphics and UI library built in C and C++. From early pixel buffers to a Flutter-like layout engine, this post documents the entire story.',
   slug: 'fern',
+  cover: 'mint',
   publishedDate: '2025-07-23',
 //   readTime: 12,
   tags: ['C++', 'Wasm', 'Graphics', 'UI', 'Layout Engine'],
@@ -201,6 +203,7 @@ int main() {
   subtitle: "A long route to Rio, a paper presentation at ICLR, and the practical lessons that came with figuring out Brazil in real time.",
   description: "A personal blurb about presenting at ICLR 2026 in Rio de Janeiro, learning the city through transport mistakes, conference conversations, hostel people, and a few hard-won travel lessons.",
   slug: "iclr-2026-rio-de-janeiro",
+  cover: "sky",
   publishedDate: "2026-05-16",
   tags: [
     "ICLR",
@@ -1050,6 +1053,7 @@ int main() {
   subtitle: 'Campus hiring in September 2026, from the OA to the final HR round.',
   description: 'A personal account of Cisco campus hiring in September 2026, from the OA through the technical, managerial, and HR rounds.',
   slug: 'cisco-interview',
+  cover: 'blue',
   publishedDate: '2026-09-29',
   tags: ['Cisco', 'Interview', 'Campus hiring'],
   category: 'experience',
@@ -1210,6 +1214,7 @@ int main() {
   "subtitle": "Two research presentations, a last-minute proxy talk, two awards, a lot of people, and a week of figuring out Bremen in between all of it.",
   "description": "Two research presentations, a last-minute proxy talk, two awards, a lot of people, and a week of figuring out Bremen in between all of it.",
   "slug": "my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+  "cover": "clay",
   "publishedDate": "2026-10-03",
   "tags": [],
   "category": "experience",

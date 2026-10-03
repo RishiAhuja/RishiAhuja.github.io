@@ -2,9 +2,13 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CoverArt from '../../components/CoverArt.astro';
+import CoverPreload from '../../components/CoverPreload.astro';
 import BlurbContentRenderer from '../../components/blurb/BlurbContentRenderer';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { blurbPosts, type BlurbPost } from '../../data/blurb';
+import { blurbArtwork } from '../../lib/artwork';
 import { formatPostDate } from '../../lib/blogs';
 import { hasWritingToc } from '../../lib/blogMarkdown';
 import { blurbHeadings } from '../../lib/blurbToc.ts';
@@ -20,38 +24,47 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props as { post: BlurbPost };
-const shareImage = post.socialImage?.startsWith('http')
-  ? post.socialImage
-  : post.coverImage?.startsWith('http')
-    ? post.coverImage
-    : undefined;
-const shareImageType = shareImage?.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
 const published = formatPostDate(new Date(`${post.publishedDate}T00:00:00`));
 const headings = blurbHeadings(post.content);
 const showToc = hasWritingToc(headings);
+const artwork = blurbArtwork(post.slug);
+const cover = post.cover || 'mist';
 ---
 
-<BaseLayout
-  title={`${post.title} · Rishi Ahuja`}
-  description={post.description}
-  image={shareImage}
-  imageType={shareImage ? shareImageType : undefined}
->
+<BaseLayout title={`${post.title} · Rishi Ahuja`} description={post.description} cover={cover}>
   <meta slot="head" name="robots" content="noindex, nofollow" />
+  <CoverPreload slot="head" cover={artwork} variant="hero" />
   <script is:inline slot="head" async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
   <main>
-    <article class={`wrap writing-with-toc${showToc ? ' has-toc' : ''}`}>
-      <div class="blog-main blurb-page">
-        <header class="blurb-hero">
-          <h1 class="page-title">{post.title}</h1>
-          {post.subtitle && <p class="blurb-subtitle">{post.subtitle}</p>}
-          <p class="project-info">
-            <time datetime={post.publishedDate}>{published}</time>
-            {post.readTime && <span> · {post.readTime} min read</span>}
-          </p>
-        </header>
+    <section class={`writing-hero ${cover}`}>
+      <div class="wrap project-hero-grid">
+        <div class="project-intro">
+          <div>
+            <div class="page-path">
+              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blurb' }]} />
+              <h1>{post.title}</h1>
+            </div>
+            <p class="project-authors">Rishi Ahuja</p>
+            <p class="project-lede">{post.subtitle || post.description}</p>
+          </div>
+          <div class="project-hero-meta">
+            <p class="project-info">
+              <time datetime={post.publishedDate}>{published}</time>
+              {post.readTime && <span> · {post.readTime} min read</span>}
+            </p>
+          </div>
+        </div>
+        {artwork && (
+          <div class={`project-hero-cover ${cover}`}>
+            <CoverArt cover={artwork} variant="hero" priority />
+          </div>
+        )}
+      </div>
+    </section>
 
+    <article class={`project-body wrap writing-with-toc${showToc ? ' has-toc' : ''}`}>
+      <div class="blog-main blurb-page">
         <div class="blurb-content">
           <BlurbContentRenderer content={post.content} client:load />
         </div>
