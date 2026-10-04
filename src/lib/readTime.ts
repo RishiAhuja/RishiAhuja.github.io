@@ -31,16 +31,3 @@ export function getReadTimeBreakdown(content: BlurbContent[]) {
 }
 
 export const calculateReadTime = (content: BlurbContent[]) => getReadTimeBreakdown(content).totalTime;
-
-export function calculateMarkdownReadTime(markdown: string): number {
-  let studySeconds = 0;
-  const prose = markdown
-    .replace(/```[^\n]*\n([\s\S]*?)```/g, (_, code: string) => {
-      studySeconds += Math.max(15, countWords(code) / 80 * 60); return ' ';
-    })
-    .replace(/\$\$([\s\S]*?)\$\$|<latex-preview[^>]*>([\s\S]*?)<\/latex-preview>/g, (_, math: string, preview: string) => {
-      studySeconds += (math || preview).length > 100 ? 15 : 5; return ' ';
-    })
-    .replace(/!\[[^\]]*\]\([^)]+\)|<img\b[^>]*>/g, () => { studySeconds += FIGURE_SECONDS; return ' '; });
-  return Math.max(1, Math.ceil(countWords(prose) / READING_WORDS_PER_MINUTE + studySeconds / 60));
-}

@@ -92,15 +92,25 @@ const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
 assert.equal((feed.match(/<item>/g) || []).length, blogFiles.length + publishedSlugs.length, 'RSS must match published articles and blurbs');
 assert.ok(index.get('/404').includes('noindex, follow'));
 
-// Check reading-time behavior at media and word-count boundaries.
+// Blogs retain their original published estimates on detail and archive pages.
+const writingArchive = index.get('/writings');
+const writingCards = [...writingArchive.matchAll(/<article\b[^>]*>[\s\S]*?<\/article>/g)].map((match) => match[0]);
+for (let i = 0; i < blogFiles.length; i++) {
+  const minutes = Number(articleSource[i].match(/^readTimeInMinutes:\s*(\d+)/m)?.[1]);
+  const slug = blogFiles[i].replace(/\.md$/, '');
+  assert.ok(minutes > 0, `${slug}: original reading estimate missing`);
+  assert.ok(index.get(`/writings/${slug}`).includes(` · ${minutes} min read`), `${slug}: detail must retain its original reading estimate`);
+  const card = writingCards.find((article) => article.includes(`href="/writings/${slug}"`));
+  assert.ok(card?.includes(` · ${minutes} min read`), `${slug}: archive must retain its original reading estimate`);
+}
+
+// Blurbs keep their independent reading and media-time calculation.
 const source = await readFile('src/lib/readTime.ts', 'utf8');
 const js = ts.transpileModule(source, {compilerOptions: {module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022}}).outputText;
-const { getReadTimeBreakdown, calculateMarkdownReadTime } = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
+const { getReadTimeBreakdown } = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
 const prose = [{type: 'paragraph', content: Array(150).fill('word').join(' ')}];
 assert.equal(getReadTimeBreakdown(prose).totalTime, 1);
 assert.equal(getReadTimeBreakdown([...prose, {type: 'video', durationSeconds: 61}]).totalTime, 3);
 assert.ok(getReadTimeBreakdown([...prose, {type:'carousel', images:Array(10).fill({src:'image',alt:'photo'})}]).mediaTime > getReadTimeBreakdown([...prose, {type:'carousel', images:[{src:'image',alt:'photo'}]}]).mediaTime);
 assert.equal(getReadTimeBreakdown([{type:'video'}]).totalTime, 2);
-assert.equal(calculateMarkdownReadTime(''), 1);
-assert.ok(calculateMarkdownReadTime(prose[0].content + '\n![figure](https://example.com/figure.png)') > calculateMarkdownReadTime(prose[0].content));
 console.log(`Verified ${pages.length} pages: canonical policy, internal links, headings, ${figures} described figures, ${contents} contents menus, discovery outputs, and reading estimates.`);

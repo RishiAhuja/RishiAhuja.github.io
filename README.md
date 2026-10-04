@@ -35,8 +35,10 @@ Social cards are generated from the same content as the pages, including Blurbs.
 
 ## Reading and media
 
-Reading estimates use 150 prose words per minute, 12 seconds per photograph,
-30 seconds per technical figure, and additional time for code and equations.
+Blogs retain their original published Hashnode reading estimates from
+`readTimeInMinutes` in their frontmatter, including archives, detail pages, and
+social cards. Blurb estimates use 150 prose words per minute, 12 seconds per
+photograph, 30 seconds per technical figure, and additional time for code.
 Carousel estimates count all images. Video estimates use `durationSeconds` when
 known, otherwise two minutes. The displayed “min read” total includes this media and study time.
 
