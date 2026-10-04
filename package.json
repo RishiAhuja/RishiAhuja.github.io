@@ -6,9 +6,10 @@
   "scripts": {
     "optimize:covers": "node scripts/optimize-covers.mjs",
     "dev": "node scripts/optimize-covers.mjs && astro dev --host 127.0.0.1 --port 4322",
-    "build": "node scripts/optimize-covers.mjs && astro build && node scripts/verify-og.mjs",
+    "build": "node scripts/optimize-covers.mjs && astro build && node scripts/verify-og.mjs && node scripts/verify-site.mjs",
     "preview": "astro preview --host 127.0.0.1 --port 4322",
-    "verify:og": "node scripts/verify-og.mjs"
+    "verify:og": "node scripts/verify-og.mjs",
+    "verify:site": "node scripts/verify-site.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.2",
