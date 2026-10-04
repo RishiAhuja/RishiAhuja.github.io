@@ -1,0 +1,94 @@
+---
+interface Props {
+  images: { src: string; alt: string }[];
+  caption?: string;
+}
+const { images, caption } = Astro.props;
+const first = images[0];
+---
+{first && (
+  <figure class="media-carousel" data-images={JSON.stringify(images)} data-caption={caption ?? ''}
+    tabindex={images.length > 1 ? 0 : undefined}
+    aria-roledescription={images.length > 1 ? 'carousel' : undefined}
+    aria-label={caption || `Image carousel with ${images.length} images`}>
+    <div class="carousel-stage">
+      {images.length > 1 && <button class="carousel-arrow" type="button" data-direction="-1" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M15 19l-7-7 7-7" /></svg>
+      </button>}
+      <div class="blurb-media-frame">
+        <img src={first.src} alt={first.alt} loading="lazy" decoding="async" class="blurb-media-image" />
+        {images.length > 1 && <span class="carousel-counter" aria-hidden="true">1 / {images.length}</span>}
+      </div>
+      {images.length > 1 && <button class="carousel-arrow" type="button" data-direction="1" aria-label="Next image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+      </button>}
+    </div>
+    {images.length > 1 && <div class="carousel-dots" role="group" aria-label="Choose an image">
+      {images.map((_, index) => <button class="carousel-dot" type="button" data-slide={index}
+        aria-label={`Show image ${index + 1} of ${images.length}`} aria-current={index === 0 ? 'true' : undefined} />)}
+    </div>}
+    <figcaption>{caption || first.alt}</figcaption>
+    <span class="sr-only carousel-announcement" aria-live="polite" aria-atomic="true" />
+  </figure>
+)}
+<script>
+  const prefetched = new Set<string>();
+  document.querySelectorAll<HTMLElement>('.media-carousel').forEach((carousel) => {
+    const images: { src: string; alt: string }[] = JSON.parse(carousel.dataset.images || '[]');
+    const photo = carousel.querySelector<HTMLImageElement>('img');
+    const frame = carousel.querySelector<HTMLElement>('.blurb-media-frame');
+    if (!photo || !frame || images.length < 2) return;
+    carousel.dataset.ready = 'true';
+    let current = 0, nearby = false, startX: number | null = null;
+    const warmNeighbours = () => {
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+      if (!nearby || connection?.saveData || connection?.effectiveType?.includes('2g')) return;
+      [current - 1, current + 1].forEach((index) => {
+        const src = images[(index + images.length) % images.length].src;
+        if (prefetched.has(src)) return;
+        prefetched.add(src);
+        const image = new Image(); image.decoding = 'async'; image.src = src;
+      });
+    };
+    const show = (index: number) => {
+      current = (index + images.length) % images.length;
+      nearby = true;
+      photo.src = images[current].src;
+      photo.alt = images[current].alt;
+      const counter = carousel.querySelector('.carousel-counter');
+      if (counter) counter.textContent = `${current + 1} / ${images.length}`;
+      carousel.querySelectorAll<HTMLElement>('[data-slide]').forEach((dot) => {
+        if (Number(dot.dataset.slide) === current) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+      if (!carousel.dataset.caption) {
+        const caption = carousel.querySelector('figcaption');
+        if (caption) caption.textContent = images[current].alt;
+      }
+      const announcement = carousel.querySelector('.carousel-announcement');
+      if (announcement) announcement.textContent = `Image ${current + 1} of ${images.length}: ${images[current].alt}`;
+      warmNeighbours();
+    };
+    carousel.querySelectorAll<HTMLElement>('[data-direction]').forEach((button) => button.addEventListener('click', () => show(current + Number(button.dataset.direction))));
+    carousel.querySelectorAll<HTMLElement>('[data-slide]').forEach((button) => button.addEventListener('click', () => show(Number(button.dataset.slide))));
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault(); show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+      } else if (event.key === 'Home' || event.key === 'End') {
+        event.preventDefault(); show(event.key === 'Home' ? 0 : images.length - 1);
+      }
+    });
+    frame.addEventListener('touchstart', (event) => { startX = event.touches[0].clientX; }, { passive: true });
+    frame.addEventListener('touchend', (event) => {
+      if (startX === null) return;
+      const delta = event.changedTouches[0].clientX - startX; startX = null;
+      if (Math.abs(delta) >= 40) show(current + (delta > 0 ? -1 : 1));
+    }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        nearby = true; warmNeighbours(); observer.disconnect();
+      }
+    }, { rootMargin: '250px' });
+    observer.observe(carousel);
+  });
+</script>
