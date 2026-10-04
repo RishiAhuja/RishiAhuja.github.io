@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-Regular.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-Regular.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-RegularItalic.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-RegularItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-Regular.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-Regular.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-RegularItalic.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-RegularItalic.woff2') format('woff2');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-Medium.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-Medium.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -40,7 +40,7 @@
 
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-MediumItalic.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-MediumItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -48,7 +48,7 @@
 
 @font-face {
   font-family: 'Athletics';
-  src: url('/fonts/athletics/Athletics-Bold.otf') format('opentype');
+  src: url('/fonts/athletics/Athletics-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
