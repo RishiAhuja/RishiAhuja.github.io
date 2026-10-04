@@ -46,6 +46,7 @@ export async function getOgCards(): Promise<OgCard[]> {
       metadata: `${publishedBlurbs().length} blurbs`, cover: publishedBlurbs()[0]?.cover,
       artwork: blurbArtwork(publishedBlurbs()[0]?.slug)?.heroWebp,
     },
+    { path: '/404', kind: 'index', title: 'Page not found', eyebrow: 'Rishi Ahuja', subtitle: 'Explore research, writing, and blurbs.', metadata: '404' },
     ...papers.map((paper: CollectionEntry<'research'>): OgCard => ({
       path: pubPath(paper.slug), kind: 'research', eyebrow: 'Research',
       title: paper.data.short_name,

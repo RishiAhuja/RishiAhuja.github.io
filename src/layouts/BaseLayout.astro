@@ -14,6 +14,7 @@ interface Props {
   ogType?: 'website' | 'article';
   cover?: string;
   canonical?: string;
+  indexable?: boolean;
 }
 
 const {
@@ -25,7 +26,7 @@ const {
   imageType = 'image/png',
   imageAlt = title,
   ogType = /^\/(?:pub|blurb|writings)\/[^/]+/.test(Astro.url.pathname) ? 'article' : 'website',
-  cover, canonical,
+  cover, canonical, indexable = true,
 } = Astro.props;
 
 const pageURL = new URL(Astro.url.pathname, Astro.site);
@@ -43,6 +44,8 @@ const isInner = Astro.url.pathname !== '/';
     <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {!indexable && <meta name="robots" content="noindex, follow" />}
+    <link rel="alternate" type="application/rss+xml" title="Rishi Ahuja — Writing and blurbs" href="/feed.xml" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={pageURL} />

@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+<BaseLayout title="Page not found · Rishi Ahuja" description="This page could not be found. Explore Rishi Ahuja’s research, writing, and blurbs." indexable={false}>
+  <main id="main-content" tabindex="-1"><section class="section wrap">
+    <p class="project-venue">404</p><h1 class="page-title">This page wandered off.</h1>
+    <p class="page-lede">You can find my work in Research or Writing.</p>
+    <div class="hero-actions"><a class="button" href="/">Go home</a><a class="button" href="/research">Research</a><a class="button" href="/writings">Writing</a></div>
+  </section></main><SiteFooter />
+</BaseLayout>
