@@ -66,23 +66,31 @@ export function mountHeader(scope: MotionScope) {
       if (destination) { destination.tabIndex = -1; destination.focus({ preventScroll: true }); }
     } else toggle.focus();
   }, { signal }));
-  const measureIndicator = () => {
+  const measureIndicator = (animate = true) => {
     measureFrame = 0;
     if (!indicator) return;
     const active = nav.querySelector<HTMLElement>('.nav-links [data-active="true"]');
-    indicator.hidden = !desktop.matches || !active;
-    if (!active || !desktop.matches) return;
+    if (!active || !desktop.matches) { indicator.hidden = true; return; }
+    const instant = !animate || indicator.hidden;
     const item = active.getBoundingClientRect(), frame = nav.getBoundingClientRect();
+    if (instant) indicator.style.transition = 'none';
     indicator.style.setProperty('--dot-x', `${item.left - frame.left + item.width / 2 - 4}px`);
     indicator.style.setProperty('--dot-y', `${item.bottom - frame.top - 8}px`);
+    indicator.hidden = false;
     nav.dataset.indicatorReady = 'true';
+    if (instant) {
+      // Commit its initial position before enabling active-item movement.
+      indicator.getBoundingClientRect();
+      indicator.style.removeProperty('transition');
+    }
   };
   const requestMeasure = () => {
-    if (!measureFrame) measureFrame = requestAnimationFrame(measureIndicator);
+    if (!measureFrame) measureFrame = requestAnimationFrame(() => measureIndicator());
   };
-  measureIndicator();
-  window.addEventListener('resize', requestMeasure, { signal });
-  desktop.addEventListener('change', () => { setOpen(false, false, false); measureIndicator(); }, { signal });
+  const resizeIndicator = () => { cancelAnimationFrame(measureFrame); measureIndicator(false); };
+  measureIndicator(false);
+  window.addEventListener('resize', resizeIndicator, { signal });
+  desktop.addEventListener('change', () => { setOpen(false, false, false); resizeIndicator(); }, { signal });
   if (location.pathname === '/') {
     const sections = ['home', 'research', 'writings', 'about'].map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
     const observer = new IntersectionObserver((entries) => {
@@ -98,7 +106,7 @@ export function mountHeader(scope: MotionScope) {
     sections.forEach((section) => observer.observe(section));
     scope.onCleanup(() => observer.disconnect());
   }
-  document.fonts.ready.then(() => { if (!signal.aborted) requestMeasure(); });
+  document.fonts.ready.then(() => { if (!signal.aborted) resizeIndicator(); });
   scope.onCleanup(() => {
     cancelAnimationFrame(measureFrame);
     panelAnimation?.cancel();
