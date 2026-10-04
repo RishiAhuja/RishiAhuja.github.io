@@ -92,7 +92,7 @@ const BlurbContentRenderer: React.FC<BlurbContentRendererProps> = ({ content }) 
                 alt={item.alt || 'Blurb image'}
                 loading={index < 6 ? 'eager' : 'lazy'}
                 decoding="async"
-                fetchpriority={index < 6 ? 'high' : 'auto'}
+                fetchPriority={index < 6 ? 'high' : 'auto'}
                 className="blurb-media-image h-full max-h-full w-full max-w-full object-contain"
               />
             </div>

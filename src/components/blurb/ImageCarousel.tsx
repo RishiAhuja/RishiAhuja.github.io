@@ -104,7 +104,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, caption, priority
             alt={currentImage.alt}
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
-            fetchpriority={priority ? 'high' : 'auto'}
+            fetchPriority={priority ? 'high' : 'auto'}
             className="blurb-media-image h-full max-h-full w-full max-w-full object-contain"
           />
 
