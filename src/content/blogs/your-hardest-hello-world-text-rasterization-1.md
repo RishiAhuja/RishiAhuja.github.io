@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/your-hardest-hello-world-text-raste
 readTimeInMinutes: 36
 cover: "blue"
 author: "Rishi Ahuja"
+tags: ["Systems", "Graphics", "From scratch"]
 ---
 <div data-node-type="callout">
 <div data-node-type="callout-emoji">💡</div>
@@ -455,7 +456,7 @@ struct GlyphHeader {
 *   We’ll worry about the compound glyphs later.
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749643315429/522b2a1f-bce7-41e0-9914-45c0fa644d31.png align="center")
+![Outline of the capital A glyph with its three contours identified.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749643315429/522b2a1f-bce7-41e0-9914-45c0fa644d31.png align="center")
 
 **Bounding Box:**
 
@@ -508,7 +509,7 @@ After 10 bytes, the next bytes represent `endPtsOfContours` (`uint16` array)
 
 This is a list of indices. Each index points to the *last point* in a particular contour. For example, if `endPtsOfContours` contains `[4, 6]`, it means the first contour uses points 0 through 4, and the second contour uses points 5 through 7. This allows the renderer to draw each closed shape correctly.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749644286756/abf4d3e3-0b1b-4676-bff9-8f89bfdabb67.png align="center")
+![TrueType glyph data showing the end-point indices for each contour.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749644286756/abf4d3e3-0b1b-4676-bff9-8f89bfdabb67.png align="center")
 
 The Raw data of our hex dump interprets as:
 
@@ -588,7 +589,7 @@ Font files can contain thousands of glyphs, each with many points. Storing all i
 
 Each bit can be checked by [simple bit masking](https://codeforces.com/blog/entry/18169).
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749656118459/6ee42165-7587-45f3-9dc3-3717ef15c4d8.png align="center")
+![Table explaining the flag bits used to encode TrueType glyph points.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749656118459/6ee42165-7587-45f3-9dc3-3717ef15c4d8.png align="center")
 
 <div data-node-type="callout">
 <div data-node-type="callout-emoji">💡</div>
@@ -950,7 +951,7 @@ After running this function, we’ll see the SVG output as:
 
 The output will look like this.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749806682118/f32d182c-5536-4359-8470-4b6ef28c7e82.png align="center")
+![SVG rendering of the A glyph with its outline and control points.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749806682118/f32d182c-5536-4359-8470-4b6ef28c7e82.png align="center")
 
 This looks so damn cool to me.
 
@@ -1194,11 +1195,11 @@ And now we can see multiple characters based on an index value.
 
 Here is Index 17 for instance:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749807918317/b59c3732-f54f-48a9-8d80-2013acdd3194.png align="center")
+![Rendered outline of the glyph at font index seventeen.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749807918317/b59c3732-f54f-48a9-8d80-2013acdd3194.png align="center")
 
 Index 3:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749807908661/65790450-bc9e-4b9f-af93-b11b82f23747.png align="center")
+![Rendered outline of the glyph at font index three.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749807908661/65790450-bc9e-4b9f-af93-b11b82f23747.png align="center")
 
 Tell me this stuff ain’t cool?  
 Right now, everything is a little blocky; we expect something which is kinda smooth, which can be discussed in another blog.
@@ -1207,7 +1208,7 @@ Just to let you know, we’ve just scratched the surface and still never “Rast
 
 We need “B” to look something like that.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1749808059514/f29024df-2329-4d7e-8aa8-2f3b3d0edf06.png align="center")
+![Pixel rasterization preview of the capital B glyph.](https://cdn.hashnode.com/res/hashnode/image/upload/v1749808059514/f29024df-2329-4d7e-8aa8-2f3b3d0edf06.png align="center")
 
 This shit was long! but undeniably rewarding. We've just peeled back a layer of complexity many people never even knew existed in their everyday digital text. Pretty cool, right? We take text for granted.
 

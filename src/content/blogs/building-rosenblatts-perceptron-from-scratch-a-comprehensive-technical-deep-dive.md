@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/building-rosenblatts-perceptron-fro
 readTimeInMinutes: 26
 cover: "reco"
 author: "Rishi Ahuja"
+tags: ["Machine learning", "Neural networks", "From scratch"]
 ---
 ## Introduction: My Journey Into Neural Networks
 
@@ -941,7 +942,7 @@ LineChart(
 
 The chart shows accuracy fluctuations during training, revealing the non-linear nature of neural network learning. Initial rapid improvements are followed by periods of plateau, occasionally broken by sudden jumps when the network overcomes local minima.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603532047/3f78df18-e403-4455-b6f4-8164a3cf16c0.png align="center")
+![Interactive perceptron demo showing input nodes, hidden neurons, output predictions, and an accuracy chart.](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603532047/3f78df18-e403-4455-b6f4-8164a3cf16c0.png align="center")
 
 ## Testing the Network
 
@@ -977,11 +978,11 @@ void predictPattern(NDArray<double> userInput) {
 
 Now train it!
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603546412/23399e01-f8ab-4d25-b949-0dbd5f6069a6.png align="center")
+![Perceptron demo with a pixel-grid input connected through a hidden layer to three shape predictions.](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603546412/23399e01-f8ab-4d25-b949-0dbd5f6069a6.png align="center")
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603548451/da2c09fd-0658-4795-90a4-801fe873bdd7.png align="center")
+![Perceptron demo classifying a drawn pixel pattern; the middle output has the highest activation.](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603548451/da2c09fd-0658-4795-90a4-801fe873bdd7.png align="center")
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603555446/f91dbb71-e5be-49eb-bdc4-fc0bfaabe05b.png align="center")
+![Perceptron demo showing neuron activations for a different pixel pattern and its shape predictions.](https://cdn.hashnode.com/res/hashnode/image/upload/v1740603555446/f91dbb71-e5be-49eb-bdc4-fc0bfaabe05b.png align="center")
 
 ## Conclusion: Seeing Neural Networks With New Eyes
 

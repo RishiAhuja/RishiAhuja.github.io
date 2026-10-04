@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/you-dont-know-websockets-yet"
 readTimeInMinutes: 31
 cover: "sky"
 author: "Rishi Ahuja"
+tags: ["Systems", "Networking", "From scratch"]
 ---
 ## WebSockets are deceptively simple af
 
@@ -30,7 +31,7 @@ In this post, we'll explore how WebSockets actually work by building a minimal s
 
 The web was built on HTTP, the Hypertext Transfer Protocol. It follows a simple transaction model. The client makes a request, and the server sends a response. The conversation is then over. The server hangs up, forgetting it ever knew you. It's a fundamentally **stateless** and **unidirectional** relationship, always initiated by the client.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1755941150542/062811a2-fc83-4269-9492-01bc5b26ca61.png align="center")
+![Diagram of the HTTP request-response exchange between a client and server.](https://cdn.hashnode.com/res/hashnode/image/upload/v1755941150542/062811a2-fc83-4269-9492-01bc5b26ca61.png align="center")
 
 This is perfect for serving documents. It’s not good enough for building real-time applications. How do you get live updates if the server can't call you? So some hacks were found.
 
@@ -76,7 +77,7 @@ The handshake's primary goal is to transition the connection from the stateless,
 
 The process is initiated by the client with an HTTP/1.1 `GET` request. While it uses the standard HTTP format, specific headers signal its intent to establish a WebSocket connection.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1755942405871/41c963ad-4031-4c43-9b0e-2ca85b9b09a9.png align="center")
+![WebSocket upgrade request with the headers used to initiate the handshake.](https://cdn.hashnode.com/res/hashnode/image/upload/v1755942405871/41c963ad-4031-4c43-9b0e-2ca85b9b09a9.png align="center")
 
 ```http
 GET /chat HTTP/1.1
@@ -121,7 +122,7 @@ You might wonder why this specific GUID was chosen rather than any random string
 
 The server sends its response back to the client. A successful response confirms the protocol switch.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1755942763845/83b23ffc-e9ee-4d87-bccf-0edfedafe4ed.png align="center")
+![HTTP 101 Switching Protocols response accepting the WebSocket upgrade.](https://cdn.hashnode.com/res/hashnode/image/upload/v1755942763845/83b23ffc-e9ee-4d87-bccf-0edfedafe4ed.png align="center")
 
 ```http
 HTTP/1.1 101 Switching Protocols
@@ -143,7 +144,7 @@ With the connection established, we can now examine the structure of the data th
 
 You can see this in your network tab after connecting to a `wss` server. [here](https://piehost.com/websocket-tester)
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1755943037103/44666f66-5dfb-4618-a3ff-d37d94f05bdf.png align="center")
+![Browser developer tools showing messages exchanged over a WebSocket connection.](https://cdn.hashnode.com/res/hashnode/image/upload/v1755943037103/44666f66-5dfb-4618-a3ff-d37d94f05bdf.png align="center")
 
 ## The Language of WebSockets
 
@@ -155,7 +156,7 @@ Every piece of information, from application data to protocol-level control sign
 
 Each WebSocket frame consists of a header, which is 2 to 14 bytes long, followed by a variable-length payload. The header contains critical metadata describing the payload and how to interpret it.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1755986233963/ad1d94c6-afb9-46d0-8fd8-cd517d475b0d.png align="center")
+![WebSocket frame layout showing the opcode, flags, payload length, masking key, and payload.](https://cdn.hashnode.com/res/hashnode/image/upload/v1755986233963/ad1d94c6-afb9-46d0-8fd8-cd517d475b0d.png align="center")
 
 The fields in the frame header are defined as follows:
 
@@ -741,7 +742,7 @@ This creates a problem the moment your users need to interact with each other.
 
 Let's see with the classic example, a chat room application distributed across multiple servers.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1756044449473/1b292267-31c4-480e-91ae-56dd6ed9e823.png align="center")
+![Chat architecture with WebSocket clients connected to multiple server instances.](https://cdn.hashnode.com/res/hashnode/image/upload/v1756044449473/1b292267-31c4-480e-91ae-56dd6ed9e823.png align="center")
 
 Now, let's trace a message:
 
@@ -787,7 +788,7 @@ We’ll first try to use Redis, an in-memory data store with Publish/Subscribe (
 
 This apparently solves our chat room problem. A is connected to Server 1, and D is connected to Server 2.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1756045523549/dbd3ba62-e3d1-4f2f-851a-52b799da5228.png align="center")
+![Distributed chat architecture using Redis pub/sub to relay messages between WebSocket servers.](https://cdn.hashnode.com/res/hashnode/image/upload/v1756045523549/dbd3ba62-e3d1-4f2f-851a-52b799da5228.png align="center")
 
 Here’s the step-by-step flow:
 
@@ -841,7 +842,7 @@ Kafka is fundamentally different from a simple message broker. It is a distribut
 *   This design guarantees that messages are not lost just because a consumer was temporarily offline.
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1756054365448/b32a3fce-e633-4775-975d-0c64aba34a32.png align="center")
+![Distributed messaging architecture using Kafka to coordinate messages across server instances.](https://cdn.hashnode.com/res/hashnode/image/upload/v1756054365448/b32a3fce-e633-4775-975d-0c64aba34a32.png align="center")
 
 To broadcast messages to *all* of our WebSocket servers, we need to configure our consumers in a specific way. In Kafka, consumers are organized into Consumer Groups. If multiple consumers share the same group ID, Kafka will distribute the partitions among them, so each message is only handled by *one* consumer in that group. This is great for distributing work, but it's not what we want.
 

@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/fernkit"
 readTimeInMinutes: 10
 cover: "mint"
 author: "Rishi Ahuja"
+tags: ["Systems", "Graphics", "From scratch"]
 ---
 ## **Go Beneath the Abstraction: Building UIs with FernKit**
 
@@ -33,7 +34,7 @@ FernKit is my attempt to make the machinery visible, to replace the black box wi
 <div data-node-type="callout-text">Just a heads-up: think of this blog post as a quick tour to give you a feel for the project. It’s a starting guide, but it barely scratches the surface. There’s a ton of detailed documentation covering every widget, the layout system, the scene manager, and more over at <a href="https://fernkit.in/docs" target="_blank" rel="noopener noreferrer"><strong>fernkit.in/docs</strong></a>.</div>
 </div>
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991863011/70c15491-afac-4d90-9624-afff0a241cf7.png align="center")
+![FernKit documentation with a navigation sidebar and the Getting Started with Fern guide.](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991863011/70c15491-afac-4d90-9624-afff0a241cf7.png align="center")
 
 ### **The Core Idea: Building from First Principles**
 
@@ -82,15 +83,15 @@ Here are some example images.
 
 **A counter example:**
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991895021/ba087f5d-88f7-4200-8469-2fadbdb2acee.png align="center")
+![Pixel-styled FernKit counter showing four, with subtract, add, and reset buttons.](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991895021/ba087f5d-88f7-4200-8469-2fadbdb2acee.png align="center")
 
 **A simple text editor:**
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991899598/568a2a93-e2b9-4a70-8e8f-580e9140c403.png align="center")
+![Fern text editor containing a sentence, character and word counts, and clear, save, and load buttons.](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991899598/568a2a93-e2b9-4a70-8e8f-580e9140c403.png align="center")
 
 **A color picker:**
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991903941/676fba37-a681-49af-ae9e-f63775504ceb.png align="center")
+![FernKit color picker displaying a blue swatch, RGB controls, and color presets.](https://cdn.hashnode.com/res/hashnode/image/upload/v1753991903941/676fba37-a681-49af-ae9e-f63775504ceb.png align="center")
 
 #### **The Main Application Structure**
 

@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/towards-the-modern-transformer-arch
 readTimeInMinutes: 36
 cover: "peach"
 author: "Rishi Ahuja"
+tags: ["Machine learning", "Neural networks"]
 ---
 Hi y'all, Long time no see! [Last post](https://rishi2220.hashnode.dev/you-dont-know-websockets-yet) was last year.
 
@@ -28,7 +29,7 @@ As we all know, the original Transformer was built for specific neural machine t
 
 Hence, it used an Encoder to read and understand the English sentence all at once, and a Decoder to generate the French sentence one word at a time. For this, the Decoder relied on Cross-Attention, which allowed it to constantly look back at the Encoder's representations to make sure it was translating the right words. It's expected that we know this already.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/bebf5112-f1c0-4364-ad1d-5466c017b61a.png align="center")
+![Original Transformer architecture with an encoder stack, decoder stack, and cross-attention between them.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/bebf5112-f1c0-4364-ad1d-5466c017b61a.png align="center")
 
 Because we don't want a machine translation task right now, but rather a natural language generation task, we don't need an encoder right now, and we also don't have any cross-attention to attend to.
 
@@ -62,7 +63,7 @@ I hope everything up to here makes sense.
 
 Here is a simple diagram for the GPT-1 architecture alongside the Vanilla Transformer.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/af240d7b-dadd-485a-bd52-269478612c0e.png align="center")
+![Diagram comparing the original encoder-decoder Transformer with the GPT-1 decoder-only architecture.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/af240d7b-dadd-485a-bd52-269478612c0e.png align="center")
 
 Now that we have the full forward pass written out, let's actually look at it like researchers instead of readers. Everything here was a *choice* someone made in 2018, under 2018 constraints. None of these choices are sacred and never will be, and honestly, there's always a lot of room to optimize almost every block in this equation.
 
@@ -88,7 +89,7 @@ It's enough teasing. Let's start by adapting stuff one by one.
 
 By 2020-2021, essentially every major LM architecture kinda agreed on pre-norm, from post-norm, except BERT. This is one of the most universally agreed-upon architectural choices in the field, more consistent than the choice of activation, position embedding, or attention variant.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/6b3c56fc-dcac-4193-ac04-38dbbb55ad00.png align="center")
+![Diagram comparing LayerNorm placement in pre-normalization and post-normalization Transformer blocks.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/6b3c56fc-dcac-4193-ac04-38dbbb55ad00.png align="center")
 
 Images in this section from *\[*[*Xiong 2020*](https://arxiv.org/pdf/2002.04745)*\]* and *\[*[*Salazar and Ngyuen 2019*](https://arxiv.org/pdf/1910.05895)*\]*
 
@@ -130,7 +131,7 @@ Compare that to post-norm, where every single factor in the equivalent product i
 
 Let's see some graphs.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/f39f36d1-12a2-4a48-b9fc-4121dcf55b9d.png align="center")
+![Gradient expectation by layer: pre-LayerNorm stays nearly flat, while post-LayerNorm grows with depth at initialization.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/f39f36d1-12a2-4a48-b9fc-4121dcf55b9d.png align="center")
 
 This graph measures the gradient magnitude actually reaching one specific weight matrix (`W¹` in the FFN), at each of 6 layers, right at initialization.
 
@@ -138,17 +139,17 @@ In Post-LN (orange), layer 6 gets a gradient of about 1.25. Layer 1 gets about 0
 
 Pre-LN (blue) is always flat, around 0.2, across all six layers, and has no dependence on depth, which we derived.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/c143cd66-2372-4f10-8554-63b21780d018.png align="center")
+![English-Vietnamese BLEU curves: pre-normalization variants learn faster and outperform the post-normalization baseline.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/c143cd66-2372-4f10-8554-63b21780d018.png align="center")
 
 Look at the `PostNorm+LayerNorm` at the very bottom (dotted-purple). It's for a machine translation task on a vanilla transformer. It starts out terrible, struggles to learn early on, and never catches up to the other lines.
 
 Every other line on that graph uses Pre-Norm. They all learn much faster and reach a higher final accuracy.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/94d27add-71a8-4c76-9ff4-61ada8598d8a.png align="center")
+![Validation loss and BLEU curves comparing pre- and post-normalization, with and without warmup, plus a BERT loss comparison.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/94d27add-71a8-4c76-9ff4-61ada8598d8a.png align="center")
 
 You can clearly see how Pre-Norm is visibly better. On IWSLT, post-norm *without* warmup is visibly worse than every pre-norm variant across all 15 epochs.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/e8d71c4e-364c-41a6-b8c7-3789b06e19a6.png align="center")
+![Global gradient-norm curves comparing normalization variants across training iterations.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/e8d71c4e-364c-41a6-b8c7-3789b06e19a6.png align="center")
 
 This chart tracks the *global norm.*
 
@@ -171,7 +172,7 @@ Double norm (used in Gemma 2 and Grok) adds a second LayerNorm right after the s
 
 $$x_{l+1} = x_l + \text{LayerNorm}{\text{out}}(\text{SubLayer}(\text{LayerNorm}{\text{in}}(x_l)))$$
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/23be9484-8092-481d-a0db-319db42470b0.png align="center")
+![Sandwich normalization block with normalization before and after the sublayer, before the residual addition.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/23be9484-8092-481d-a0db-319db42470b0.png align="center")
 
 ## RMSNorm
 
@@ -227,7 +228,7 @@ Normalization is the opposite. Computing a mean and variance requires reading ev
 
 [Narang et al 2020](https://arxiv.org/pdf/2102.11972), analysed it with other methods, and RMSNorm was not just faster but also had the lowest loss.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/496ce2fe-6558-412d-9063-ae7c528cdaf6.png align="center")
+![Results table comparing normalization methods, including RMSNorm.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/496ce2fe-6558-412d-9063-ae7c528cdaf6.png align="center")
 
 ## Dropping bias terms
 
@@ -258,7 +259,7 @@ $$\operatorname{FFN}(a_l) = \boxed{\operatorname{GELU}}\left(a_lW_1 + b_1\right)
 
 ### Activation Function
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/73699c03-e11a-42ea-ab41-4502f01ae99f.png align="center")
+![Plot comparing activation functions used in feed-forward layers.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/73699c03-e11a-42ea-ab41-4502f01ae99f.png align="center")
 
 So far, every FFN we have considered has followed the same basic structure:
 
@@ -442,7 +443,7 @@ $$\boxed{ \operatorname{FFN}{\text{SwiGLU}}(x) = \left[ \operatorname{SiLU}(xW{\
 <latex-preview>\operatorname{SiLU}(z)=z,\sigma(z)</latex-preview><p></p><p>where the sigmoid function is:</p><latex-preview>\sigma(z)=\frac{1}{1+e^{-z}}</latex-preview><p></p>
 </details>
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/724c977c-d122-4e46-a7f2-1d38a8fe5386.png align="center")
+![Results comparing GLU feed-forward variants, including ReGLU, GEGLU, and SwiGLU.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/724c977c-d122-4e46-a7f2-1d38a8fe5386.png align="center")
 
 A above image is taken from \[[Narang 2020](https://arxiv.org/pdf/2102.11972)\] corroborating Shazeer's work comparing different activation functions, and it can be clearly observed GLU variants are performed the best.
 
@@ -556,7 +557,7 @@ $$\boxed{ x_{l+1} = x_l + \operatorname{Attention} \left( \operatorname{Norm}(x_
 
 Here is a illustration:
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/c6d9cd02-b34b-464e-8a4a-70fc8618258d.png align="center")
+![Transformer block diagram with attention and feed-forward branches computed in parallel from a normalized input.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/c6d9cd02-b34b-464e-8a4a-70fc8618258d.png align="center")
 
 PaLM and GPT-NeoX reported that parallel Transformer blocks improved training throughput by roughly 15% in their large-scale setups.
 
@@ -658,7 +659,7 @@ Before understanding the complete high-dimensional operation, let us first under
 
 <details data-node-type="hn-details-summary">
 <summary>How does multiplying by a rotation matrix rotate a vector?</summary>
-<p>This should be implied, but here is a quick revision from high school.</p><p>Consider a two-dimensional vector:</p><latex-preview data-syntax-type="default">v= \begin{bmatrix} a\\ b \end{bmatrix}</latex-preview><p>The two-dimensional rotation matrix for an angle theta is:</p><latex-preview>R(\theta)= \begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{bmatrix}</latex-preview><p>Multiplying the matrix by the vector gives:</p><latex-preview>R(\theta)\mathbf{v}=\begin{bmatrix}\cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta\end{bmatrix}\begin{bmatrix}a \\ b\end{bmatrix}</latex-preview><p>Carrying out the matrix multiplication:</p><latex-preview>R(\theta)v = \begin{bmatrix} a\cos\theta-b\sin\theta\\ a\sin\theta+b\cos\theta \end{bmatrix}</latex-preview><p>To see why this is a rotation, write the original vector using its magnitude r and direction alpha:</p><latex-preview>\mathbf{v}=r\begin{bmatrix}\cos\alpha \cr \sin\alpha\end{bmatrix}</latex-preview><p>Substituting this into the rotation:</p><latex-preview>R(\theta)\mathbf{v}=r\begin{bmatrix}\cos\alpha\cos\theta-\sin\alpha\sin\theta \cr \cos\alpha\sin\theta+\sin\alpha\cos\theta\end{bmatrix}</latex-preview><p>Using the angle-addition identities:</p><latex-preview>\cos(\alpha+\theta)=\cos\alpha\cos\theta-\sin\alpha\sin\theta</latex-preview><latex-preview>\sin(\alpha+\theta)=\sin\alpha\cos\theta+\cos\alpha\sin\theta</latex-preview><p>we obtain:</p><latex-preview>R(\theta)\mathbf{v}=r\begin{bmatrix}\cos(\alpha+\theta)\cr\sin(\alpha+\theta)\end{bmatrix}</latex-preview><p>The original vector pointed in direction alpha. The new vector points in direction:</p><latex-preview data-syntax-type="default">\alpha+\theta</latex-preview><p>Therefore, multiplying by (R(\theta)) rotates the vector by exactly (\theta).</p><p>The vector's magnitude remains unchanged:</p><latex-preview>\left\lVert R(\theta)\mathbf{v}\right\rVert=\left\lVert\mathbf{v}\right\rVert</latex-preview><p>because:</p><latex-preview>\left(a\cos\theta-b\sin\theta\right)^2+\left(a\sin\theta+b\cos\theta\right)^2=a^2+b^2</latex-preview><p></p><img class="rounded-lg max-w-full h-auto" src="https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/7d5d107f-a2f4-4a43-b472-130d7b05d1a6.png" isuploading="false" align="center">
+<p>This should be implied, but here is a quick revision from high school.</p><p>Consider a two-dimensional vector:</p><latex-preview data-syntax-type="default">v= \begin{bmatrix} a\\ b \end{bmatrix}</latex-preview><p>The two-dimensional rotation matrix for an angle theta is:</p><latex-preview>R(\theta)= \begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{bmatrix}</latex-preview><p>Multiplying the matrix by the vector gives:</p><latex-preview>R(\theta)\mathbf{v}=\begin{bmatrix}\cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta\end{bmatrix}\begin{bmatrix}a \\ b\end{bmatrix}</latex-preview><p>Carrying out the matrix multiplication:</p><latex-preview>R(\theta)v = \begin{bmatrix} a\cos\theta-b\sin\theta\\ a\sin\theta+b\cos\theta \end{bmatrix}</latex-preview><p>To see why this is a rotation, write the original vector using its magnitude r and direction alpha:</p><latex-preview>\mathbf{v}=r\begin{bmatrix}\cos\alpha \cr \sin\alpha\end{bmatrix}</latex-preview><p>Substituting this into the rotation:</p><latex-preview>R(\theta)\mathbf{v}=r\begin{bmatrix}\cos\alpha\cos\theta-\sin\alpha\sin\theta \cr \cos\alpha\sin\theta+\sin\alpha\cos\theta\end{bmatrix}</latex-preview><p>Using the angle-addition identities:</p><latex-preview>\cos(\alpha+\theta)=\cos\alpha\cos\theta-\sin\alpha\sin\theta</latex-preview><latex-preview>\sin(\alpha+\theta)=\sin\alpha\cos\theta+\cos\alpha\sin\theta</latex-preview><p>we obtain:</p><latex-preview>R(\theta)\mathbf{v}=r\begin{bmatrix}\cos(\alpha+\theta)\cr\sin(\alpha+\theta)\end{bmatrix}</latex-preview><p>The original vector pointed in direction alpha. The new vector points in direction:</p><latex-preview data-syntax-type="default">\alpha+\theta</latex-preview><p>Therefore, multiplying by (R(\theta)) rotates the vector by exactly (\theta).</p><p>The vector's magnitude remains unchanged:</p><latex-preview>\left\lVert R(\theta)\mathbf{v}\right\rVert=\left\lVert\mathbf{v}\right\rVert</latex-preview><p>because:</p><latex-preview>\left(a\cos\theta-b\sin\theta\right)^2+\left(a\sin\theta+b\cos\theta\right)^2=a^2+b^2</latex-preview><p></p><img alt="Geometry diagram of a vector rotated by an angle while preserving its length." class="rounded-lg max-w-full h-auto" src="https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/7d5d107f-a2f4-4a43-b472-130d7b05d1a6.png" isuploading="false" align="center">
 </details>
 
 ### Make the rotation depend on position
@@ -685,7 +686,7 @@ $$\begin{aligned} \text{position }0 &\rightarrow R(0\theta)\\ \text{position }1 
 
 Each position therefore produces a different orientation.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/b7eb7b4f-67cb-4364-93f6-f68538784ff4.png align="center")
+![Diagram showing rotary position embeddings applying different rotations at successive token positions.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/b7eb7b4f-67cb-4364-93f6-f68538784ff4.png align="center")
 
 ### Compare two rotated vectors
 
@@ -976,7 +977,7 @@ However, interactive serving cannot always rely on large batches, and context le
 
 Here is an AI-generated image to illustrate:
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/082677df-ce04-46a5-9705-9174090c450f.png align="center")
+![AI-generated illustration of memory bandwidth and the key-value cache during language-model inference.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/082677df-ce04-46a5-9705-9174090c450f.png align="center")
 
 ### Ordinary Multi-Head Attention
 
@@ -1196,11 +1197,11 @@ $$\boxed{ \text{AI} = O \left( \left( \frac{1}{d} + \frac{nH_{KV}}{dH_Q} + \frac
 
 so GQA turns the number of KV heads, H\_KV, into an architectural efficiency knob. Increasing H\_KV gives the model more independent key and value representation spaces, which provides greater representational freedom. However, it also increases the size of the KV cache and the amount of data that must be moved from GPU memory during decoding. Reducing H\_KV, on the other hand, forces more query heads to share the same key and value representations. This slightly restricts the model’s flexibility, but produces a smaller KV cache, reduces memory-bandwidth requirements, and makes autoregressive decoding cheaper and faster. Therefore, the number of KV heads can be chosen to balance representational capacity against inference efficiency.
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/2bc5a7bf-419a-4a23-a38b-454a6b65278e.png align="center")
+![Diagram comparing separate key-value heads in MHA with shared heads in MQA and grouped heads in GQA.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/2bc5a7bf-419a-4a23-a38b-454a6b65278e.png align="center")
 
 MQA can hurt, but GQA is best of both worlds; see here: (from [Ainslie 2023](https://arxiv.org/pdf/2305.13245))
 
-![](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/f71768b4-4dc6-46d3-842d-cb055ce73967.png align="center")
+![Graph from the GQA study comparing quality and inference trade-offs for attention-head sharing.](https://cdn.hashnode.com/uploads/covers/66a2992853a702ac0b81f928/f71768b4-4dc6-46d3-842d-cb055ce73967.png align="center")
 
 We've discussed too much today. Let's conclude.
 

@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/getting-started-at-bloc-architectur
 readTimeInMinutes: 25
 cover: "rose"
 author: "Rishi Ahuja"
+tags: ["Flutter", "Architecture"]
 ---
 ### Asynchronous data, streams, and futures:
 
@@ -523,7 +524,7 @@ The BLoC architecture consists of three primary layers that work together to man
     *   It fetches, stores, and updates data as required by the business logic.
         
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1728665522146/d8e77399-34eb-4d89-b602-fd183ceda5b5.png align="center")
+![BLoC architecture diagram separating presentation, business logic, and data layers.](https://cdn.hashnode.com/res/hashnode/image/upload/v1728665522146/d8e77399-34eb-4d89-b602-fd183ceda5b5.png align="center")
 
 Let’s start with the Data layer first and build upon it to the UI layer.
 

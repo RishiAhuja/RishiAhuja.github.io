@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/resource-management-with-probabilis
 readTimeInMinutes: 37
 cover: "mist"
 author: "Rishi Ahuja"
+tags: ["Systems", "Linux"]
 ---
 # Abstract
 
@@ -47,7 +48,7 @@ Here are some key process states:
     
 *   **Terminated (or Exit):** Once a process has completed its execution or has been terminated by the operating system (due to errors or other reasons), it enters the terminated state. In this state, the operating system performs cleanup operations to free up resources that were allocated to the process.
     
-    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347261202/6919864b-17ca-4984-946f-ef4e794b9b4e.png align="center")
+    ![Process-state diagram showing transitions among ready, running, and waiting.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347261202/6919864b-17ca-4984-946f-ef4e794b9b4e.png align="center")
     
 
 ## 0.3 **CPU Scheduling Criteria**
@@ -100,7 +101,7 @@ Here are some key process states:
 
 A Gantt chart provides a graphical representation of a project schedule. It displays tasks along a timeline, allowing one to see the start and end duration of each task. Here is an example of a Gantt chart.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347304327/8f5b42f5-ad28-4012-8db3-ea4997e7c367.png align="center")
+![Example Gantt chart showing when each process receives CPU time.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347304327/8f5b42f5-ad28-4012-8db3-ea4997e7c367.png align="center")
 
 Here is a flowchart about a process, where for the first two seconds the CPU is idle, and for the next 1 second, the process is ready in the ready queue waiting for the scheduler to assign it to the CPU. Next five seconds, the CPU is running and then waits for some I/O and moves to the waiting state. The process again waits for the scheduler to be ready for one more second, then the process runs for the next 6 seconds and terminates.
 
@@ -186,7 +187,7 @@ Here is the Gantt chart of the following processes:
 
 * * *
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347351432/3d1ce963-ee55-4a33-b8db-1ef03e5a292b.png align="center")
+![First-Come, First-Served scheduling Gantt chart.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347351432/3d1ce963-ee55-4a33-b8db-1ef03e5a292b.png align="center")
 
 On the basis of the Gantt chart, we can calculate the ST, CT, TAT, WT, RT:
 
@@ -242,7 +243,7 @@ Image the same coffee shop we talked about earlier, In the Shortest Job First (S
 
 Here is the Gantt chart of the following processes:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347365426/7bc631d8-445c-48b3-9fd0-a75a1a8932e9.png align="center")
+![Non-preemptive Shortest Job First scheduling Gantt chart.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347365426/7bc631d8-445c-48b3-9fd0-a75a1a8932e9.png align="center")
 
 Here we can see, the scheduler picked the process with less burst time first at the 9th millisecond.
 
@@ -273,7 +274,7 @@ $$TP = task ÷ (Max (CT) - Min(AT)) = 3÷(47-0) = 3/47$$
 
 Here is the Gantt chart of the following processes:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347383884/0c37948d-8c90-4933-b3cd-700200b02ba0.png align="center")
+![Shortest Remaining Time First scheduling Gantt chart showing preemption.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347383884/0c37948d-8c90-4933-b3cd-700200b02ba0.png align="center")
 
 As P1 arrives, It will receive the scheduled time, as the second process P2 arrived at the second second, the burst time of P1 would have been reduced to 2 seconds, Now we have two processes with the same burst time, we have to follow FCFS, and provide CPU time to P1 as it has less arrival time. As the third process P3 arrives, at the third second, P1 will have a BT of 1, P2 will have a BT of 2 and P3 will have a BT of 1, hence again P1 will have CPU time as per FCFS. After six seconds, all the tasks would have arrived at the ready queue, hence the SRTF will convert to normal SJF
 
@@ -351,7 +352,7 @@ The time quantum, also known as the time slice, determines how long each process
 
 Here the Quantum time taken is 3ms.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347443178/c96986ff-1bb7-4809-a2fc-b98afb8d0338.png align="center")
+![Round Robin scheduling Gantt chart with a time quantum of three.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347443178/c96986ff-1bb7-4809-a2fc-b98afb8d0338.png align="center")
 
 Here even if the burst of P1 is 6 seconds, we only gave CPU time of 3 seconds due to decided quanta being 3 seconds. Then as P2 is arrived at 2 seconds, and is waiting in the ready queue, the CPU time is next allotted to P2. Next, at 4 seconds, P3 arrives, but after a 3-second burst of P2, CPU time is allotted to P1, because that was in the ready queue before P3. At, 9 seconds, the burst of P1 completes and it starts an I/O burst. Other bursts and I/Os can be similarly observed in the above Gantt chart.
 
@@ -414,7 +415,7 @@ To understand PS, with the ongoing example, we can simply make an analogy where 
 
 Here is the Gantt chart of the following processes:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347486920/9170f2dc-d498-48e8-880b-ef22964efe50.png align="center")
+![Non-preemptive priority scheduling Gantt chart.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347486920/9170f2dc-d498-48e8-880b-ef22964efe50.png align="center")
 
 Here it can be seen that, at the 6th second, the CPU time is given based on the priority given in the table.
 
@@ -446,7 +447,7 @@ $$TP = task ÷ (Max (CT) - Min(AT)) = 3÷(36-0) = 1/12$$
 
 Here is the Gantt chart of the following processes:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347511455/bb67eb38-0886-4041-859d-e8cbcc0fd684.png align="center")
+![Preemptive priority scheduling Gantt chart.](https://cdn.hashnode.com/res/hashnode/image/upload/v1729347511455/bb67eb38-0886-4041-859d-e8cbcc0fd684.png align="center")
 
 As new tasks arrive in the queue, the scheduler performs context switches based on the priority they are provided with. This can be easily seen in the Gantt chart above.
 
@@ -581,7 +582,7 @@ $$P(C) = \frac{15}{30} = 0.5$$
 
 Frameworks like `matplotlib` in `python3` can be used to simulate the lottery draws, and we can see how Process C can enjoy CPU time the most because of the high number of tickets. The given chart is for 100 picks.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1730413077806/55d6e5cf-2064-44ef-a54e-ad3311a139a9.png align="center")
+![Chart of lottery-scheduling selections over one hundred draws.](https://cdn.hashnode.com/res/hashnode/image/upload/v1730413077806/55d6e5cf-2064-44ef-a54e-ad3311a139a9.png align="center")
 
 | Process | Picks | Expected values | Deviation |
 | --- | --- | --- | --- |
@@ -631,7 +632,7 @@ $$CV=\frac{μ}{σ}$$
 
 A normal distribution can also be generated, not of this process, though for a stretched version, where processes are increased to a very large number, here is the graph plotted using `matplotlib`.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1730413195280/c9cd99ce-6b6e-4c2a-8551-9618de16c23c.png align="center")
+![Histogram of process selections in a larger lottery-scheduling simulation.](https://cdn.hashnode.com/res/hashnode/image/upload/v1730413195280/c9cd99ce-6b6e-4c2a-8551-9618de16c23c.png align="center")
 
 **2.25 Efficiency—Key points**
 

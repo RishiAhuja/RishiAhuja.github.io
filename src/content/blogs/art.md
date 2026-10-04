@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/art"
 readTimeInMinutes: 6
 cover: "sage"
 author: "Rishi Ahuja"
+tags: ["Systems", "Runtime", "Compilation"]
 ---
 Let us first understand the difference between C++ and Java when it comes to compiling the source code for different architectures:
 
@@ -21,7 +22,7 @@ Let us first understand the difference between C++ and Java when it comes to com
     
 *   If a new architecture uses a different ISA, the compiled code (machine code) from the previous architecture will not be compatible, Hence to use any C/C++ based software we might need to recompile the whole codebase from scratch for every program to use them on new ISA.
     
-    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1725380382864/f32d97aa-91c7-40f3-b904-93a2b431ce76.png align="center")
+    ![Diagram of C++ source compiled into machine code for a specific processor architecture.](https://cdn.hashnode.com/res/hashnode/image/upload/v1725380382864/f32d97aa-91c7-40f3-b904-93a2b431ce76.png align="center")
     
 
 **Java Compilation Process:**
@@ -37,13 +38,13 @@ Let us first understand the difference between C++ and Java when it comes to com
 *   If a new architecture uses a different ISA, This time we don't need to recompile the whole codebase for all the apps to make them compatible, as A new single JVM is developed by someone, the bytecode can be fed to that JVM to make it executable for the new architecture.
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1725380397175/48b57ed8-1dd5-4210-9d56-a8bf1c870b19.png align="center")
+![Diagram of Java source compiled to bytecode and executed by platform-specific Java virtual machines.](https://cdn.hashnode.com/res/hashnode/image/upload/v1725380397175/48b57ed8-1dd5-4210-9d56-a8bf1c870b19.png align="center")
 
 Google adopted the Java flow as they found it more relevant. Here is the process of how Android applications are compiled and executed.
 
 Here is an email, Tim Lindholm sent to Andy Robin:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1725372434640/485b67b9-743a-4d40-9d5e-35624d406c4d.webp align="center")
+![Screenshot of Tim Lindholm’s email to Andy Rubin discussing alternatives to Java for Android.](https://cdn.hashnode.com/res/hashnode/image/upload/v1725372434640/485b67b9-743a-4d40-9d5e-35624d406c4d.webp align="center")
 
 After the source code is written,
 
@@ -68,7 +69,7 @@ After the source code is written,
 *   Once the DEX files are converted to machine code, the application can be executed directly by the device’s CPU, providing improved performance and responsiveness.
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1725380982625/a3dc1278-da02-4141-96c8-5c10dbdf3a97.png align="center")
+![Diagram of Android’s ahead-of-time compilation from DEX bytecode to native machine code.](https://cdn.hashnode.com/res/hashnode/image/upload/v1725380982625/a3dc1278-da02-4141-96c8-5c10dbdf3a97.png align="center")
 
 Here is a table examining how DEX files are optimized for Android compared to bytecode.
 

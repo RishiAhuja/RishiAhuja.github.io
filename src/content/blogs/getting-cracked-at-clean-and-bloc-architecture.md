@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/getting-cracked-at-clean-and-bloc-a
 readTimeInMinutes: 25
 cover: "prismer"
 author: "Rishi Ahuja"
+tags: ["Flutter", "Architecture"]
 ---
 In our previous exploration of BLoC architecture, we laid the groundwork by understanding the core concepts: streams, futures, Cubits, and basic BLoC patterns. We learned how to manage simple state changes, handle navigation, and implement basic testing. However, real-world applications demand more sophisticated approaches to state management and architecture. If you’ve not read the [previous blog](https://rishi2220.hashnode.dev/getting-started-at-bloc-architecture) first, please consider reading that first.
 
@@ -219,7 +220,7 @@ icon: Icon(state == ThemeMode.light
               : Icons.wb_sunny_rounded),
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1736006664397/48c6aa91-4811-4622-90ed-e59687b3ef80.png align="center")
+![Example of a Flutter interface whose theme is controlled by a Cubit.](https://cdn.hashnode.com/res/hashnode/image/upload/v1736006664397/48c6aa91-4811-4622-90ed-e59687b3ef80.png align="center")
 
 Interesting, simple, easy, and practical implementation of a hydrated cubit!
 
@@ -373,7 +374,7 @@ Before implementing the implementation to firebase service, let’s understand s
 
 Either can have two values. The Success and a Failure value. Success is denoted by Right, and Failure is denoted by Left. This means, that if the API we are calling, omits an error, we can return a Left, with the error object, and if everything goes right, and we get back the expected responses, we will return a Right with the returned entity being sent with it. Further, we can check if it is right or left to examine what to show in the lower layers.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1735990613138/c5d0ddc7-382a-4b31-8e4b-3a5073517c01.png align="center")
+![Diagram of Either with Left for failure and Right for success.](https://cdn.hashnode.com/res/hashnode/image/upload/v1735990613138/c5d0ddc7-382a-4b31-8e4b-3a5073517c01.png align="center")
 
 ### Writing Entities and Models
 
@@ -395,7 +396,7 @@ To get started, we will create a model in the presentation, and then send it to 
 
 Let’s say we provide the name, email, and password to the server, and it provides us back with the UID, email, and name. The first is a `CreateUserModel` and the latter is a `UserEntity` here.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1735990462914/b0ac6c3b-e430-443e-aa5b-d984acb74640.png align="center")
+![Diagram separating a domain user entity from its data-layer model.](https://cdn.hashnode.com/res/hashnode/image/upload/v1735990462914/b0ac6c3b-e430-443e-aa5b-d984acb74640.png align="center")
 
 Here is the structure of our Model:
 
@@ -563,7 +564,7 @@ Let’s understand Service Locators, Taking the analogy forward, Think of a serv
 
 Basically, We will register every service that can be used somewhere in the application, this is done, as stated, to avoid confusion and inject all the dependencies into one file, which can be called anywhere.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1736000206447/520c9b05-6458-4a68-9e56-278581264def.png align="center")
+![Diagram showing dependencies registered and retrieved through a service locator.](https://cdn.hashnode.com/res/hashnode/image/upload/v1736000206447/520c9b05-6458-4a68-9e56-278581264def.png align="center")
 
 `get_it` provides a Service Locator (or dependency injection container) for Dart and Flutter.
 
@@ -715,7 +716,7 @@ class SignupUsecase extends Usecase<Either, CreateUserRequest> {
 
 Now this is how things are looking right now:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1736006818701/11b34615-17bb-460f-9971-e23839493441.png align="center")
+![Clean Architecture diagram with use cases between presentation and repositories.](https://cdn.hashnode.com/res/hashnode/image/upload/v1736006818701/11b34615-17bb-460f-9971-e23839493441.png align="center")
 
 OK OK! This looks scary, but if one looks it like simple node connections, things will fall into place easily.
 
@@ -727,7 +728,7 @@ Here also we will write a hydrated bloc to persist the states.
 
 This has been already established but let’s again see the
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1736014269367/08f0fd31-749e-450a-aec7-25d55623fad4.png align="center")
+![Application architecture diagram linking domain, data sources, repositories, and presentation.](https://cdn.hashnode.com/res/hashnode/image/upload/v1736014269367/08f0fd31-749e-450a-aec7-25d55623fad4.png align="center")
 
 Hydrated BLoC structure.
 
@@ -961,7 +962,7 @@ We can both listen to states like AuthSuccess and redirect the user to some othe
 
 Let’s see the diagram about what’s the data from, this is a simpler diagram and will clearly give a bird's eye view of the full architecture.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1736013996758/1e4e5f6d-23d5-49e0-9cea-6af1d047eade.png align="center")
+![Authentication architecture diagram showing BLoC events and states connected to use cases and repositories.](https://cdn.hashnode.com/res/hashnode/image/upload/v1736013996758/1e4e5f6d-23d5-49e0-9cea-6af1d047eade.png align="center")
 
 ## Exercise: Hive
 

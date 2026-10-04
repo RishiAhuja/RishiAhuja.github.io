@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/bits-of-trust-the-elegance-of-aes"
 readTimeInMinutes: 26
 cover: "clay"
 author: "Rishi Ahuja"
+tags: ["Cryptography", "Security"]
 ---
 Back in 1997, the U.S. National Institute of Standards and Technology (NIST) launched a global competition to find the next generation encryption standard. After years of rigorous testing and analysis, an algorithm called Rijndael emerged victorious, becoming what we now know as AES. Today, AES is everywhere, securing hard drives, protecting internet communications, and even built directly into the processors of our computers, phones, and countless other devices. But beneath this ubiquity lies an elegant cryptographic dance of confusion and diffusion that transforms our readable data into seemingly random gibberish that only the intended recipient can decipher. In this post, we'll journey into the inner workings of AES, demystifying the core principles that make it the backbone of modern digital security. Whether you're a cybersecurity enthusiast or simply curious about how your information stays private in an increasingly connected world, understanding AES offers a fascinating glimpse into the mathematics that powers our digital trust.
 
@@ -163,7 +164,7 @@ If a user provides a password (which is likely to be of variable length), we mus
 
 $$\begin{array}{c} \texttt{ThisIsAVeryLong} \\ \texttt{Password000000} \\ \hline \textbf{XOR} \\ \hline \texttt{Result} \end{array}$$
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464093609/13311a6f-9a01-4d5c-b9e8-8ea47a3748c8.png align="center")
+![Diagram of plaintext combined with a key using XOR in a simple encryption scheme.](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464093609/13311a6f-9a01-4d5c-b9e8-8ea47a3748c8.png align="center")
 
 ## **Key Expansion in AES**
 
@@ -222,12 +223,12 @@ $$[S(b),S(c),S(d)] → [S(b) \oplus {rcon}[round],S(c),S(d)]$$
     *   **S-box (Substitution Box):** A fixed 16×16 lookup table (256 entries). Each byte value 0-255 maps to a different byte value. Designed to introduce non-linearity into the encryption. The substitution is not a simple mathematical formula but a carefully designed mapping.
         
     
-    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464295259/c3bc792e-7f6e-46eb-91e8-7bbb1ea223f3.png align="center")
+    ![AES substitution box: a lookup table used to replace each byte during SubBytes.](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464295259/c3bc792e-7f6e-46eb-91e8-7bbb1ea223f3.png align="center")
     
     *   **Round Constants (**`Rcon`): A series of predefined values used in the key expansion. Only the first byte of each round constant is non-zero. Values: 01, 02, 04, 08, 10, 20, 40, 80, 1B, 36... Notice that these values double each time (in the finite field). Ensures each round key is different and depends on the round number.
         
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464326009/ce8ed03c-6907-47e9-9de1-9dd6064c99fd.png align="center")
+![Table of round constants used in the AES key schedule.](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464326009/ce8ed03c-6907-47e9-9de1-9dd6064c99fd.png align="center")
 
 ### **SubBytes: Introducing Confusion, One Byte at a Time**
 
@@ -273,7 +274,14 @@ $$\text{Initial State:} \quad \begin{bmatrix} a_{0,0} & a_{0,1} & a_{0,2} & a_{0
 
 After the ShiftRows transformation, the state becomes:
 
-$$\text{After ShiftRows:} \quad \begin{bmatrix} a_{0,0} & a_{0,1} & a_{0,2} & a_{0,3} \\ % Row 0 - No Shift a_{1,1} & a_{1,2} & a_{1,3} & a_{1,0} \\ % Row 1 - Shift 1 byte to the left a_{2,2} & a_{2,3} & a_{2,0} & a_{2,1} \\ % Row 2 - Shift 2 bytes to the left a_{3,3} & a_{3,0} & a_{3,1} & a_{3,2} % Row 3 - Shift 3 bytes to the left \end{bmatrix}$$
+$$
+\text{After ShiftRows:} \quad \begin{bmatrix}
+a_{0,0} & a_{0,1} & a_{0,2} & a_{0,3} \\
+a_{1,1} & a_{1,2} & a_{1,3} & a_{1,0} \\
+a_{2,2} & a_{2,3} & a_{2,0} & a_{2,1} \\
+a_{3,3} & a_{3,0} & a_{3,1} & a_{3,2}
+\end{bmatrix}
+$$
 
 **Why** `ShiftRows` is Important:
 
@@ -423,7 +431,7 @@ $$3 \times b = (2 \times b) \oplus b$$
 
 MixColumns provides vertical diffusion, ensuring each byte in a column affects all bytes in that column. Combined with ShiftRows, it provides complete diffusion, ensuring changes quickly propagate throughout the state. The combination of shifting and mixing after a few rounds results in each output bit depending on every input bit
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464749320/0c2e3f6f-1904-4a73-be1f-12bd79525649.png align="center")
+![Diagram of AES MixColumns combining bytes to spread changes across a column.](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464749320/0c2e3f6f-1904-4a73-be1f-12bd79525649.png align="center")
 
 ### 4\. AddRoundKey: Combining with the Key
 
@@ -483,7 +491,7 @@ The number of rounds `(Nr)` depends on the key size `(Nk)`.
 
 Here is graph describing the whole process.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464766853/12d1c91d-0742-47ce-846b-8c6a0ed44522.png align="center")
+![AES encryption flow showing key expansion and the repeated substitution, shifting, mixing, and key-addition rounds.](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464766853/12d1c91d-0742-47ce-846b-8c6a0ed44522.png align="center")
 
 ## Beyond the Algorithm: Introducing Cipher Block Chaining (CBC) Mode
 
@@ -513,7 +521,7 @@ CBC is a block cipher mode of operation that enhances security by making each ci
         
     *   XOR the result with the *previous* ciphertext block (or the IV for the first block) to recover the plaintext block.
         
-        ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464790965/27839091-f9b0-4454-90e4-b4c0a2ce4d40.png align="center")
+        ![Cipher Block Chaining diagram: each plaintext block is XORed with the previous ciphertext before encryption.](https://cdn.hashnode.com/res/hashnode/image/upload/v1743464790965/27839091-f9b0-4454-90e4-b4c0a2ce4d40.png align="center")
         
 
 ## AES in the Real World

@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/shamirs-secret-sharing-scheme-and-m
 readTimeInMinutes: 23
 cover: "lilac"
 author: "Rishi Ahuja"
+tags: ["Cryptography", "Security"]
 ---
 Imagine losing $600 million because a single database was compromised. That's exactly what happened to Poly Network in 2021, and it highlights a fundamental flaw in how we handle sensitive data. Whether it's your crypto wallet, API keys, or confidential business data, storing critical secrets in one place creates a catastrophic single point of failure.
 
@@ -61,11 +62,11 @@ SSS uses a very simple technique of polynomials on a graph. If we take one point
 
 Imagine a single point on a graph, say at coordinates (2,4). How many straight lines can go through that specific point? An infinite number. Each of these lines would have a different slope and, importantly for us, a different y-intercept (the point where the line crosses the vertical y-axis, i.e., when x=0).
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1751710683281/c24b960d-7e92-43ce-90f8-dc3f1ecdc6d7.png align="center")
+![Plot showing multiple possible lines passing through a single known point.](https://cdn.hashnode.com/res/hashnode/image/upload/v1751710683281/c24b960d-7e92-43ce-90f8-dc3f1ecdc6d7.png align="center")
 
 Now, consider what happens if you have **two** distinct points. There is only *one* unique straight line that can pass through both of them.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1751710648078/e16b4cca-dac3-4475-b7bf-1bee995f3f96.png align="center")
+![Plot showing that two distinct points determine a unique line.](https://cdn.hashnode.com/res/hashnode/image/upload/v1751710648078/e16b4cca-dac3-4475-b7bf-1bee995f3f96.png align="center")
 
 This simple point is everything that we need to know, and it’s that simple. For this example, we can identify the value of `f(0)` which in this case is 2.
 
@@ -78,7 +79,7 @@ This simple point is everything that we need to know, and it’s that simple. Fo
 
 The core idea is that, let’s say A has a secret, 6 and he wants to split the secret between B and C. A can choose any secret line such that `f(0)` is 6 and A gives any two points on the line it chooses to B and C (except `f(0)`) obviously.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1751711113649/1fe4bd69-1d85-451d-aac2-3c5880836fad.png align="center")
+![Linear secret-sharing example with shares on a line and the secret six at the vertical intercept.](https://cdn.hashnode.com/res/hashnode/image/upload/v1751711113649/1fe4bd69-1d85-451d-aac2-3c5880836fad.png align="center")
 
 We can see how things got split. Now we can destroy our secret and still be able to find out about the secret by reconstructing the line using the other 2 points, given to B and C. Actually we can also generate another point on the line, to D, let’s say (3,6) and now we can generate the original secret from any two points out of B, C, D.
 
@@ -120,7 +121,7 @@ $$f(x) = 5 + 3x - x^2$$
 
 If you have any two of these points, you could fit an infinite number of parabolas through them, and thus learn nothing about f(0). But with all three, the curve is fixed, and so is our secret.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1751711850255/78053efe-df3f-4391-bc27-13c2fe239171.png align="center")
+![Quadratic secret-sharing example requiring three points to reconstruct the secret five.](https://cdn.hashnode.com/res/hashnode/image/upload/v1751711850255/78053efe-df3f-4391-bc27-13c2fe239171.png align="center")
 
 Gathering three shares allows us to precisely reconstruct the unique parabola, and by evaluating it at x=0, we retrieve our secret (5). If you only had two points, say (1,7) and (2,7), an infinite number of parabolas (and even lines!) could pass through them, each with a different y-intercept. This means no information about the secret is revealed until the threshold is met.
 
@@ -529,11 +530,11 @@ We've seen how Shamir's Secret Sharing (SSS) provides a good way to distribute a
 
 However, a critical challenge remains: the moment of reconstruction. If one single server is designated to orchestrate the key shares from the 5 different databases, and during the reconstruction process, all the shares converge at this single server, the whole security effort could be undermined. If that single point (the reconstruction server) is compromised, and all the shares eventually pass through or reside there, the reconstructed key will still be exposed. This reintroduces a perilous single point of exposure during the *active use* phase of the secret.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1751717129536/f2ccd08c-12c4-4264-b56b-5e439076a5b1.png align="center")
+![Diagram showing the risk of bringing secret shares together at one reconstruction point.](https://cdn.hashnode.com/res/hashnode/image/upload/v1751717129536/f2ccd08c-12c4-4264-b56b-5e439076a5b1.png align="center")
 
 This is precisely the problem **Secure Multi-Party Computation (MPC)** aims to eliminate. MPC allows multiple parties to jointly compute a function on their private inputs without ever revealing those inputs to each other. In our Ethereum private key example, MPC could enable several custodians to collectively "sign" a transaction without any single party ever learning the full private key or even seeing the other parties' shares of it.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1751717179845/1fb98a3f-0e57-4281-b832-e81f273bd4f6.png align="center")
+![Multi-party computation diagram showing parties computing together without pooling their private inputs.](https://cdn.hashnode.com/res/hashnode/image/upload/v1751717179845/1fb98a3f-0e57-4281-b832-e81f273bd4f6.png align="center")
 
 Let’s take simple examples.
 

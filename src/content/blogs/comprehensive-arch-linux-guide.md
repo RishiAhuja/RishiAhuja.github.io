@@ -6,6 +6,7 @@ hashnodeUrl: "https://rishi2220.hashnode.dev/comprehensive-arch-linux-guide"
 readTimeInMinutes: 28
 cover: "sand"
 author: "Rishi Ahuja"
+tags: ["Systems", "Linux"]
 ---
 Linux distributions can be largely classified under three umbrellas:
 
@@ -59,15 +60,15 @@ Earlier I used tools like [Rufus](https://rufus.ie/en/) and [BalenaEtcher](https
 
 After opening `Ventoy2Disk.exe`, It looks something like this:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723657070375/2ab41d39-52b9-48ff-a61a-5b7886d27042.png align="center")
+![Ventoy2Disk window for installing Ventoy on a USB drive.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723657070375/2ab41d39-52b9-48ff-a61a-5b7886d27042.png align="center")
 
 You just need to install the Ventoy firmware once on the bootable drive, and then you can just drag and drop your `iso`, once you boot into live USB, you will be greeted with a choice to select the `iso`'s awaiting to be booted. Changing the boot sequence from the `BIOS` is different for different motherboard manufacturers. The following needs to be researched by the reader.
 
-[![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723656867014/8e8ddad0-b4a9-49e3-b20a-c164852058e6.png align="center")](https://www.linuxuprising.com/2021/04/ventoy-bootable-usb-creator-adds.html)
+[![Ventoy boot menu listing ISO images available on the USB drive.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723656867014/8e8ddad0-b4a9-49e3-b20a-c164852058e6.png align="center")](https://www.linuxuprising.com/2021/04/ventoy-bootable-usb-creator-adds.html)
 
 After booting into Arch, a terminal-based environment formally called, **Arch Linux Live Environment** will be expecting input:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723657755628/84c7db76-33c4-40e9-9212-601f18e3a187.png align="center")
+![Terminal prompt in the Arch Linux live installation environment.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723657755628/84c7db76-33c4-40e9-9212-601f18e3a187.png align="center")
 
 From now on, I will introduce different commands, and try explaining each command and its arguments in detail.
 
@@ -128,7 +129,7 @@ The requests and replies can be interrupted by pressing `ctrl+c`, this is called
 
 *NOTE: Unix-based systems like Arch provide a facility called* `iwctl` *to allows users to manage wireless network connections, including scanning for networks, connecting to them, and viewing network information, if you want to use Wi-fi for the process.* [*Linked here*](https://man.archlinux.org/man/extra/iwd/iwctl.1.en) *for more information.*
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723660885208/10c1e0aa-ba99-493b-85cb-191936133dba.png align="center")
+![Arch installation terminal showing an internet connectivity check.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723660885208/10c1e0aa-ba99-493b-85cb-191936133dba.png align="center")
 
 ### Pacman basics and synchronizing databases
 
@@ -158,7 +159,7 @@ If you try to install a package without first synchronizing the database, Pacman
 
 We currently have no packages installed, though a command `pacman -Syu` can be used later/after the installation, where `u` stands for upgrading all the installed packages to the latest version.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723662160984/1f2d557d-71c1-4c11-b97f-e316680830a8.png align="center")
+![Terminal output from synchronizing Arch package databases with Pacman.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723662160984/1f2d557d-71c1-4c11-b97f-e316680830a8.png align="center")
 
 ### Arch keyrings
 
@@ -170,7 +171,7 @@ The following command is being used to upgrade the `archlinux-keyring` package. 
 
 PGP(Pretty good privacy) is a data encryption and decryption program that provides cryptographic privacy and authentication for data communication.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723662791028/13280126-a4c5-4553-97e1-6e9371efcb8c.png align="center")
+![Terminal output from installing the Arch Linux package-signing keyring.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723662791028/13280126-a4c5-4553-97e1-6e9371efcb8c.png align="center")
 
 ### Understanding `lsblk` and block devices
 
@@ -189,7 +190,7 @@ Let's understand block devices in brief:
 
 hence `lbslk` provides a concise overview of the storage hierarchy, making it easy to visualize the relationships between different block devices.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723667454499/8263106e-3f55-4eba-aa6d-39cddd6d5183.png align="center")
+![lsblk output listing disks and their partitions in the installation environment.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723667454499/8263106e-3f55-4eba-aa6d-39cddd6d5183.png align="center")
 
 The output omits three block devices:
 
@@ -301,7 +302,7 @@ The major difference between `fdisk` and `cfdisk` is that `fdisk` is a command-l
 fdisk /dev/sda
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723709065632/3b26184e-59f7-49d9-8f75-e0103ae953a3.png align="center")
+![fdisk terminal for creating partitions on the selected disk.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723709065632/3b26184e-59f7-49d9-8f75-e0103ae953a3.png align="center")
 
 After starting the `fdisk` utility to partition the hard drive/`sda` the utility will be expecting a single-letter command, and `m` can be pressed to state all the options available.
 
@@ -342,7 +343,7 @@ We only want to use very limited functionalities of the tool.
 *   Here is an infographic I made for better understanding:
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723713620570/f36ebdbd-fe16-4c6b-b4f9-2c301a1ab58d.png align="center")
+![Infographic explaining primary, extended, and logical disk partitions.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723713620570/f36ebdbd-fe16-4c6b-b4f9-2c301a1ab58d.png align="center")
 
 **Understanding the First and Last sectors of a partition in brief:**
 
@@ -374,7 +375,7 @@ Now that we have established these terms, we can start creating partitions.
     
 *   Now run `lsblk` to review the changes.
     
-    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723714614202/8f94b214-d0f9-4096-b751-09c2c87b9b51.png align="center")
+    ![lsblk output showing the newly created EFI, Linux, and swap partitions.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723714614202/8f94b214-d0f9-4096-b751-09c2c87b9b51.png align="center")
     
 
 ### Formatting partitions
@@ -415,7 +416,7 @@ mkswap /dev/sda3
     
 *   `/dev/sda3`: This specifies the partition that you want to use as Swap.
     
-    ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723715453067/d2c2763c-bf8b-4273-848a-b6e049847975.png align="center")
+    ![Terminal commands formatting the EFI, Linux filesystem, and swap partitions.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723715453067/d2c2763c-bf8b-4273-848a-b6e049847975.png align="center")
     
 
 ### Mounting partitions
@@ -444,7 +445,7 @@ Now we need to enable the Swap partition by using `swapon`:
 swapon /dev/sda3
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723718659045/5ff52171-c9dc-4807-8a5c-cc9f26fab8c6.png align="center")
+![Terminal commands mounting the root and EFI partitions and enabling swap.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723718659045/5ff52171-c9dc-4807-8a5c-cc9f26fab8c6.png align="center")
 
 ### Installing Arch Linux
 
@@ -502,7 +503,7 @@ After generating we can view the contents of the `fstab` file by using `cat`
 cat /mnt/etc/fstab
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723726780338/49b7ac08-6bda-4cb4-8a97-645ee4c380d9.png align="center")
+![Generated fstab file listing the mounted filesystems and swap partition.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723726780338/49b7ac08-6bda-4cb4-8a97-645ee4c380d9.png align="center")
 
 ### Chrooting into Installed Arch
 
@@ -518,7 +519,7 @@ The command `arch-chroot /mnt` is like saying, "I want to go inside the new room
 
 Now you can use `neofetch` if installed and verify the correct installation of Linux kernel and firmware
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723727235026/1598a940-6795-4a3c-bda1-3601f9152939.png align="center")
+![Neofetch output after entering the installed Arch system with arch-chroot.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723727235026/1598a940-6795-4a3c-bda1-3601f9152939.png align="center")
 
 ### Adding a standard user
 
@@ -528,7 +529,7 @@ Now we can set a password for the root user. The root user is the superuser or a
 passwd
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723727483468/53b95680-d38c-4d8d-a94c-c1afc4ac3fab.png align="center")
+![Terminal prompt for setting the root account password with passwd.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723727483468/53b95680-d38c-4d8d-a94c-c1afc4ac3fab.png align="center")
 
 **Adding a user:**
 
@@ -570,7 +571,7 @@ Specifying that the editor edits the `sudoers` file, with `visudo` the command. 
 
 We might want to uncomment the following line at the end of the file:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723735524452/c729ec25-d771-465c-bd46-07be126c5e31.png align="center")
+![Sudoers configuration showing the wheel-group line used to grant sudo access.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723735524452/c729ec25-d771-465c-bd46-07be126c5e31.png align="center")
 
 Then write the file with `ctrl+O` and exit with `ctrl+x`.
 
@@ -665,7 +666,7 @@ Now we might want to specify our locale by uncommenting the desired locale from 
 nano /etc/locale.gen
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723742079607/22b779d7-87e0-4b9a-b791-7c5d23c13064.png align="center")
+![Locale configuration file used to enable the system language.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723742079607/22b779d7-87e0-4b9a-b791-7c5d23c13064.png align="center")
 
 Write the file and exit nano text editor.
 
@@ -713,7 +714,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 
 `--bootloader-id=GRUB`: This option sets the name of the bootloader entry in the UEFI firmware. In this case, it's set to `GRUB`.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723744929439/0bd5e2e8-a949-4f2f-9002-fc194bf6ce31.png align="center")
+![Terminal output from installing GRUB for a 64-bit UEFI system.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723744929439/0bd5e2e8-a949-4f2f-9002-fc194bf6ce31.png align="center")
 
 Re/generate grub's configuration file to identify/update this linux kernel using `grub-mkconfig`.
 
@@ -721,7 +722,7 @@ Re/generate grub's configuration file to identify/update this linux kernel using
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723746224751/e338465f-8c02-41ab-b1f2-f81184918fcd.png align="center")
+![Terminal output from generating the GRUB boot configuration.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723746224751/e338465f-8c02-41ab-b1f2-f81184918fcd.png align="center")
 
 Now we can also enable Bluetooth and network services.
 
@@ -755,7 +756,7 @@ umount -lR /mnt
 
 Shutdown by typing `shutdown now`, After booting again we will boot into grub and then we can boot into arch and login as a user.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723746484824/b3d578c9-b0ce-4eba-a7c8-da947eb8e68c.png align="center")
+![Arch Linux login and terminal after rebooting into the installed system.](https://cdn.hashnode.com/res/hashnode/image/upload/v1723746484824/b3d578c9-b0ce-4eba-a7c8-da947eb8e68c.png align="center")
 
 After logging in, it's time to install the GUI.
 
