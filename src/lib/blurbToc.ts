@@ -22,9 +22,10 @@ export const blurbHeadings = (content: BlurbContent[]): TocItem[] => {
   const used = new Map<string, number>();
   const headings: TocItem[] = [];
 
+  const baseLevel = Math.max(2, content.find((item) => item.type === 'heading')?.level || 2);
   for (const item of content) {
     if (item.type !== 'heading' || !item.content) continue;
-    const depth = item.level || 2;
+    const depth = Math.max(2, Math.min(4, (item.level || 2) - baseLevel + 2));
     if (depth < 2 || depth > 3) continue;
     headings.push({
       depth,

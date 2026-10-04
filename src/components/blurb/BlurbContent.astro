@@ -1,0 +1,62 @@
+---
+import type { BlurbContent } from '../../data/blurb';
+import { blurbHeadings } from '../../lib/blurbToc';
+import ImageCarousel from './ImageCarousel.astro';
+interface Props { content: BlurbContent[]; }
+const { content } = Astro.props;
+const headings = blurbHeadings(content);
+const baseLevel = Math.max(2, content.find((item) => item.type === 'heading')?.level || 2);
+let headingIndex = 0;
+const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+const inline = (value = '') => value.split(/(`[^`]+`|\[[^\]\n]+\]\(https?:\/\/[^)\s]+\))/g).map((part) => {
+  if (part.startsWith('`') && part.endsWith('`')) return `<code>${escape(part.slice(1, -1))}</code>`;
+  const link = part.match(/^\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)$/);
+  if (!link) return escape(part);
+  const url = new URL(link[2]);
+  const local = url.hostname === 'rishiahuja.github.io';
+  return `<a href="${escape(local ? url.pathname + url.search + url.hash : url.href)}"${local ? '' : ' target="_blank" rel="noopener noreferrer"'}>${escape(link[1])}</a>`;
+}).join('');
+const youtubeId = (url: string) => url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/)?.[1];
+---
+<div class="blurb-content">
+  {content.map((item) => {
+    if (item.type === 'heading') {
+      const level = Math.max(2, Math.min(4, (item.level || 2) - baseLevel + 2));
+      const Tag = `h${level}`;
+      const id = level <= 3 ? headings[headingIndex++]?.id : undefined;
+      return <Tag id={id}>{item.content}</Tag>;
+    }
+    if (item.type === 'paragraph') return <p><Fragment set:html={inline(item.content)} /></p>;
+    if (item.type === 'quote') return <blockquote><p><Fragment set:html={inline(item.content)} /></p></blockquote>;
+    if (item.type === 'list') return <ul>{item.items?.map((text) => <li><Fragment set:html={inline(text)} /></li>)}</ul>;
+    if (item.type === 'code') return <div class="blurb-code">{item.language && <p class="code-language">{item.language}</p>}<pre tabindex="0" aria-label={`${item.language || ''} code example`}><code>{item.content}</code></pre></div>;
+    if (item.type === 'image' || item.type === 'tweetImage') return <figure>
+      <div class:list={['blurb-media-frame', item.type === 'tweetImage' && 'tweet-screenshot']}>
+        <img src={item.content} alt={item.alt || 'Image accompanying this blurb'} loading="lazy" decoding="async" class="blurb-media-image" />
+      </div>
+      {item.alt && <figcaption>{item.alt}</figcaption>}
+      {item.type === 'tweetImage' && item.tweetUrl && <p class="tweet-source"><a href={item.tweetUrl} target="_blank" rel="noopener noreferrer">View original post <span aria-hidden="true">↗</span></a></p>}
+    </figure>;
+    if (item.type === 'carousel') return <ImageCarousel images={item.images || []} caption={item.caption} />;
+    if (item.type === 'linkEmbed') return <a class="blurb-link-card" href={item.content} target="_blank" rel="noopener noreferrer">
+      {item.image && <img src={item.image} alt="" width="160" height="120" loading="lazy" decoding="async" />}
+      <span><span class="blurb-link-domain">{item.domain || new URL(item.content || 'https://example.com').hostname}</span>
+        {item.title && <strong>{item.title}</strong>}{item.description && <span>{item.description}</span>}
+        <span class="blurb-link-action">Visit link ↗</span></span>
+    </a>;
+    if (item.type === 'twitter' && item.tweetId && item.tweetId.length >= 15) return <blockquote class="twitter-tweet" data-theme="light"><a href={`https://twitter.com/i/status/${item.tweetId}`}>View this post on Twitter</a></blockquote>;
+    if (item.type === 'video') {
+      const id = youtubeId(item.content || '');
+      return <figure>{id ? <div class="blurb-media-frame youtube-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={item.alt || 'Video accompanying this blurb'} loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen /></div>
+        : <div class="blurb-media-frame"><video class="blurb-media-video" controls playsinline poster={item.poster} preload="none" aria-label={item.alt || 'Video accompanying this blurb'}>
+          <source src={item.content} type="video/mp4" />
+          {item.captions && <track kind="captions" src={item.captions} srclang="en" label="English" default />}
+          <a href={item.content}>Open video</a>
+        </video></div>}
+        {item.alt && <figcaption>{item.alt}</figcaption>}
+        {item.transcript && <details class="video-transcript"><summary>Video transcript</summary><p>{item.transcript}</p></details>}
+      </figure>;
+    }
+    return null;
+  })}
+</div>
