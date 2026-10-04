@@ -2,6 +2,9 @@ import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 import hljs from 'highlight.js';
 import katex from 'katex';
+import imageDimensions from '../data/blog-image-dimensions.json';
+const escapeAttribute = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+const dimensionsFor = (src: string) => (imageDimensions as Record<string, {width: number; height: number}>)[src];
 
 const isExternalHref = (href: string) => /^(https?:)?\/\//i.test(href);
 
@@ -20,7 +23,7 @@ const sanitizeImportedHtml = (html: string) =>
 marked.use(
   markedKatex({
     throwOnError: false,
-    output: 'html',
+    output: 'htmlAndMathml',
   }),
 );
 
@@ -37,14 +40,14 @@ renderer.code = function ({
   if (lang && hljs.getLanguage(lang)) {
     try {
       const highlighted = hljs.highlight(text, { language: lang }).value;
-      return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
+      return `<pre tabindex="0" aria-label="Code example"><code class="hljs language-${lang}">${highlighted}</code></pre>`;
     } catch (err) {
       console.error('Highlight error:', err);
     }
   }
 
   const highlighted = hljs.highlightAuto(text).value;
-  return `<pre><code class="hljs">${highlighted}</code></pre>`;
+  return `<pre tabindex="0" aria-label="Code example"><code class="hljs">${highlighted}</code></pre>`;
 };
 
 renderer.image = function ({
@@ -57,8 +60,10 @@ renderer.image = function ({
   text: string;
 }) {
   if (!href) return text;
-  const titleAttr = title ? ` title="${title}"` : '';
-  return `<img src="${href}" alt="${text}"${titleAttr} class="blog-image" loading="lazy" />`;
+  const titleAttr = title ? ` title="${escapeAttribute(title)}"` : '';
+  const size = dimensionsFor(href);
+  const sizeAttr = size ? ` width="${size.width}" height="${size.height}"` : '';
+  return `<img src="${escapeAttribute(href)}" alt="${escapeAttribute(text)}"${titleAttr}${sizeAttr} class="blog-image" loading="lazy" decoding="async" />`;
 };
 
 marked.setOptions({
@@ -124,7 +129,7 @@ const slugify = (value: string, used: Map<string, number>) => {
 const collectHeadings = (html: string): { html: string; headings: TocItem[] } => {
   const used = new Map<string, number>();
   const headings: TocItem[] = [];
-  const next = html.replace(/<h([1-4])(\s[^>]*)?>([\s\S]*?)<\/h\1>/gi, (_, depth, attrs = '', inner) => {
+  const next = html.replace(/<h([1-6])(\s[^>]*)?>([\s\S]*?)<\/h\1>/gi, (_, depth, attrs = '', inner) => {
     const text = decodeHtmlEntities(stripTags(inner));
     if (!text) return `<h${depth}${attrs}>${inner}</h${depth}>`;
     const existing = /id="([^"]+)"/.exec(attrs);
@@ -212,14 +217,23 @@ export const renderBlogMarkdown = async (
   let html = await marked.parse(content);
 
   placeholders.forEach((htmlBlock, index) => {
-    html = html.replace(`@@BLOG_HTML_${index}@@`, htmlBlock);
     html = html.replace(`<p>@@BLOG_HTML_${index}@@</p>`, htmlBlock);
+    html = html.replace(`@@BLOG_HTML_${index}@@`, htmlBlock);
   });
 
   html = html
-    .replace(/<table>/g, '<div class="table-wrapper"><table>')
+    .replace(/<table>/g, '<div class="table-wrapper" tabindex="0" role="region" aria-label="Scrollable table"><table>')
     .replace(/<\/table>/g, '</table></div>');
 
+  html = html.replace(/<img\b([^>]*)>/gi, (tag, attributes: string) => {
+    const src = /\bsrc="([^"]+)"/.exec(attributes)?.[1];
+    const size = src && dimensionsFor(src);
+    if (!size || /\bwidth=/.test(attributes)) return tag;
+    return `<img${attributes} width="${size.width}" height="${size.height}" decoding="async">`;
+  });
+  const minimum = Math.min(2, ...[...html.matchAll(/<h([1-6])\b/g)].map((match) => Number(match[1])));
+  const offset = 2 - minimum;
+  html = html.replace(/<(\/?)h([1-6])(\b[^>]*)>/g, (_, closing, depth, attrs) => `<${closing}h${Math.min(6, Number(depth) + offset)}${attrs}>`);
   return collectHeadings(wrapKatexDisplay(html));
 };
 
@@ -253,7 +267,7 @@ const wrapKatexDisplay = (html: string): string => {
         pos = nextClose + 7;
       }
     }
-    out += `<div class="math-scroll">${html.slice(open, pos)}</div>`;
+    out += `<div class="math-scroll" tabindex="0" role="region" aria-label="Scrollable equation">${html.slice(open, pos)}</div>`;
     last = pos;
   }
 
