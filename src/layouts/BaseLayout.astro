@@ -1,6 +1,6 @@
 ---
 import '../styles/site.css';
-import Header from '../components/Header';
+import Header from '../components/Header.astro';
 import { OG_WIDTH, OG_HEIGHT, ogImagePath } from '../lib/og';
 
 interface Props {
@@ -59,12 +59,15 @@ const isInner = Astro.url.pathname !== '/';
     <slot name="head" />
   </head>
   <body class={[isInner ? 'is-inner' : 'is-home', cover && `cover-${cover}`].filter(Boolean).join(' ')}>
-    <Header client:load />
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header />
     <slot />
     <script>
       const warmed = new Set<string>();
 
       const prefetchCover = (url: string) => {
+        const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+        if (connection?.saveData || connection?.effectiveType?.includes('2g')) return;
         if (!url || warmed.has(url) || document.querySelector(`link[href="${url}"]`)) return;
         warmed.add(url);
         const link = document.createElement('link');

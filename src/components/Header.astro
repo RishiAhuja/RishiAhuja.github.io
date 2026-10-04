@@ -1,0 +1,108 @@
+---
+import { siGithub, siGooglescholar } from 'simple-icons';
+import { LINKS } from '../lib/constants';
+
+const LINKEDIN_PATH = 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C0 .774 23.2 0 22.222 0h.003z';
+const path = Astro.url.pathname;
+const active = path.startsWith('/pub') || path.startsWith('/research') ? 'research'
+  : path.startsWith('/writings') ? 'writings'
+  : path.startsWith('/blurb') ? '' : 'home';
+const navigation = [
+  { id: 'home', label: 'Home', href: '/' },
+  { id: 'research', label: 'Research', href: '/research' },
+  { id: 'writings', label: 'Writing', href: '/writings' },
+  { id: 'about', label: 'About', href: '/#about' },
+  { id: 'resume', label: 'Résumé', href: LINKS.RESUME, external: true },
+];
+const socials = [
+  { label: 'Google Scholar', href: LINKS.GOOGLE_SCHOLAR, path: siGooglescholar.path },
+  { label: 'GitHub', href: LINKS.GITHUB, path: siGithub.path },
+  { label: 'LinkedIn', href: LINKS.LINKEDIN, path: LINKEDIN_PATH },
+];
+---
+<header class="site-header">
+  <nav class="site-nav wrap" aria-label="Main navigation" data-open="false">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav-links main-nav-social" aria-label="Open menu">
+      <span class="nav-toggle-bars" aria-hidden="true" />
+    </button>
+    <ul class="nav-links" id="main-nav-links">
+      {navigation.map((item) => (
+        <li><a href={item.href} data-nav-id={item.id} data-active={String(active === item.id)}
+          aria-current={active === item.id ? 'page' : undefined}
+          target={item.external ? '_blank' : undefined}
+          rel={item.external ? 'noopener noreferrer' : undefined}>{item.label}</a></li>
+      ))}
+    </ul>
+    <ul class="nav-social" id="main-nav-social">
+      {socials.map((item) => (
+        <li><a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+          <svg class="icon-brand" viewBox="0 0 24 24" aria-hidden="true"><path d={item.path} /></svg>
+        </a></li>
+      ))}
+    </ul>
+  </nav>
+</header>
+<script>
+  const nav = document.querySelector<HTMLElement>('.site-nav');
+  const toggle = nav?.querySelector<HTMLButtonElement>('.nav-toggle');
+  if (nav && toggle) {
+    nav.dataset.menuReady = 'true';
+    let open = false;
+    let blocked: { element: HTMLElement; inert: boolean }[] = [];
+    const setOpen = (next: boolean, restoreFocus = true) => {
+      open = next;
+      nav.dataset.open = String(next);
+      toggle.setAttribute('aria-expanded', String(next));
+      toggle.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', next);
+      if (next) {
+        blocked = [...document.querySelectorAll<HTMLElement>('body > :is(main, footer, .skip-link)')]
+          .map((element) => ({ element, inert: element.inert }));
+        blocked.forEach(({ element }) => { element.inert = true; });
+        nav.querySelector<HTMLAnchorElement>('.nav-links a')?.focus();
+      } else {
+        blocked.forEach(({ element, inert }) => { element.inert = inert; });
+        blocked = [];
+        if (restoreFocus) toggle.focus();
+      }
+    };
+    toggle.addEventListener('click', () => setOpen(!open));
+    nav.addEventListener('keydown', (event) => {
+      if (!open) return;
+      if (event.key === 'Escape') { event.preventDefault(); setOpen(false); return; }
+      if (event.key !== 'Tab') return;
+      const focusable = [...nav.querySelectorAll<HTMLElement>('button, a[href]')]
+        .filter((element) => element.getClientRects().length > 0);
+      const first = focusable[0], last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    });
+    nav.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => link.addEventListener('click', () => {
+      if (!open) return;
+      setOpen(false, false);
+      if (link.hash && link.pathname === location.pathname) {
+        const destination = document.getElementById(link.hash.slice(1));
+        if (destination) { destination.tabIndex = -1; destination.focus({ preventScroll: true }); }
+      } else toggle.focus();
+    }));
+    matchMedia('(min-width: 901px)').addEventListener('change', (event) => {
+      if (event.matches && open) setOpen(false, false);
+    });
+    if (location.pathname === '/') {
+      const sections = ['home', 'research', 'writings', 'about']
+        .map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
+      const observer = new IntersectionObserver((entries) => {
+        const current = entries.filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.target.id;
+        if (!current) return;
+        nav.querySelectorAll<HTMLElement>('[data-nav-id]').forEach((link) => {
+          const selected = link.dataset.navId === current;
+          link.dataset.active = String(selected);
+          if (selected) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      }, { rootMargin: '-20% 0px -55% 0px', threshold: 0 });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+</script>
