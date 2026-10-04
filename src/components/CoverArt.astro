@@ -19,7 +19,7 @@ const webpSrcset = `${cover.cardWebp} 640w, ${cover.heroWebp} 1086w`;
 const fallback = variant === 'hero' ? cover.heroWebp : cover.cardWebp;
 ---
 
-<picture class="cover-art">
+<picture class="cover-art" data-cover-id={cover.stem}>
   <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
   <source type="image/webp" srcset={webpSrcset} sizes={sizes} />
   <img

@@ -20,11 +20,12 @@ const socials = [
   { label: 'LinkedIn', href: LINKS.LINKEDIN, path: LINKEDIN_PATH },
 ];
 ---
-<header class="site-header">
+<header class="site-header" style="view-transition-name: site-header;">
   <nav class="site-nav wrap" aria-label="Main navigation" data-open="false">
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav-links main-nav-social" aria-label="Open menu">
-      <span class="nav-toggle-bars" aria-hidden="true" />
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav-panel" aria-label="Open menu">
+      <span class="nav-toggle-bars" aria-hidden="true"><span /><span /><span /></span>
     </button>
+    <div class="nav-panel" id="main-nav-panel">
     <ul class="nav-links" id="main-nav-links">
       {navigation.map((item) => (
         <li><a href={item.href} data-nav-id={item.id} data-active={String(active === item.id)}
@@ -40,69 +41,7 @@ const socials = [
         </a></li>
       ))}
     </ul>
+    </div>
+    <span class="nav-indicator" aria-hidden="true" style="view-transition-name: nav-indicator;" hidden />
   </nav>
 </header>
-<script>
-  const nav = document.querySelector<HTMLElement>('.site-nav');
-  const toggle = nav?.querySelector<HTMLButtonElement>('.nav-toggle');
-  if (nav && toggle) {
-    nav.dataset.menuReady = 'true';
-    let open = false;
-    let blocked: { element: HTMLElement; inert: boolean }[] = [];
-    const setOpen = (next: boolean, restoreFocus = true) => {
-      open = next;
-      nav.dataset.open = String(next);
-      toggle.setAttribute('aria-expanded', String(next));
-      toggle.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
-      document.body.classList.toggle('nav-open', next);
-      if (next) {
-        blocked = [...document.querySelectorAll<HTMLElement>('body > :is(main, footer, .skip-link)')]
-          .map((element) => ({ element, inert: element.inert }));
-        blocked.forEach(({ element }) => { element.inert = true; });
-        nav.querySelector<HTMLAnchorElement>('.nav-links a')?.focus();
-      } else {
-        blocked.forEach(({ element, inert }) => { element.inert = inert; });
-        blocked = [];
-        if (restoreFocus) toggle.focus();
-      }
-    };
-    toggle.addEventListener('click', () => setOpen(!open));
-    nav.addEventListener('keydown', (event) => {
-      if (!open) return;
-      if (event.key === 'Escape') { event.preventDefault(); setOpen(false); return; }
-      if (event.key !== 'Tab') return;
-      const focusable = [...nav.querySelectorAll<HTMLElement>('button, a[href]')]
-        .filter((element) => element.getClientRects().length > 0);
-      const first = focusable[0], last = focusable.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-    });
-    nav.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => link.addEventListener('click', () => {
-      if (!open) return;
-      setOpen(false, false);
-      if (link.hash && link.pathname === location.pathname) {
-        const destination = document.getElementById(link.hash.slice(1));
-        if (destination) { destination.tabIndex = -1; destination.focus({ preventScroll: true }); }
-      } else toggle.focus();
-    }));
-    matchMedia('(min-width: 901px)').addEventListener('change', (event) => {
-      if (event.matches && open) setOpen(false, false);
-    });
-    if (location.pathname === '/') {
-      const sections = ['home', 'research', 'writings', 'about']
-        .map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
-      const observer = new IntersectionObserver((entries) => {
-        const current = entries.filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.target.id;
-        if (!current) return;
-        nav.querySelectorAll<HTMLElement>('[data-nav-id]').forEach((link) => {
-          const selected = link.dataset.navId === current;
-          link.dataset.active = String(selected);
-          if (selected) link.setAttribute('aria-current', 'location');
-          else link.removeAttribute('aria-current');
-        });
-      }, { rootMargin: '-20% 0px -55% 0px', threshold: 0 });
-      sections.forEach((section) => observer.observe(section));
-    }
-  }
-</script>

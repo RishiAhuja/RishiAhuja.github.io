@@ -134,8 +134,9 @@ const awardMarks = paperAwardMarks(paper.data);
         <section class="project-cite">
           <div class="project-cite-head">
             <h2>Cite</h2>
-            <button class="button" type="button" id="copy-bibtex">Copy</button>
+            <button class="button copy-button" type="button" id="copy-bibtex"><span class="copy-label" aria-live="polite" aria-atomic="true">Copy</span></button>
           </div>
+          <p id="copy-feedback" class="copy-feedback" role="status" />
           <pre><code id="bibtex-code">{paper.data.bibtex}</code></pre>
         </section>
       )}
@@ -161,19 +162,3 @@ const awardMarks = paperAwardMarks(paper.data);
 
   <SiteFooter />
 </BaseLayout>
-
-{paper.data.bibtex && (
-  <script>
-    const copyBtn = document.getElementById('copy-bibtex');
-    const bibtexCode = document.getElementById('bibtex-code');
-    copyBtn?.addEventListener('click', async () => {
-      if (!bibtexCode?.textContent) return;
-      try { await navigator.clipboard.writeText(bibtexCode.textContent); }
-      catch { copyBtn.textContent = 'Select and copy the citation below'; return; }
-      copyBtn.textContent = 'Copied';
-      setTimeout(() => {
-        copyBtn.textContent = 'Copy';
-      }, 1600);
-    });
-  </script>
-)}

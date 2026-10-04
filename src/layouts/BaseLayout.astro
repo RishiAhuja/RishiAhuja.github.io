@@ -1,6 +1,7 @@
 ---
 import '../styles/site.css';
 import Header from '../components/Header.astro';
+import { ViewTransitions } from 'astro:transitions';
 import { OG_WIDTH, OG_HEIGHT, ogImagePath } from '../lib/og';
 
 interface Props {
@@ -61,6 +62,7 @@ const isInner = Astro.url.pathname !== '/';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageURL} />
     <meta name="twitter:image:alt" content={imageAlt} />
+    <ViewTransitions fallback="none" />
     <slot name="head" />
   </head>
   <body class={[isInner ? 'is-inner' : 'is-home', cover && `cover-${cover}`].filter(Boolean).join(' ')}>
@@ -68,33 +70,7 @@ const isInner = Astro.url.pathname !== '/';
     <Header />
     <slot />
     <script>
-      const warmed = new Set<string>();
-
-      const prefetchCover = (url: string) => {
-        const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-        if (connection?.saveData || connection?.effectiveType?.includes('2g')) return;
-        if (!url || warmed.has(url) || document.querySelector(`link[href="${url}"]`)) return;
-        warmed.add(url);
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.as = 'image';
-        link.href = url;
-        document.head.appendChild(link);
-      };
-
-      const fromTarget = (target: EventTarget | null) => {
-        if (!(target instanceof Element)) return;
-        const host = target.closest('[data-cover-prefetch]');
-        if (host instanceof HTMLElement) prefetchCover(host.dataset.coverPrefetch ?? '');
-      };
-
-      document.addEventListener('pointerenter', (event) => fromTarget(event.target), true);
-      document.addEventListener('focusin', (event) => fromTarget(event.target));
-      document.addEventListener(
-        'touchstart',
-        (event) => fromTarget(event.target),
-        { capture: true, passive: true },
-      );
+      import '../scripts/siteMotion';
     </script>
   </body>
 </html>

@@ -117,7 +117,7 @@ const schema = {
           </a>
           <a class="button" href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
             CV
-            <ArrowDownIcon aria-hidden="true" />
+            <ArrowDownIcon className="arrow-down" aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -301,19 +301,3 @@ const schema = {
 
   <SiteFooter />
 </BaseLayout>
-
-<script>
-  const updates = document.querySelector<HTMLButtonElement>('.updates-toggle');
-  const extra = [...document.querySelectorAll<HTMLElement>('[data-extra-update]')];
-  if (updates && extra.length) {
-    updates.hidden = false;
-    updates.addEventListener('click', () => {
-      const expanded = updates.getAttribute('aria-expanded') !== 'true';
-      extra.forEach((row) => { row.hidden = !expanded; });
-      updates.setAttribute('aria-expanded', String(expanded));
-      updates.querySelector('span')!.textContent = expanded ? 'Show less' : `Show ${extra.length} more`;
-      updates.querySelector('.toggle-arrow')!.textContent = expanded ? '↑' : '↓';
-      if (!expanded) updates.scrollIntoView({ block: 'nearest', behavior: 'instant' });
-    });
-  }
-</script>
