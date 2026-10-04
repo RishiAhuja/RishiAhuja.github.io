@@ -21,7 +21,7 @@ const posts = await getWritings();
         <h1 class="page-title">Writing</h1>
       </div>
       <p class="page-lede">
-        Notes on systems, protocols, and models. Full posts, rendered here from the original markdown.
+        Explorations of systems, protocols, and models, with explanations built from first principles.
       </p>
       <div class="project-grid writing-grid">
         {posts.map((post, index) => (
@@ -29,26 +29,27 @@ const posts = await getWritings();
             <a
               class="project-cover-link"
               href={writingPath(post.slug)}
+              aria-label={`Read ${post.data.title}`}
               data-cover-prefetch={writingArtwork(post.slug)?.heroAvif}
             >
               <div class={`project-cover ${post.data.cover}`}>
                 {writingArtwork(post.slug) && (
-                  <CoverArt cover={writingArtwork(post.slug)!} variant="card" priority={index < 3} />
+                  <CoverArt cover={writingArtwork(post.slug)!} variant="card" priority={index === 0} />
                 )}
               </div>
             </a>
-            <h3>
+            <h2>
               <a class="project-name" href={writingPath(post.slug)}>{post.data.title}</a>
-            </h3>
+            </h2>
             <p class="project-desc">{post.data.brief}</p>
-            <p class="project-venue">{post.data.dateAdded.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} · {post.data.readTimeInMinutes} min</p>
+            <p class="project-venue">{post.data.dateAdded.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} · {post.data.readTimeInMinutes} min read</p>
           </article>
         ))}
       </div>
       <p class="writing-hashnode">
         <a class="button" href="https://rishi2220.hashnode.dev" target="_blank" rel="noopener noreferrer">
           Hashnode
-          <ArrowUpRightIcon />
+          <ArrowUpRightIcon aria-hidden="true" />
         </a>
       </p>
     </section>

@@ -13,6 +13,7 @@ interface Props {
   imageAlt?: string;
   ogType?: 'website' | 'article';
   cover?: string;
+  canonical?: string;
 }
 
 const {
@@ -24,10 +25,11 @@ const {
   imageType = 'image/png',
   imageAlt = title,
   ogType = /^\/(?:pub|blurb|writings)\/[^/]+/.test(Astro.url.pathname) ? 'article' : 'website',
-  cover,
+  cover, canonical,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = canonical ? new URL(canonical) : pageURL;
 const imageURL = new URL(image, Astro.site).toString();
 const isInner = Astro.url.pathname !== '/';
 ---
@@ -43,7 +45,7 @@ const isInner = Astro.url.pathname !== '/';
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content={ogType} />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={pageURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={imageURL} />

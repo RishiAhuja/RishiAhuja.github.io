@@ -1590,6 +1590,7 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .research-status { margin: 0 0 .5rem; color: var(--text-muted); font-size: .8em; }
 .research-authors, .research-venue { margin: 0 0 .7rem; font-size: .9em; }
 .research-venue { font-weight: 600; }
+.original-publication a { display: inline-flex; align-items: center; gap: .35em; min-height: 44px; font-size: .84em; text-decoration: underline; text-underline-offset: .2em; }
 .toc { display: block; grid-row: 1; width: 100%; margin-bottom: 1.75rem; border-block: 1px solid var(--rule); padding-block: .5rem; }
 .toc summary { padding-block: .5rem; min-height: 44px; cursor: pointer; font-size: .85em; font-weight: 600; }
 .toc nav { padding-bottom: .75rem; }
