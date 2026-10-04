@@ -23,7 +23,7 @@ const latestWritings = (await getWritings()).slice(0, 3);
 const updates = [
   ['Sep 2026', 'Selected to attend the Google DeepMind APAC Research Symposium 2026 at Google Ananta.'],
   ['Sep 2026', 'Selected to present ICFD-31k at ConfAI, Plaksha University.'],
-  ['Sep 2026', 'Selected as a summer intern at Cisco.'],
+  ['Sep 2026', 'Selected as a summer intern at <a class="highlight" href="/blurb/cisco-interview">Cisco</a>.'],
   // ['Sep 2026', 'Joined the Machine and Hybrid Intelligence Lab at Northwestern University as an undergraduate researcher.'],
   ['Sep 2026', 'Served as a reviewer for GlobalSouthAI at NeurIPS 2026.'],
   ['Sep 2026', 'ICFD-31k published in the IJCAI–ECAI 2026 proceedings.'],
@@ -44,6 +44,12 @@ const updates = [
   ['Mar 2026', 'Awarded an ICLR 2026 grant.'],
   ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
 ];
+
+const monthDate = (label: string) => {
+  const [month, year] = label.split(' ');
+  const number = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(month) + 1;
+  return `${year}-${String(number).padStart(2, '0')}`;
+};
 
 const schema = {
   '@context': 'https://schema.org',
@@ -80,6 +86,7 @@ const schema = {
 >
   <link slot="head" rel="preload" as="image" href={PORTRAIT} fetchpriority="high" />
   <JsonLd data={schema} />
+  <noscript slot="head"><style is:inline>[data-extra-update] { display: grid !important; }</style></noscript>
 
   <main id="main-content" tabindex="-1">
     <section class="hero wrap" id="home">
@@ -87,9 +94,9 @@ const schema = {
         <div>
           <h1>Hello 👋</h1>
           <p>
-            I am Rishi Ahuja, an undergraduate researcher pursuing a B.Tech. with
-            Research in Information Technology at NIT Jalandhar, and an incoming
-            intern at Cisco.
+            I am <a class="intro-link" href="#about">Rishi Ahuja</a>, an undergraduate researcher pursuing a B.Tech. with
+            Research in Information Technology at <a class="intro-link" href="https://www.nitj.ac.in/" target="_blank" rel="noopener noreferrer">NIT Jalandhar</a>, and an incoming
+            intern at <a class="intro-link" href="/blurb/cisco-interview">Cisco</a>.
             {/*
             I also work at <span class="highlight">Northwestern University</span>.
             I also work with the{' '}
@@ -106,11 +113,11 @@ const schema = {
         <div class="hero-actions">
           <a class="button" href="/research">
             View research
-            <ArrowUpRightIcon />
+            <ArrowUpRightIcon aria-hidden="true" />
           </a>
           <a class="button" href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
             CV
-            <ArrowDownIcon />
+            <ArrowDownIcon aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -137,11 +144,12 @@ const schema = {
             <a
               class="project-cover-link"
               href={pubPath(paper.slug)}
+              aria-label={`Read about ${paper.data.short_name}`}
               data-cover-prefetch={paperArtwork(paper.slug)?.heroAvif}
             >
               <div class={`project-cover ${paper.data.cover}`}>
                 {paperArtwork(paper.slug) && (
-                  <CoverArt cover={paperArtwork(paper.slug)!} variant="card" priority />
+                  <CoverArt cover={paperArtwork(paper.slug)!} variant="card" />
                 )}
               </div>
             </a>
@@ -160,7 +168,7 @@ const schema = {
       <p class="writing-more">
         <a class="button" href="/research">
           All research
-          <ArrowUpRightIcon />
+          <ArrowUpRightIcon aria-hidden="true" />
         </a>
       </p>
     </section>
@@ -192,14 +200,17 @@ const schema = {
 
     <section class="section wrap" id="updates">
       <h2 class="section-title">Updates and awards</h2>
-      <ul class="update-list">
-        {updates.map(([date, text]) => (
-          <li>
-            <time>{date}</time>
-            <span>{text}</span>
+      <ul class="update-list" id="updates-list">
+        {updates.map(([date, text], index) => (
+          <li hidden={index >= 8} data-extra-update={index >= 8 ? '' : undefined}>
+            <time datetime={monthDate(date)}>{date}</time>
+            <span set:html={text} />
           </li>
         ))}
       </ul>
+      <button class="updates-toggle" type="button" hidden aria-expanded="false" aria-controls="updates-list" data-remaining={updates.length - 8}>
+        <span>Show {updates.length - 8} more</span> <span class="toggle-arrow" aria-hidden="true">↓</span>
+      </button>
     </section>
 
     <section class="section wrap-wide" id="writings">
@@ -210,6 +221,7 @@ const schema = {
             <a
               class="project-cover-link"
               href={writingPath(post.slug)}
+              aria-label={`Read ${post.data.title}`}
               data-cover-prefetch={writingArtwork(post.slug)?.heroAvif}
             >
               <div class={`project-cover ${post.data.cover}`}>
@@ -230,8 +242,8 @@ const schema = {
       </div>
       <p class="writing-more">
         <a class="button" href="/writings">
-          All Writing
-          <ArrowUpRightIcon />
+          All writing
+          <ArrowUpRightIcon aria-hidden="true" />
         </a>
       </p>
     </section>
@@ -289,3 +301,19 @@ const schema = {
 
   <SiteFooter />
 </BaseLayout>
+
+<script>
+  const updates = document.querySelector<HTMLButtonElement>('.updates-toggle');
+  const extra = [...document.querySelectorAll<HTMLElement>('[data-extra-update]')];
+  if (updates && extra.length) {
+    updates.hidden = false;
+    updates.addEventListener('click', () => {
+      const expanded = updates.getAttribute('aria-expanded') !== 'true';
+      extra.forEach((row) => { row.hidden = !expanded; });
+      updates.setAttribute('aria-expanded', String(expanded));
+      updates.querySelector('span')!.textContent = expanded ? 'Show less' : `Show ${extra.length} more`;
+      updates.querySelector('.toggle-arrow')!.textContent = expanded ? '↑' : '↓';
+      if (!expanded) updates.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    });
+  }
+</script>

@@ -355,7 +355,7 @@ img {
   max-width: 100%;
   color: #1f1f1f;
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 0.18em;
   text-decoration-color: currentColor;
@@ -1574,6 +1574,12 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .is-inner:has(.writing-hero) .site-header, .is-inner:has(.project-hero) .site-header { display: block; background: var(--cover-fill); }
 .crumbs, .crumbs a { color: var(--text); opacity: 1; }
 .crumbs a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: .2em; }
+.intro-link, .intro-link:visited { color: var(--text); font-weight: 700; text-decoration: none; cursor: pointer; white-space: nowrap; }
+.intro-link:hover, .intro-link:focus-visible { color: var(--accent); }
+.project-tile h2 { margin: 14px 0 4px; line-height: 1.35; }
+.updates-toggle { display: inline-flex; align-items: center; gap: .8rem; padding: .6rem 0; min-height: 44px; margin-top: 1rem; border: 0; background: transparent; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.updates-toggle:hover .toggle-arrow { transform: translateY(3px); }
+.toggle-arrow { transition: transform .2s; }
 .toc { display: block; grid-row: 1; width: 100%; margin-bottom: 1.75rem; border-block: 1px solid var(--rule); padding-block: .5rem; }
 .toc summary { padding-block: .5rem; min-height: 44px; cursor: pointer; font-size: .85em; font-weight: 600; }
 .toc nav { padding-bottom: .75rem; }
