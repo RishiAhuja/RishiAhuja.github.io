@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CoverArt from '../../components/CoverArt.astro';
+import { blurbArtwork } from '../../lib/artwork';
+import { formatPostDate } from '../../lib/blogs';
+import { publishedBlurbs, blurbPath } from '../../lib/blurbs';
+const blurbs = publishedBlurbs();
+const categoryLabels = { project: 'Building', learning: 'Learning', experience: 'Experience', achievement: 'Achievement', reflection: 'Reflection' };
+---
+<BaseLayout title="Blurbs · Rishi Ahuja" description="Conference journeys, building projects, and experiences along the way.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap">
+      <div class="blurbs-intro">
+        <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Blurbs</h1></div>
+        <p class="page-lede">Conference journeys, things I’m building, and experiences along the way.</p>
+      </div>
+      <div class="blurbs-list">
+        {blurbs.map((blurb, index) => (
+          <article class="blurb-entry">
+            <a class="project-cover-link" href={blurbPath(blurb.slug)} aria-label={`Read ${blurb.title}`} data-cover-prefetch={blurbArtwork(blurb.slug)?.heroAvif}>
+              <div class={`project-cover ${blurb.cover || 'mist'}`}>{blurbArtwork(blurb.slug) && <CoverArt cover={blurbArtwork(blurb.slug)!} priority={index === 0} />}</div>
+            </a>
+            <div class="blurb-entry-copy">
+              <p class="blurb-entry-kind">{categoryLabels[blurb.category]}</p>
+              <h2><a class="project-name" href={blurbPath(blurb.slug)}>{blurb.title}</a></h2>
+              <p class="project-desc">{blurb.subtitle || blurb.description}</p>
+              <p class="project-venue"><time datetime={blurb.publishedDate}>{formatPostDate(new Date(`${blurb.publishedDate}T00:00:00Z`))}</time> · {blurb.readTime} min read</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

@@ -1,18 +1,21 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import { paperBlurbs, publishedBlurbs, blurbPath } from '../../lib/blurbs';
+import { pubPath } from '../../lib/research';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CoverArt from '../../components/CoverArt.astro';
 import CoverPreload from '../../components/CoverPreload.astro';
-import BlurbContentRenderer from '../../components/blurb/BlurbContentRenderer';
+import BlurbContent from '../../components/blurb/BlurbContent.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { blurbPosts, type BlurbPost } from '../../data/blurb';
 import { blurbArtwork } from '../../lib/artwork';
 import { formatPostDate } from '../../lib/blogs';
 import { hasWritingToc } from '../../lib/blogMarkdown';
 import { blurbHeadings } from '../../lib/blurbToc.ts';
-import '../../styles/blurb-utilities.css';
+
 
 export const getStaticPaths = (() => {
   return blurbPosts
@@ -29,12 +32,14 @@ const headings = blurbHeadings(post.content);
 const showToc = hasWritingToc(headings);
 const artwork = blurbArtwork(post.slug);
 const cover = post.cover || 'mist';
+const relatedPapers = (await getCollection('research')).filter((paper) => paperBlurbs[paper.slug]?.includes(post.slug));
+const relatedBlurbs = publishedBlurbs().filter((note) => note.slug !== post.slug).sort((a, b) => Number(b.category === post.category) - Number(a.category === post.category)).slice(0, 2);
+const hasTwitter = post.content.some((item) => item.type === 'twitter' && item.tweetId && item.tweetId.length >= 15);
 ---
 
 <BaseLayout title={`${post.title} · Rishi Ahuja`} description={post.description} cover={cover}>
-  <meta slot="head" name="robots" content="noindex, nofollow" />
   <CoverPreload slot="head" cover={artwork} variant="hero" />
-  <script is:inline slot="head" async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  {hasTwitter && <script is:inline slot="head" async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>}
 
   <main id="main-content" tabindex="-1">
     <section class={`writing-hero ${cover}`}>
@@ -42,7 +47,7 @@ const cover = post.cover || 'mist';
         <div class="project-intro">
           <div>
             <div class="page-path">
-              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blurb' }]} />
+              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blurbs', href: '/blurb' }]} />
               <h1>{post.title}</h1>
             </div>
             <p class="project-authors">Rishi Ahuja</p>
@@ -64,13 +69,13 @@ const cover = post.cover || 'mist';
     </section>
 
     <article class={`project-body wrap writing-with-toc${showToc ? ' has-toc' : ''}`}>
-      <div class="blog-main blurb-page">
-        <div class="blurb-content">
-          <BlurbContentRenderer content={post.content} client:load />
-        </div>
-      </div>
       <TableOfContents items={headings} />
+      <div class="blog-main blurb-page">
+        <BlurbContent content={post.content} />
+      </div>
     </article>
+    {relatedPapers.length > 0 && <section class="section wrap"><h2 class="section-title">Research from this trip</h2><div class="related-grid">{relatedPapers.map((paper) => <a class="related-card" href={pubPath(paper.slug)}><p class="project-venue">{paper.data.venue}</p><h3>{paper.data.short_name}</h3><p>{paper.data.blurb}</p></a>)}</div></section>}
+    <section class="section wrap"><h2 class="section-title">More blurbs</h2><div class="related-grid">{relatedBlurbs.map((note) => <a class="related-card" href={blurbPath(note.slug)}><h3>{note.title}</h3><p>{note.subtitle || note.description}</p></a>)}</div></section>
   </main>
 
   <SiteFooter />

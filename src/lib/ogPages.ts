@@ -4,6 +4,7 @@ import { paperArtwork, writingArtwork, blurbArtwork } from './artwork';
 import { PORTRAIT } from './constants';
 import { paperAwardMarks, pubPath } from './research';
 import { getWritings } from './blogs';
+import { publishedBlurbs } from './blurbs';
 import type { OgCard } from './og';
 
 const dateLabel = (date: Date) =>
@@ -34,10 +35,16 @@ export async function getOgCards(): Promise<OgCard[]> {
     },
     {
       path: '/writings', kind: 'index', title: 'Writing', eyebrow: 'Rishi Ahuja',
-      subtitle: 'Notes on systems, protocols, and models.',
+      subtitle: 'Systems, protocols, and models.',
       metadata: `${writings.length} posts · Systems & machine learning`,
       cover: writings[0]?.data.cover,
       artwork: writings[0] && writingArtwork(writings[0].slug)?.heroWebp,
+    },
+    {
+      path: '/blurb', kind: 'index', title: 'Blurbs', eyebrow: 'Rishi Ahuja',
+      subtitle: 'Conference journeys, things I’m building, and experiences along the way.',
+      metadata: `${publishedBlurbs().length} blurbs`, cover: publishedBlurbs()[0]?.cover,
+      artwork: blurbArtwork(publishedBlurbs()[0]?.slug)?.heroWebp,
     },
     ...papers.map((paper: CollectionEntry<'research'>): OgCard => ({
       path: pubPath(paper.slug), kind: 'research', eyebrow: 'Research',

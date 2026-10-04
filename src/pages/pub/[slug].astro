@@ -8,6 +8,7 @@ import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { isResourceLink, paperAwardMarks, pubPath, resourceLabel } from '../../lib/research';
 import { paperArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
+import { publishedBlurbs, paperBlurbs, blurbPath } from '../../lib/blurbs';
 import CoverPreload from '../../components/CoverPreload.astro';
 
 export async function getStaticPaths() {
@@ -28,6 +29,7 @@ const related = (await getCollection('research'))
 
 const resources = paper.data.links.filter((link) => isResourceLink(link.label, link.primary));
 const pageUrl = new URL(pubPath(paper.slug), Astro.site).toString();
+const relatedBlurbs = publishedBlurbs().filter((note) => paperBlurbs[paper.slug]?.includes(note.slug));
 const awardMarks = paperAwardMarks(paper.data);
 ---
 
@@ -101,7 +103,7 @@ const awardMarks = paperAwardMarks(paper.data);
                 {resources.map((link) => (
                   <a class="button" href={link.url} target="_blank" rel="noopener noreferrer">
                     {resourceLabel(link.label)}
-                    <ArrowUpRightIcon />
+                    <ArrowUpRightIcon aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -139,6 +141,8 @@ const awardMarks = paperAwardMarks(paper.data);
       )}
     </article>
 
+    {relatedBlurbs.length > 0 && <section class="section wrap"><h2 class="section-title">Behind the research</h2><div class="related-grid">{relatedBlurbs.map((note) => <a class="related-card" href={blurbPath(note.slug)}><h3>{note.title}</h3><p>{note.subtitle || note.description}</p></a>)}</div></section>}
+
     {related.length > 0 && (
       <section class="section wrap">
         <h2 class="section-title">More research</h2>
@@ -164,7 +168,8 @@ const awardMarks = paperAwardMarks(paper.data);
     const bibtexCode = document.getElementById('bibtex-code');
     copyBtn?.addEventListener('click', async () => {
       if (!bibtexCode?.textContent) return;
-      await navigator.clipboard.writeText(bibtexCode.textContent);
+      try { await navigator.clipboard.writeText(bibtexCode.textContent); }
+      catch { copyBtn.textContent = 'Select and copy the citation below'; return; }
       copyBtn.textContent = 'Copied';
       setTimeout(() => {
         copyBtn.textContent = 'Copy';
