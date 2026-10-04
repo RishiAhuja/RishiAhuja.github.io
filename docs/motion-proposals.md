@@ -1,17 +1,17 @@
 # Motion proposals for the researcher portfolio
 
-Status: implemented after approval. All feedback is brief, with a 200 ms ceiling and immediate state changes under reduced motion.
+Status: implemented after approval. Interaction feedback stays within 200 ms; the cover-to-hero transition takes 300 ms after the requested timing adjustment. Reduced motion keeps state changes immediate.
 
 The site uses restrained typography, a blue interaction accent, pale cover colours, and abstract artwork. Motion should explain a click, connect a cover to its page, or acknowledge a change. Keep the introduction's bold links and the existing CTA appearance. Blurbs remain a quiet footer discovery.
 
 ## Locations and behaviour
 
-Scripted animations are capped at 200 ms. Native navigation is enabled only in supporting browsers; other browsers keep regular page navigation.
+Scripted animations are capped at 200 ms. Shared cover movement uses 300 ms; page fades and navigation-dot timings stay unchanged. Native navigation is enabled only in supporting browsers; other browsers keep regular page navigation.
 
 | Priority | Location and source | Trigger | Animation | Timing |
 | --- | --- | --- | --- | --- |
 | Start | Internal page navigation: `src/layouts/BaseLayout.astro` and all page `<main>` elements | Home / Research / Writing / Blurbs / publication navigation, including Back | Crossfade the main content while the shared navigation stays visually steady. Avoid sliding an entire long page. Restore scroll on Back and move focus appropriately on new-page navigation. | 70 ms out; 130 ms in |
-| Start | Cover links in `src/pages/index.astro`, `src/pages/research/index.astro`, `src/pages/writings/index.astro`, and `src/pages/blurb/index.astro`; destination hero covers in the detail routes | Open a paper, article, or blurb | Let the clicked cover move and resize into the destination hero cover. Fade the surrounding content. Use the reverse connection on Back where the cover is visible; fall back to the page fade otherwise. | 200 ms |
+| Start | Cover links in `src/pages/index.astro`, `src/pages/research/index.astro`, `src/pages/writings/index.astro`, and `src/pages/blurb/index.astro`; destination hero covers in the detail routes | Open a paper, article, or blurb | Let the clicked cover move and resize into the destination hero cover. Fade the surrounding content. Use the reverse connection on Back where the cover is visible; fall back to the page fade otherwise. | 300 ms |
 | Consider | Active navigation dot: `src/components/Header.astro`, `.nav-links` in `src/styles/site.css` | Selected route or observed homepage section changes | Move one indicator to the new link, with a small opacity fade when the navigation layout changes. Keep Research selected on publication pages and Writing on article pages. Blurbs selects no unrelated nav item. | 160 ms |
 | Consider | Navbar text and social icons: `Header.astro` | Pointer hover / keyboard focus | Ease the colour into the blue accent. Keep the focus ring immediate and the text and icon positions steady. | 110 ms |
 | Start | Mobile navigation panel: `Header.astro`, `.site-nav[data-open]` | Open / close menu | Fade the panel and move its links down 4 px into position as a single group. Close slightly faster. Focus trapping, Escape, inert background, and focus restoration take effect immediately. | 160 ms open; 120 ms close |

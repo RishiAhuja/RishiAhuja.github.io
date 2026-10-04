@@ -92,11 +92,13 @@ const routingSource = await readFile(new URL('../src/scripts/siteMotion.ts', imp
 const routingJS = ts.transpileModule(routingSource.replace(/^import .*;\n/gm, ''), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
 let fixtureCount = 0;
 async function navigationFixture() {
+  const root = () => ({ style: { values: {}, setProperty(name, value) { this.values[name] = value; }, getPropertyValue(name) { return this.values[name] || ''; }, removeProperty(name) { delete this.values[name]; } } });
+  const oldRoot = root(), nextRoot = root();
   const cover = () => ({ dataset: { coverId: 'research-example' }, style: { viewTransitionName: '', removeProperty() { this.viewTransitionName = ''; } }, getBoundingClientRect: () => ({ width: 100, height: 130, left: 20, right: 120, top: 20, bottom: 150 }) });
   const old = cover(), next = cover(), finished = deferred(); let focused = 0;
   const main = { focus() { focused++; } };
   const document = Object.assign(new EventTarget(), {
-    readyState: 'loading', body: {},
+    readyState: 'loading', body: {}, documentElement: oldRoot,
     querySelectorAll: () => [], querySelector: () => old,
     getElementById: () => main,
   });
@@ -111,7 +113,7 @@ async function navigationFixture() {
     const controller = new AbortController();
     const event = Object.assign(new Event('astro:before-preparation'), { navigationType, signal: controller.signal, newDocument: document });
     document.dispatchEvent(event);
-    event.newDocument = { querySelectorAll: () => [next] };
+    event.newDocument = { querySelectorAll: () => [next], documentElement: nextRoot };
     document.dispatchEvent(new Event('astro:after-preparation'));
     return controller;
   };
@@ -119,16 +121,19 @@ async function navigationFixture() {
     document.dispatchEvent(Object.assign(new Event('astro:before-swap'), { viewTransition: { finished: finished.promise } }));
     document.dispatchEvent(new Event('astro:after-swap'));
   };
-  return { document, old, next, finished, prepare, swap, focused: () => focused };
+  return { document, old, next, oldRoot, nextRoot, finished, prepare, swap, focused: () => focused };
 }
 await test('Astro plain after-preparation notifications pair the loaded cover safely', async () => {
   const fixture = await navigationFixture(); fixture.prepare();
   assert.equal(fixture.old.style.viewTransitionName, 'cover-research-example');
   assert.equal(fixture.next.style.viewTransitionName, 'cover-research-example');
+  assert.equal(fixture.oldRoot.style.getPropertyValue('--shared-cover-duration'), '300ms');
+  assert.equal(fixture.nextRoot.style.getPropertyValue('--shared-cover-duration'), '300ms');
   fixture.swap(); assert.equal(fixture.focused(), 1);
   // Keep names until the native snapshots finish, then remove both.
   assert.equal(fixture.next.style.viewTransitionName, 'cover-research-example');
   fixture.finished.resolve(); await flush(); assert.equal(fixture.old.style.viewTransitionName, ''); assert.equal(fixture.next.style.viewTransitionName, '');
+  assert.equal(fixture.oldRoot.style.getPropertyValue('--shared-cover-duration'), ''); assert.equal(fixture.nextRoot.style.getPropertyValue('--shared-cover-duration'), '');
 });
 await test('Back navigation preserves focus and native scroll restoration', async () => {
   const fixture = await navigationFixture(); fixture.prepare('traverse'); fixture.swap();
@@ -137,5 +142,6 @@ await test('Back navigation preserves focus and native scroll restoration', asyn
 await test('aborted navigation removes temporary cover names', async () => {
   const fixture = await navigationFixture(), controller = fixture.prepare(); controller.abort();
   assert.equal(fixture.old.style.viewTransitionName, ''); assert.equal(fixture.next.style.viewTransitionName, '');
+  assert.equal(fixture.oldRoot.style.getPropertyValue('--shared-cover-duration'), ''); assert.equal(fixture.nextRoot.style.getPropertyValue('--shared-cover-duration'), '');
 });
 console.log(`Motion verification passed: ${passed} checks.`);

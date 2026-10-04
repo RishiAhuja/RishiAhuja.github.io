@@ -1699,7 +1699,7 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 @keyframes page-fade-out { to { opacity: 0; } }
 @keyframes page-fade-in { from { opacity: 0; } }
 ::view-transition { pointer-events: none; }
-::view-transition-group(*) { animation-duration: 200ms; animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+::view-transition-group(*) { animation-duration: var(--shared-cover-duration, 200ms); animation-timing-function: cubic-bezier(.2,.7,.2,1); }
 ::view-transition-old(root) { animation: page-fade-out 70ms ease-out both; }
 ::view-transition-new(root) { animation: page-fade-in 130ms ease-out both; }
 ::view-transition-group(site-header) { animation: none; }

@@ -12,7 +12,7 @@ let scope: MotionScope | null = null;
 let body: HTMLElement | null = null;
 let closeMenu = () => {};
 let focusDestination = false;
-let pairedCover: { old: HTMLElement; next: HTMLElement } | null = null;
+let pairedCover: { old: HTMLElement; next: HTMLElement; oldRoot: HTMLElement; nextRoot: HTMLElement } | null = null;
 let preparation: NavigationEvent | null = null;
 const warmed = new Set<string>();
 
@@ -23,6 +23,8 @@ const visible = (element: HTMLElement) => {
 const clearCover = () => {
   pairedCover?.old.style.removeProperty('view-transition-name');
   pairedCover?.next.style.removeProperty('view-transition-name');
+  pairedCover?.oldRoot.style.removeProperty('--shared-cover-duration');
+  pairedCover?.nextRoot.style.removeProperty('--shared-cover-duration');
   pairedCover = null;
 };
 const mountPage = () => {
@@ -72,7 +74,10 @@ document.addEventListener('astro:after-preparation', () => {
   const next = [...navigation.newDocument.querySelectorAll<HTMLElement>('[data-cover-id]')].find((cover) => cover.dataset.coverId === id);
   if (!next) return;
   old.style.viewTransitionName = next.style.viewTransitionName = `cover-${id}`;
-  pairedCover = { old, next };
+  const oldRoot = document.documentElement, nextRoot = navigation.newDocument.documentElement;
+  oldRoot.style.setProperty('--shared-cover-duration', '300ms');
+  nextRoot.style.setProperty('--shared-cover-duration', '300ms');
+  pairedCover = { old, next, oldRoot, nextRoot };
   navigation.signal?.addEventListener('abort', clearCover, { once: true });
 });
 document.addEventListener('astro:before-swap', (event) => {
