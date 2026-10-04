@@ -16,7 +16,11 @@ export interface BlurbContent {
   domain?: string; // for link embeds
   images?: { src: string; alt: string }[]; // for carousel
   caption?: string; // for carousel
-  poster?: string; // for video poster/thumbnail
+  poster?: string;
+  captions?: string;
+  transcript?: string;
+  durationSeconds?: number;
+  technical?: boolean; // for video poster/thumbnail
 }
 
 export interface BlurbPost {
@@ -1880,6 +1884,8 @@ int main() {
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790979955337_WhatsApp_Video_2026-10-03_at_03.54.56.mp4",
+      "poster": "/images/video-posters/1790979955337.webp",
+      "durationSeconds": 11.36,
       "alt": "Cathedral first look"
     },
     {
@@ -1945,11 +1951,15 @@ int main() {
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980430624_WhatsApp_Video_2026-10-03_at_04.00.11_4_.mp4",
+      "poster": "/images/video-posters/1790980430624.webp",
+      "durationSeconds": 54.73,
       "alt": "Inside the cathedral"
     },
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980442113_WhatsApp_Video_2026-10-03_at_04.00.11_5_.mp4",
+      "poster": "/images/video-posters/1790980442113.webp",
+      "durationSeconds": 6.13,
       "alt": "Cathedral stroll"
     },
     {
@@ -1969,11 +1979,15 @@ int main() {
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980499449_WhatsApp_Video_2026-10-03_at_04.00.11_6_.mp4",
+      "poster": "/images/video-posters/1790980499449.webp",
+      "durationSeconds": 9.59,
       "alt": "Cathedral square buzz"
     },
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980513565_WhatsApp_Video_2026-10-03_at_04.00.11_3_.mp4",
+      "poster": "/images/video-posters/1790980513565.webp",
+      "durationSeconds": 11.17,
       "alt": "Looking up again"
     },
     {
@@ -2039,6 +2053,8 @@ int main() {
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980829556_WhatsApp_Video_2026-10-03_at_04.09.56.mp4",
+      "poster": "/images/video-posters/1790980829556.webp",
+      "durationSeconds": 29.0,
       "alt": "By the Rhine"
     },
     {
@@ -2094,6 +2110,8 @@ int main() {
     {
       "type": "video",
       "content": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790981165912_WhatsApp_Video_2026-10-03_at_04.14.16.mp4",
+      "poster": "/images/video-posters/1790981165912.webp",
+      "durationSeconds": 79.5,
       "alt": "Layover plane watching"
     },
     {
