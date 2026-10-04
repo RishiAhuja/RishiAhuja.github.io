@@ -3,6 +3,7 @@ import { blurbPosts } from '../data/blurb';
 import { paperArtwork, writingArtwork, blurbArtwork } from './artwork';
 import { PORTRAIT } from './constants';
 import { paperAwardMarks, pubPath } from './research';
+import { getWritings } from './blogs';
 import type { OgCard } from './og';
 
 const dateLabel = (date: Date) =>
@@ -13,7 +14,7 @@ const dateLabel = (date: Date) =>
 // The same collections and publication filter used by the actual page routes.
 export async function getOgCards(): Promise<OgCard[]> {
   const [papers, writings] = await Promise.all([
-    getCollection('research'), getCollection('blogs'),
+    getCollection('research'), getWritings(),
   ]);
   papers.sort((a: CollectionEntry<'research'>, b: CollectionEntry<'research'>) => b.data.sort_date.valueOf() - a.data.sort_date.valueOf());
   writings.sort((a: CollectionEntry<'blogs'>, b: CollectionEntry<'blogs'>) => b.data.dateAdded.valueOf() - a.data.dateAdded.valueOf());
