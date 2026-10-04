@@ -1576,10 +1576,20 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .crumbs a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: .2em; }
 .intro-link, .intro-link:visited { color: var(--text); font-weight: 700; text-decoration: none; cursor: pointer; white-space: nowrap; }
 .intro-link:hover, .intro-link:focus-visible { color: var(--accent); }
+.project-links { display: flex; flex-wrap: wrap; gap: .1rem 1.2rem; margin: .75rem 0 0; padding: 0; list-style: none; font-size: .88em; }
+.project-links a { display: inline-flex; align-items: center; gap: .3em; min-height: 44px; color: var(--accent); text-decoration: underline; text-underline-offset: .2em; }
 .project-tile h2 { margin: 14px 0 4px; line-height: 1.35; }
 .updates-toggle { display: inline-flex; align-items: center; gap: .8rem; padding: .6rem 0; min-height: 44px; margin-top: 1rem; border: 0; background: transparent; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
 .updates-toggle:hover .toggle-arrow { transform: translateY(3px); }
 .toggle-arrow { transition: transform .2s; }
+.research-record { display: grid; grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); padding-block: 2.5rem; border-top: 1px solid var(--rule); }
+.research-record:first-child { margin-top: 2.5rem; }
+.research-record:last-child { border-bottom: 1px solid var(--rule); }
+.research-record h2 { margin: 0 0 .6rem; font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.3; font-weight: 600; }
+.research-record h2 a { color: #1f1f1f; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .18em; }
+.research-status { margin: 0 0 .5rem; color: var(--text-muted); font-size: .8em; }
+.research-authors, .research-venue { margin: 0 0 .7rem; font-size: .9em; }
+.research-venue { font-weight: 600; }
 .toc { display: block; grid-row: 1; width: 100%; margin-bottom: 1.75rem; border-block: 1px solid var(--rule); padding-block: .5rem; }
 .toc summary { padding-block: .5rem; min-height: 44px; cursor: pointer; font-size: .85em; font-weight: 600; }
 .toc nav { padding-bottom: .75rem; }
@@ -1645,6 +1655,8 @@ main:focus, [tabindex='-1']:focus { outline: none; }
   .is-inner:has(.writing-hero) .project-hero-grid, .is-inner:has(.project-hero) .project-hero-grid { padding-top: .75rem; }
 }
 @media (max-width: 620px) {
+  .research-record { grid-template-columns: 1fr; padding-block: 2rem; }
+  .research-thumbnail { max-width: 12rem; }
   .blurb-media-frame { aspect-ratio: 3 / 4; }
   .youtube-frame { aspect-ratio: 16 / 9; }
   .carousel-stage { gap: .25rem; }
