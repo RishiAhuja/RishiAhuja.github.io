@@ -29,14 +29,10 @@ const original: Update[] = [
 const additions: Update[] = [
   ['Oct 2026', 'Started as a visiting scholar and undergraduate researcher at the <a href="https://bagcilab.com/people/rishi-ahuja/" target="_blank" rel="noopener noreferrer">Machine and Hybrid Intelligence Lab</a>, Northwestern University.'],
   ['Oct 2026', 'Became Mobile Development Lead at <a href="/community#gdgc">GDGC, NIT Jalandhar</a>.'],
-  ['Apr 2026', 'Selected for YC Startup School India and the OpenAI Codex Hackathon in Bengaluru.'],
+  ['Apr 2026', 'Selected for and attended YC Startup School India 2026 in Bengaluru.'],
   ['Mar 2026', 'Organised <a href="/community#hackmol">HackMol 7.0</a> at NIT Jalandhar and coordinated the judges.'],
-  ['Jan 2026', 'Completed teaching a <a href="/flutter-bootcamp">14-lecture Flutter bootcamp</a> at GDGC, NIT Jalandhar.'],
   ['Dec 2025', 'Won first place in the AWS Partner Track at HackCBS 8.0.'],
   ['Nov 2025', 'Won first place in the Qyrus sponsor track at HackCBS 8.0.'],
-  ['Nov 2025', 'Presented agricultural technology work at IIT Ropar to a delegation from MeitY and the Ministry of Agriculture.'],
-  ['Sep 2025', 'Mentored teams at Bit N Build Punjab, Thapar University.'],
-  ['Jun 2025', 'Co-founded <a href="https://openlearn.org.in/" target="_blank" rel="noopener noreferrer">OpenLearn</a>, a community for learning and sharing technical work.'],
   ['Jan 2025', 'Placed second at the Level SuperMind National Hackathon in Mumbai.'],
   ['Oct 2024', 'Placed third as a solo participant at the PEC × Prajna AI Hackathon.'],
 ];
