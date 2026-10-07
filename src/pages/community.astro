@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { COURSE } from '../data/teaching';
+---
+<BaseLayout title="Community · Rishi Ahuja" description="Teaching, mentoring, and building developer communities.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Community</h1></div>
+      <p class="page-lede">Teaching, mentoring, and building developer communities.</p>
+      <div class="community-list">
+        <article class="community-entry" id="teaching">
+          <p class="info-label">Teaching · {COURSE.date}</p>
+          <div><h2><a href="/flutter-bootcamp">CS404: Applied Mobile Engineering</a></h2><p>Instructor and creator of a 14-lecture Flutter bootcamp at GDGC, NIT Jalandhar. The completed course covers mobile development from widgets and state to networking, inference, and signed releases.</p><p class="quiet-meta">14 recorded lectures · 23+ hours · Slides and curriculum</p><a class="text-link" href="/flutter-bootcamp">Explore the course <span aria-hidden="true">→</span></a></div>
+        </article>
+        <article class="community-entry" id="hackmol">
+          <p class="info-label">Organising · 28–29 Mar 2026</p>
+          <div><h2>HackMol 7.0</h2><p>Organizer and Judge Coordinator at NIT Jalandhar’s HackMol 7.0.</p><a class="text-link" href="https://hackmol.com/" target="_blank" rel="noopener noreferrer">HackMol <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="community-entry" id="mentoring">
+          <p class="info-label">Mentoring · 6 Sep 2025</p>
+          <div><h2>Bit N Build Punjab</h2><p>Technical mentor at Thapar University, guiding more than 30 teams during a hackathon with over 120 participants.</p></div>
+        </article>
+        <article class="community-entry" id="gdgc">
+          <p class="info-label">Leadership · Present</p>
+          <div class="community-with-logo"><img src="/images/logos/gdgc.svg" alt="" width="64" height="64" loading="lazy" /><div><h2>GDGC, NIT Jalandhar</h2><p>Mobile Development Lead. I teach Flutter, organise workshops, and support the campus developer community. I joined the chapter in November 2024.</p></div></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
