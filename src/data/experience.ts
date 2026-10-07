@@ -19,7 +19,7 @@ export const experiences: ExperienceGroup[] = [
     { title: 'Summer Intern', date: 'Upcoming', upcoming: true },
   ] },
   { organisation: 'Machine and Hybrid Intelligence Lab', href: LINKS.MHI, logo: '/images/logos/mhi.webp', context: 'Northwestern University', roles: [
-    { title: 'Visiting Scholar', date: 'Oct 2026–Present' },
+    { title: 'Visiting Scholar · Undergraduate Researcher', date: 'Oct 2026–Present' },
   ] },
   { organisation: 'Zenbase Singapore', href: 'https://www.silentninja.tech/', logo: '/images/logos/zenbase.webp', roles: [
     { title: 'DevOps Engineer', date: 'Dec 2025–May 2026', meta: 'Part-time · Remote' },
@@ -35,7 +35,7 @@ export const experiences: ExperienceGroup[] = [
     { title: 'Frontend Intern', date: 'Jan–Feb 2025', meta: 'Internship · Remote' },
   ] },
   { organisation: 'GDGC, NIT Jalandhar', href: '/community#gdgc', logo: '/images/logos/gdgc.svg', roles: [
-    { title: 'Core Member · Mobile Development', date: 'Nov 2024–Oct 2026' },
     { title: 'Mobile Development Lead', date: 'Oct 2026–Present' },
+    { title: 'Core Member · Mobile Development', date: 'Nov 2024–Oct 2026' },
   ] },
 ];
