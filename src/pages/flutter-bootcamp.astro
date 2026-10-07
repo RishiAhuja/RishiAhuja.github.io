@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { COURSE, lectures } from '../data/teaching';
+const schema = { '@context': 'https://schema.org', '@type': 'Course', name: COURSE.title, description: 'A completed 14-lecture Flutter development bootcamp taught by Rishi Ahuja at GDGC NIT Jalandhar.', provider: { '@type': 'Person', name: 'Rishi Ahuja', url: new URL('/', Astro.site).href }, url: new URL('/flutter-bootcamp', Astro.site).href, inLanguage: 'en', hasCourseInstance: { '@type': 'CourseInstance', startDate: COURSE.startDate, endDate: COURSE.endDate, courseMode: 'online', instructor: { '@type': 'Person', name: 'Rishi Ahuja' } } };
+---
+<BaseLayout title="Flutter Bootcamp · Rishi Ahuja" description="Fourteen recorded Flutter lectures, slides, and resources from CS404: Applied Mobile Engineering, taught from 18 December 2025 to 14 January 2026.">
+  <JsonLd data={schema} />
+  <main id="main-content" tabindex="-1">
+    <section class="course-hero section-soft">
+      <div class="wrap">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Community', href: '/community' }]} />
+        <p class="info-label">Completed course · {COURSE.date}</p>
+        <h1>{COURSE.title}</h1>
+        <p class="course-subtitle">{COURSE.subtitle}</p>
+        <p class="page-lede">Fourteen lectures on building mobile applications, from your first widgets to networking, AI inference, and signed releases.</p>
+        <p class="quiet-meta">Taught by Rishi Ahuja · GDGC, NIT Jalandhar · {COURSE.duration}</p>
+        <a class="button" href={COURSE.curriculum} target="_blank" rel="noopener noreferrer">Course curriculum <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+    <section class="section wrap-wide" aria-labelledby="course-lectures">
+      <div class="course-section-heading"><h2 class="section-title" id="course-lectures">Lectures</h2><p>Recordings and slides from the original course.</p></div>
+      <div class="lecture-grid">
+        {lectures.map((lecture) => (
+          <article class="lecture-card" id={`lecture-${lecture.day}`}>
+            <a class="lecture-cover" href={lecture.videoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Watch lecture ${lecture.day}: ${lecture.title}`}>
+              <picture><source srcset={lecture.avif} type="image/avif" /><img src={lecture.artwork} alt="" width="1280" height="720" loading="lazy" decoding="async" /></picture>
+              <span class="lecture-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 9 6-9 6Z" /></svg></span>
+            </a>
+            <p class="lecture-number">Lecture {String(lecture.day).padStart(2, '0')}</p>
+            <h3><a href={lecture.videoUrl} target="_blank" rel="noopener noreferrer">{lecture.title}</a></h3>
+            <p class="lecture-description">{lecture.description}</p>
+            <div class="lecture-resources"><a href={lecture.videoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Watch lecture ${lecture.day}`}>Watch <span aria-hidden="true">↗</span></a>{lecture.slidesUrl && <a href={lecture.slidesUrl} target="_blank" rel="noopener noreferrer" aria-label={`Slides for lecture ${lecture.day}`}>Slides <span aria-hidden="true">↗</span></a>}</div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

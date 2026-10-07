@@ -1,0 +1,156 @@
+[
+  {
+    "lecture": 1,
+    "asset": "covers-src/teaching/lecture-01.png",
+    "generation": {
+      "day": 1,
+      "title": "Introduction to Flutter and Digital Identity Card",
+      "prompt": "Use case: stylized-concept. Create a brand-new landscape 16:9 abstract editorial raster artwork for the first lecture of a Flutter programming bootcamp: Introduction to Flutter and Digital Identity Card, learning basic widgets and assembling a first app. Composition: small modular colored widget planes gradually join into a broad identity-card-like abstract arrangement, suggested only through overlapping cream rectangles, a circular patch, and offset horizontal slabs, never a literal UI or actual card. Edge-to-edge painterly geometric collage with layered scraped translucent forms, scumbled pigment, worn paper grain, etched stippling and uneven printmaking edges. Restrained muted teal, slate blue, warm cream, with deep navy contrast and one small terracotta accent. Dense interlocking construction toward the lower left and center, airy cream space upper right; meaningful visual rhythm of elementary pieces becoming a coherent identity. Sophisticated archival research-blog cover, handmade textures, flat layered planes, no photorealism, no glossy 3D. No legible text, letters, numerals, logos, screenshots, frame, border, or watermark.",
+      "alt": "Scraped teal, blue and cream widget planes assemble into an abstract identity card with a small terracotta accent.",
+      "generatedPath": "/Users/rishi/.codex/generated_images/01a11841-3321-7461-9da0-a156df28c426/exec-c9e8d133-e837-4c34-9623-ac8d5da49a90.png",
+      "path": "/private/tmp/portfolio-expansion/artwork/lecture-01.png"
+    }
+  },
+  {
+    "lecture": 2,
+    "asset": "covers-src/teaching/lecture-02.png",
+    "generation": {
+      "day": 2,
+      "title": "State and The Dice Roller",
+      "prompt": "Use case: stylized-concept. Asset type: abstract editorial lecture thumbnail, landscape 16:9. Create a brand new edge-to-edge painterly abstract artwork for a lecture on stateful versus stateless programming and a dice roller. Meaning inside the shapes: a restrained arrangement of fractured cube-like planes moves from an ordered, stable geometric cluster into displaced, rotating, changing fragments, suggesting state transitions and chance. Keep these as abstract layered planes, not recognizable literal dice; tiny worn circular impressions can subtly suggest changing outcomes. Warm peach, aged cream, muted terracotta, dusty lavender with deep ink-blue contrast accents. Scraped paint, translucent layered blocks, visible fibrous paper grain, distressed printmaking texture and irregular rubbed edges. Elegant quiet research-blog editorial cover with dense textured geometric interplay and areas of luminous cream breathing room. Flat tactile collage/monotype feel, sophisticated abstract composition, avoid glossy 3D. No legible text, no letters, no numbers, no logos, no screenshot, no frame, no watermark. Wide 16:9 composition.",
+      "alt": "Textured peach, cream and ink-blue cube planes break from an ordered cluster into rotating fragments, suggesting changing state and chance.",
+      "generatedPath": "/Users/rishi/.codex/generated_images/01a11841-5bd7-7ca0-a08c-32892b0c4bee/exec-35de305f-5eb3-45b8-af6e-76598a6f3495.png",
+      "outputPath": "/private/tmp/portfolio-expansion/artwork/lecture-02.png",
+      "tool": "built-in image_gen"
+    }
+  },
+  {
+    "lecture": 3,
+    "asset": "covers-src/teaching/lecture-03.png",
+    "generation": {
+      "day": 3,
+      "title": "Navigation, Lists and Movie Browser",
+      "prompt": "Use case: stylized-concept. Asset type: abstract editorial lecture thumbnail, landscape 16:9. Create a brand new painterly abstract artwork for a Flutter lecture about Navigation, Lists and Movie Browser. A winding cream pathway moves through repeated filmstrip-like panels, intersecting a stack of nested page frames, suggesting movement through a list into deeper screens. These are abstract scraped rectangles and partial rounded geometric forms, never a literal interface or movie poster. Muted lilac, dusty rose, warm paper cream, with a few deep navy accents. Dense layered monoprint and palette-knife textures, visible paper grain, worn ink, scratched translucent pigment and irregular edges. Sophisticated quiet research/blog cover art, meaningful geometry and deep contrast accents, asymmetrical composition, airy cream areas balanced by clusters of overlapping forms. Landscape 16:9, edge-to-edge. No legible text, no numbers, no letters, no logos, no watermark, no border or frame, no screenshots, no literal movie posters.",
+      "alt": "A cream pathway winds through navy filmstrip panels toward nested lilac and rose page frames on textured paper.",
+      "generatedPath": "/Users/rishi/.codex/generated_images/01a11841-82e7-78d3-821c-aad2131f1913/exec-5f84a5bb-aec9-4e72-9a80-12e5eb0c050f.png",
+      "copiedPath": "/private/tmp/portfolio-expansion/artwork/lecture-03.png",
+      "tool": "built-in image_gen"
+    }
+  },
+  {
+    "lecture": 4,
+    "asset": "covers-src/teaching/lecture-04.png",
+    "generation": {
+      "day": 4,
+      "title": "Animations and UI/UX primitives",
+      "prompt": "Use case: stylized-concept. Asset type: editorial blog lecture thumbnail. Generate a brand new abstract painterly artwork for a lecture about animations and UI/UX primitives. Wide horizontal 16:9 composition, edge-to-edge artwork. A bold focal sequence of repeated rounded geometric planes follows a gentle curved sweep, changing spacing and scale to suggest easing, movement, and transformation. Layered translucent geometric shapes, scraped pigment, distressed block-print impressions, subtle paper grain and tactile matte paint. Muted coral, dusty rose, pale lilac and warm cream, with restrained deep navy accent. Sophisticated abstract editorial painting with broad cream breathing areas and overlapping rhythmic forms. No literal interface, no screens, no devices, no diagrams, no text, letters, numbers, labels, logos, border, frame, or watermark.",
+      "alt": "Textured coral, rose, lilac and navy rounded planes sweep along a curved sequence, suggesting animation and easing.",
+      "generationMode": "built-in"
+    }
+  },
+  {
+    "lecture": 5,
+    "asset": "covers-src/teaching/lecture-05.png",
+    "generation": {
+      "day": 5,
+      "title": "Web, Servers, and HTTP",
+      "prompt": "Use case: stylized-concept. Asset type: abstract editorial blog thumbnail for a lecture on Web, Servers, and HTTP. Create one brand-new horizontal 16:9 image, edge-to-edge. Two opposing tall abstract server-like columns built from irregular layered geometric pigment blocks flank a spacious central gap. Alternating cream and sky-blue packet bands traverse the gap in opposing rhythms, evoking HTTP requests and responses without literal arrows or schematic symbols. Bold central exchange of bands is the focal form. Painterly editorial abstraction with scraped pigment, rough printmaking textures, paper grain, imperfect edges and overlapping translucent shapes. Muted sky blue, teal, warm cream, deep blue shadows, with small restrained burnt-orange accents. Flat tactile composition, visually rich but clear at thumbnail size. No literal computers, screens, labels, letters, words, numbers, logos, frame, border or watermark. All title, day and date remain outside the image.",
+      "alt": "Textured blue and teal abstract server columns exchange cream and sky-blue bands, with small orange accents.",
+      "mode": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 6,
+    "asset": "covers-src/teaching/lecture-06.png",
+    "generation": {
+      "day": 6,
+      "prompt": "Use case: stylized-concept. Asset type: abstract editorial lecture blog thumbnail. Create a brand-new painterly abstract artwork for a lecture about input, validation, and data persistence. Horizontal 16:9 composition, edge-to-edge. Irregular scattered pigment marks pass through a strong geometric threshold and become orderly stacked bands contained within a deeper recessed rectangle. Make this an evocative layered modernist painting, not an explanatory diagram. Muted sage green, warm ivory, ochre, and dark teal; strong abstract focal form. Scraped pigment, translucent layered geometric forms, rough paper grain, worn stamped textures, subtle paint abrasion and imperfect edges. Sophisticated quiet editorial artwork with spatial depth conveyed by overlapping planes. No text, letters, numbers, labels, logos, watermark, outer frame, literal UI, screens or icons. Title and day are added outside the image in HTML.",
+      "alt": "Irregular sage and ochre pigment marks pass through a geometric threshold into orderly bands within a recessed dark teal rectangle.",
+      "mode": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 7,
+    "asset": "covers-src/teaching/lecture-07.png",
+    "generation": {
+      "day": 7,
+      "prompt": "Use case: stylized-concept. Asset type: abstract editorial lecture thumbnail, Day 7 Global Themes and Firebase Firestore. Create one brand-new raster artwork, 16:9 landscape edge-to-edge. Abstract tessellated document panes share a common colour rhythm; a subtle warm ember-like coral thread runs through a branching database lattice, conveyed purely through overlapping geometry and pigment. Painterly modernist collage with visible ivory paper grain, scraped and rubbed pigment, translucent layered rectangles, irregular worn edges, scattered stippling and fine broken ink lines. Match a refined muted editorial cover aesthetic: sand, ochre, muted coral, blue-grey and ivory, with a few deep ink accents. Asymmetric interconnected panes distributed across the wide canvas, layered tonal depth and calm airy negative space. Keep it poetic and abstract, not a technical diagram. No literal flames, screenshots, interface elements, text, letters, numbers, logos, frames, borders, or watermarks. Title and date will be HTML outside the image.",
+      "alt": "Textured sand, ochre, coral and blue-grey panes connected by a branching coral lattice, evoking shared themes and Firestore documents.",
+      "mode": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 8,
+    "asset": "covers-src/teaching/lecture-08.png",
+    "generation": {
+      "day": 8,
+      "prompt": "Use case: stylized-concept. Asset type: abstract editorial lecture thumbnail. Create ONE 16:9 landscape edge-to-edge painterly abstract image for Sockets, Streams and Auth, a lecture about WebSockets, JWT and authentication. Two persistent parallel curving channels carry rhythms of small packet-like geometric dashes through a central keyed geometric aperture. Suggest an abstract lock only through subtly shaped negative space, never a literal icon. Layered cut-paper geometry, broad interlocking arcs, dry scraped pigment, dense paper grain and distressed screenprint texture. Muted teal and blue with pale grey, deep navy ink contrast, controlled warm orange accents. Sophisticated handmade modernist editorial composition that remains legible at thumbnail size, energetic but balanced. No text, letters, numbers, logos, screenshots, user interface, border, frame or watermark. Full bleed landscape 16:9.",
+      "alt": "Textured teal and blue channels carry orange geometric packets through a pale keyed aperture, suggesting secure persistent streams.",
+      "mode": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 9,
+    "asset": "covers-src/teaching/lecture-09.png",
+    "generation": {
+      "day": 9,
+      "prompt": "Use case: stylized-concept\nAsset type: abstract editorial lecture thumbnail, 16:9 landscape.\nPrimary request: An abstract painterly cover evoking an anonymous confession application: overlapping speech-like rounded planes, obscured individual marks, many voices converging into a single quiet shared space.\nStyle/medium: refined layered monoprint and scraped pigment on warm paper, geometric abstraction, muted pastel editorial art. Soft rounded planes intermingle with rectangular fragments; ghosted marks partially covered by translucent washes. Material richness and organic imperfections, visible paper grain and fine scumbling, restrained navy ink contrast.\nComposition/framing: edge-to-edge wide 16:9 landscape; a quiet warm ivory central clearing surrounded by overlapping dusty rose and lilac rounded planes, a few small navy shapes among the layers. Balance dense layered areas with breathing room, cohesive asymmetric composition.\nColor palette: dusty rose, lilac, warm ivory, deep navy.\nConstraints: purely abstract, no literal messaging UI, no readable text, no letters or numbers, no logo, no frame or border, no watermark. Title and date will appear outside the image in HTML.",
+      "alt": "Layered rose and lilac rounded forms gather around a quiet ivory space, with obscured navy marks suggesting anonymous shared voices.",
+      "mode": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 10,
+    "asset": "covers-src/teaching/lecture-10.png",
+    "generation": {
+      "day": 10,
+      "title": "AdMob, Exchanges, RTB and VCS!",
+      "prompt": "Use case: stylized-concept\nAsset type: abstract artwork thumbnail for Day 10 of Rishi Ahuja\u2019s Flutter bootcamp.\nLecture: AdMob, Exchanges, RTB and VCS! Description: Unlocking the app economy with AdMob & Real-Time Bidding, and mastering professional engineering workflows through Git, GitHub, and Open Source contributions.\nCreate one horizontal 16:9 image (1536 x 864), edge-to-edge. Input image is a STYLE REFERENCE only: match its painterly muted geometric abstraction, overlapping translucent rectangular fields, worn pigment, granular stippling, scraped printmaking textures and cream paper ground; do not copy its portrait composition.\nSubject: abstract shapes suggesting advertising exchanges, competing bids and branching version-control histories: a loose constellation of small layered blocks feeds into an interlocking central exchange of ochre and coral forms; thin broken painted pathways branch and converge through plum and ink-blue nodes across the width, with subtle repeated rising steps implying bids. Keep the subject poetic and abstract, not a literal diagram or interface. Rich handmade surface with broad cream breathing spaces and patches of dense weathered pigment. Use ochre, coral, cream, muted plum and sparing deep ink blue. Balanced wide composition with irregular geometric rhythm and tactile layered painterly texture like the reference.\nConstraints: absolutely no text, letters, numbers, symbols, logos, frame, border, watermark or realistic objects. Artwork extends to every edge.",
+      "alt": "Textured ochre, coral, plum and ink-blue blocks linked by branching paths on cream, evoking advertising bids and version-control histories.",
+      "generation_method": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 11,
+    "asset": "covers-src/teaching/lecture-11.png",
+    "generation": {
+      "prompt": "Use case: stylized-concept\nAsset type: abstract Flutter bootcamp lecture thumbnail, Day 11.\nPrimary request: Create a horizontal 16:9 edge-to-edge abstract painting interpreting 'Deep Links, Platform Channel and Sharing!' \u2014 Flutter deep links, communication with native code through platform channels, and cross-platform sharing. Interlocking geometric bridges join separate planes, with smaller fragments travelling across them.\nInput images: The provided painting is a style reference only; create a new composition. Match its layered painterly geometry, subdued pigment, weathered printmaking surface, translucent overlapping blocks, irregular rubbed edges, stippled grain, and fine scraped/roller textures.\nSubject/composition: broad separate geometric planes connected by interlocking stepped bands and archlike bridges; small rectangular fragments distributed along those pathways suggest movement between planes. Abstract architectural collage, flattened spatial depth, compelling and legible at thumbnail size. Asymmetric balanced arrangement with cream breathing room between forms, texture extending to every edge.\nColor palette: muted teal, pale blue, warm cream, and terracotta, restrained darker teal accents. Soft matte pigments and textured plaster/paper rather than glossy digital gradients.\nConstraints: landscape 16:9 canvas; no text, lettering, numbers, logos, Flutter symbols, frame, border, or watermark. Pure artwork, no diagram labels, no literal phone or computer.",
+      "alt": "Textured teal and terracotta geometric bridges connect separate planes as small colored fragments travel across cream and pale blue pathways."
+    }
+  },
+  {
+    "lecture": 12,
+    "asset": "covers-src/teaching/lecture-12.png",
+    "generation": {
+      "day": 12,
+      "title": "LLMs, Inference, Groq, Ollama and POST Requests!",
+      "description": "Exploring Generative AI and Inference!",
+      "prompt": "Use case: stylized-concept\nAsset type: abstract lecture thumbnail for Day 12 of Rishi Ahuja's Flutter bootcamp.\nLecture context: \"LLMs, Inference, Groq, Ollama and POST Requests!\" \u2014 \"Exploring Generative AI and Inference!\"\nCreate one horizontal 16:9 edge-to-edge abstract painting, 1536x864 or equivalent exact 16:9.\nInput image 1 is a style reference only: match its tactile painterly monoprint/collage character, overlapping translucent geometric paint layers, worn pigment, mottled paper grain, stippled and scraped marks, subdued tonal variation, and warm ivory atmosphere. Invent a new composition.\nVisual meaning: LLMs and inference. A dense mesh of small layered lilac and indigo marks gathers and condenses into one clear outgoing ribbon that flows across the canvas, suggesting an inference request becoming a coherent response. Make the transition from richly entangled layered marks to a smooth legible ribbon apparent at thumbnail scale, while keeping the entire artwork abstract, handmade, and softly geometric. Warm ivory negative space supports the form. A small coral accent near the gathering point. Palette: lilac, indigo, warm ivory, small coral accent. Preserve palpable irregular print texture on the ribbon too. Restrained, sophisticated editorial art.\nConstraints: opaque background; full bleed, edge-to-edge artwork; no text, letters, digits, logos, icons, frames, borders, watermarks, literal computers, robots, brains, or diagram arrows.",
+      "alt": "Textured lilac and indigo marks condense into an outgoing ribbon over warm ivory, with coral accents, evoking AI inference.",
+      "generation_method": "built-in imagegen"
+    }
+  },
+  {
+    "lecture": 13,
+    "asset": "covers-src/teaching/lecture-13.png",
+    "generation": {
+      "day": 13,
+      "title": "Async Generators and Isolates",
+      "description": "Understand how to stream results and multithreading models in dart",
+      "prompt": "Use case: stylized-concept\nAsset type: abstract cover thumbnail for Day 13 of Rishi Ahuja's Flutter bootcamp.\nLecture grounding: \"Async Generators and Isolates\"; \"Understand how to stream results and multithreading models in dart\".\nPrimary request: A horizontal 16:9, edge-to-edge abstract painting that conveys async generators and isolates. Several separated geometric islands operate in parallel, and rhythmic streams of small geometric fragments arrive in sequence across the composition. Islands are independent clusters of overlapping rectangles, stepped slabs, semicircles and subtle arches, separated by cream breathing spaces; several parallel paths of repeated fragments suggest ordered streams and independent work.\nStyle reference: Match the supplied reference's painterly textured abstract artwork: layered translucent geometric collage, irregular ink transfer, distressed monoprint and scraped paint textures, softly worn edges, rich paper grain and mottled pigment, subtle tonal overlays. Use its visual language only, create a distinct composition.\nComposition: wide landscape 16:9 canvas, abstract all-over painting with four separated clusters and sequence rhythms, strong thumbnail-readable grouping, no literal landscape, no infographic symbols. Muted sage, dusty blue, warm cream and ochre, with deeper blue accents. Elegant restrained gallery artwork.\nConstraints: full bleed to all four edges, no text, no letters, no numbers, no logos, no frame, no border, no watermark. Output a single PNG at 16:9, preferably 1536x864.",
+      "alt": "Four textured geometric islands in sage, blue, and ochre, with rhythmic streams of fragments crossing a cream background.",
+      "generation_method": "built-in image generation"
+    }
+  },
+  {
+    "lecture": 14,
+    "asset": "covers-src/teaching/lecture-14.png",
+    "generation": {
+      "day": 14,
+      "title": "Building and Signing",
+      "prompt": "Use case: stylized-concept\nAsset type: abstract Flutter bootcamp Day 14 thumbnail, horizontal 16:9.\nLecture context: title 'Building and Signing'; description 'Building and building Flutter apps for play app key signing'. Translate building apps and signing a release into abstract visual meaning only.\nReference image: the provided image is a style reference only, not an edit target. Match its painterly textured geometric abstraction, translucent layered rectangles, worn pigment, grain, scraped plaster, faint stamped patterns, soft edges, and quiet architectural rhythm.\nPrimary request: many loose modular planes gradually assemble into one resolved, coherent geometric form. Loose rectangular and angled fragments gather across the composition into a consolidated interlocking structure, with a subtle seal-like geometric imprint embedded in its surface to suggest signing and completion. The imprint is an abstract faint nested circle and diamond impression, without letters or an emblem.\nComposition: edge-to-edge wide 16:9 abstract painting; restrained depth created by overlapping flat planes, balanced visual rhythm, unified form readable at thumbnail size, no literal computer or phone. Warm sand is the dominant field with terracotta planes, deep navy anchors and pale blue translucent layers. Allow texture and geometry to continue beyond the canvas edges.\nStyle/medium: tactile monoprint and mixed-media painting on weathered paper; dusty mineral pigments, layered glazing, mottled ink, distressed pattern fragments, soft warm diffuse atmosphere, elegant fine-art editorial abstraction, close to reference.\nConstraints: no text, no numerals, no logos, no frame, no borders, no watermark; no typography or signature; horizontal 16:9 output.",
+      "alt": "Textured sand, terracotta, navy, and pale blue planes assemble into a unified geometric form with a faint circular seal imprint.",
+      "generation_method": "built-in image generation"
+    }
+  }
+]

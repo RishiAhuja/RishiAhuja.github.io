@@ -36,6 +36,19 @@ const isStale = async (src, dest) => {
 
 const encode = async (src) => {
   const stem = path.basename(src, path.extname(src));
+  if (path.relative(SRC_DIR, src).startsWith(`teaching${path.sep}`)) {
+    const teachingDir = path.join(root, 'public/images/teaching');
+    await mkdir(teachingDir, { recursive: true });
+    const pipeline = () => sharp(src).rotate().resize(1280, 720, { fit: 'cover' });
+    for (const format of ['webp', 'avif']) {
+      const out = path.join(teachingDir, `${stem}.${format}`);
+      if (await isStale(src, out)) {
+        await pipeline()[format]({ quality: format === 'webp' ? 80 : 52, effort: 4 }).toFile(out);
+        console.log(`  wrote ${path.relative(root, out)}`);
+      }
+    }
+    return;
+  }
   for (const variant of VARIANTS) {
     const webpOut = path.join(OUT_DIR, `${stem}-${variant.suffix}.webp`);
     const avifOut = path.join(OUT_DIR, `${stem}-${variant.suffix}.avif`);
