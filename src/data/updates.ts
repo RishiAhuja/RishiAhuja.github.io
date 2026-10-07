@@ -27,8 +27,6 @@ const original: Update[] = [
   ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
 ];
 const additions: Update[] = [
-  ['Oct 2026', 'Started as a visiting scholar and undergraduate researcher at the <a href="https://bagcilab.com/people/rishi-ahuja/" target="_blank" rel="noopener noreferrer">Machine and Hybrid Intelligence Lab</a>, Northwestern University.'],
-  ['Oct 2026', 'Became Mobile Development Lead at <a href="/community#gdgc">GDGC, NIT Jalandhar</a>.'],
   ['Apr 2026', 'Selected for and attended YC Startup School India 2026 in Bengaluru.'],
   ['Mar 2026', 'Organised <a href="/community#hackmol">HackMol 7.0</a> at NIT Jalandhar and coordinated the judges.'],
   ['Dec 2025', 'Won first place in the AWS Partner Track at HackCBS 8.0.'],
