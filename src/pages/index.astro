@@ -9,6 +9,7 @@ import { FEATURED_SLUGS, paperCardAward, pubPath } from '../lib/research';
 import { getWritings, writingPath } from '../lib/blogs';
 import { paperArtwork, writingArtwork } from '../lib/artwork';
 import CoverArt from '../components/CoverArt.astro';
+import ExperienceList from '../components/ExperienceList.astro';
 
 const papers = (await getCollection('research')).sort(
   (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime()
@@ -115,7 +116,7 @@ const schema = {
             View research
             <ArrowUpRightIcon aria-hidden="true" />
           </a>
-          <a class="button" href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
+          <a class="button" href={LINKS.RESEARCH_RESUME} target="_blank" rel="noopener noreferrer">
             CV
             <ArrowDownIcon className="arrow-down" aria-hidden="true" />
           </a>
@@ -173,31 +174,6 @@ const schema = {
       </p>
     </section>
 
-    {/*
-    <section class="section section-soft" id="experience">
-      <div class="wrap">
-        <h2 class="section-title">Research experience</h2>
-        <div class="info-list">
-          <article class="info-row">
-            <p class="info-label">01 / Northwestern</p>
-            <div>
-              <h3>Undergraduate Researcher</h3>
-              <p>Machine and Hybrid Intelligence Lab, Northwestern University</p>
-              <p>Advisor: Prof. Ulaş Bağcı</p>
-            </div>
-          </article>
-          <article class="info-row">
-            <p class="info-label">02 / Annam.AI</p>
-            <div>
-              <h3>Research Intern, AI Systems</h3>
-              <p>IIT Ropar</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-    */}
-
     <section class="section wrap" id="updates">
       <h2 class="section-title">Updates and awards</h2>
       <ul class="update-list" id="updates-list">
@@ -211,6 +187,11 @@ const schema = {
       <button class="updates-toggle" type="button" hidden aria-expanded="false" aria-controls="updates-list" data-remaining={updates.length - 8}>
         <span>Show {updates.length - 8} more</span> <span class="toggle-arrow" aria-hidden="true">↓</span>
       </button>
+    </section>
+
+    <section class="section wrap" id="experience" aria-labelledby="experience-title">
+      <h2 class="section-title" id="experience-title">Experience</h2>
+      <ExperienceList />
     </section>
 
     <section class="section wrap-wide" id="writings">
@@ -246,6 +227,15 @@ const schema = {
           <ArrowUpRightIcon aria-hidden="true" />
         </a>
       </p>
+    </section>
+
+    <section class="section wrap" id="academics" aria-labelledby="academics-title">
+      <h2 class="section-title" id="academics-title">Academics</h2>
+      <article class="experience-row academic-row">
+        <div class="organisation-logo"><img src="/images/logos/nitj.webp" alt="" width="64" height="64" loading="lazy" decoding="async" /></div>
+        <div class="experience-copy"><h3><a class="organisation-name" href="https://www.nitj.ac.in/" target="_blank" rel="noopener noreferrer">NIT Jalandhar</a></h3><p class="experience-role">B.Tech. with Research in Information Technology</p><p class="experience-meta">Dr. B. R. Ambedkar National Institute of Technology</p></div>
+        <p class="experience-date">Present</p>
+      </article>
     </section>
 
     <section class="section section-soft" id="about">
@@ -289,8 +279,12 @@ const schema = {
               <p>
                 I write about machine learning, systems, and building software from
                 first principles. The full archive is in
-                <a href="/writings">Writing</a>; other work and experience are in my
-                CV.
+                <a href="/writings">Writing</a>. I also teach mobile development and
+                help organise developer events through <a href="/community">Community</a>.
+              </p>
+              <p>
+                Outside work, I train hard in the gym and have lost a significant
+                amount of weight over the past year.
               </p>
             </div>
           </article>

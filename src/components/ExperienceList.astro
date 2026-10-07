@@ -1,0 +1,16 @@
+---
+import { experiences } from '../data/experience';
+---
+<div class="experience-list">
+  {experiences.map((item) => (
+    <article class="experience-row">
+      <div class="organisation-logo"><img src={item.logo} alt="" width="64" height="64" loading="lazy" decoding="async" /></div>
+      <div class="experience-copy">
+        <h3><a href={item.href} class="organisation-name" target={item.href.startsWith('https:') ? '_blank' : undefined} rel={item.href.startsWith('https:') ? 'noopener noreferrer' : undefined}>{item.organisation}</a></h3>
+        <p class="experience-role">{item.role}</p>
+        {item.meta && <p class="experience-meta">{item.meta}</p>}
+      </div>
+      <p class:list={['experience-date', { 'is-upcoming': item.upcoming }]}>{item.date}</p>
+    </article>
+  ))}
+</div>

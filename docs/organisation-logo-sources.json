@@ -1,0 +1,38 @@
+[
+  {
+    "name": "nitj",
+    "source": "https://www.nitj.ac.in/public/assets/images/nitj-logo.png",
+    "sourceBytes": 179021
+  },
+  {
+    "name": "gdgc",
+    "source": "https://www.nitj.ac.in/public/assets/images/DSC_Logo.svg",
+    "sourceBytes": 12691,
+    "preparation": "Original four-colour developer mark retained; surrounding lettering and padding omitted for small-size readability."
+  },
+  {
+    "name": "stack",
+    "source": "https://cdn.stackwealth.in/union_69b8407ec1.webp",
+    "sourceBytes": 2036
+  },
+  {
+    "name": "level",
+    "source": "https://level.game/_next/static/media/logonew.c0685eca.png",
+    "sourceBytes": 46895
+  },
+  {
+    "name": "zenbase",
+    "source": "https://www.chahatkesh.me/_next/static/immutable/media/Zenbase.0vy2-6_53h0d-.png",
+    "sourceBytes": 5500
+  },
+  {
+    "name": "annam",
+    "source": "https://res.cloudinary.com/dgwhmqdhr/image/upload/v1769143824/annam-color-with-icon_jsaz3l.png",
+    "page": "https://www.annam.ai/"
+  },
+  {
+    "name": "cisco",
+    "source": "simple-icons, installed dependency",
+    "page": "https://www.cisco.com/"
+  }
+]
