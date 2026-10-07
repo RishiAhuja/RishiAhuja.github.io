@@ -5,6 +5,7 @@ import { PORTRAIT } from './constants';
 import { paperAwardMarks, pubPath } from './research';
 import { getWritings } from './blogs';
 import { publishedBlurbs } from './blurbs';
+import { COURSE } from '../data/teaching';
 import type { OgCard } from './og';
 
 const dateLabel = (date: Date) =>
@@ -46,6 +47,12 @@ export async function getOgCards(): Promise<OgCard[]> {
       metadata: `${publishedBlurbs().length} blurbs`, cover: publishedBlurbs()[0]?.cover,
       artwork: blurbArtwork(publishedBlurbs()[0]?.slug)?.heroWebp,
     },
+    { path: '/community', kind: 'index', title: 'Community', eyebrow: 'Rishi Ahuja', subtitle: 'Teaching, mentoring, and building developer communities.', metadata: 'GDGC · HackMol · Flutter', cover: 'mint' },
+    { path: '/flutter-bootcamp', kind: 'index', title: 'Applied Mobile Engineering', eyebrow: 'CS404 · Flutter Bootcamp', subtitle: 'Fourteen lectures, from your first widgets to signed releases.', metadata: `${COURSE.date} · 23+ hours`, cover: 'blue', artwork: '/images/teaching/lecture-01.webp' },
+    { path: '/colophon', kind: 'index', title: 'Colophon', eyebrow: 'Rishi Ahuja', subtitle: 'How this site is made, and the choices behind it.', metadata: 'Type · Colour · Artwork · Code', cover: 'sand' },
+    { path: '/archive', kind: 'index', title: 'Archive', eyebrow: 'Rishi Ahuja', subtitle: 'Earlier portfolios and pieces of the site’s history.', metadata: 'A record since 2021', cover: 'mist' },
+    { path: '/links', kind: 'index', title: 'Links', eyebrow: 'Rishi Ahuja', subtitle: 'Find me elsewhere, get in touch, or explore my work.', metadata: 'Research · Engineering · Teaching', cover: 'sky' },
+    { path: '/resume', kind: 'index', title: 'Résumés', eyebrow: 'Rishi Ahuja', subtitle: 'Engineering experience and academic work.', metadata: 'Research CV · Engineering résumé', cover: 'rose' },
     { path: '/404', kind: 'index', title: 'Page not found', eyebrow: 'Rishi Ahuja', subtitle: 'Explore research, writing, and blurbs.', metadata: '404' },
     ...papers.map((paper: CollectionEntry<'research'>): OgCard => ({
       path: pubPath(paper.slug), kind: 'research', eyebrow: 'Research',

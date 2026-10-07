@@ -9,6 +9,7 @@ export async function canonicalPages() {
   const papers = await getCollection('research');
   return [
     { path: '/' }, { path: '/research' }, { path: '/writings' }, { path: '/blurb' },
+    { path: '/community' }, { path: '/flutter-bootcamp' }, { path: '/colophon' }, { path: '/archive' }, { path: '/links' }, { path: '/resume' },
     ...papers.map((paper) => ({path: pubPath(paper.slug)})),
     ...publishedBlurbs().map((note) => ({path: blurbPath(note.slug)})),
   ];
