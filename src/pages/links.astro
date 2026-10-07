@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { LINKS } from '../lib/constants';
+---
+<BaseLayout title="Links · Rishi Ahuja" description="Find me elsewhere, get in touch, or explore my work.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Links</h1></div>
+      <p class="page-lede">Find me elsewhere, get in touch, or explore my work.</p>
+      <div class="link-groups">
+        <section><h2>Connect</h2><ul class="plain-link-list"><li><a href={LINKS.EMAIL}>Email <span class="quiet-meta">rishia2220@gmail.com</span></a></li><li><a href={LINKS.CAL_COM} target="_blank" rel="noopener noreferrer">Schedule a conversation <span aria-hidden="true">↗</span></a></li><li><a href={LINKS.TWITTER} target="_blank" rel="noopener noreferrer">Twitter <span aria-hidden="true">↗</span></a></li></ul></section>
+        <section><h2>Work and research</h2><ul class="plain-link-list"><li><a href="/resume">Résumés <span aria-hidden="true">→</span></a></li>{[{name:'Google Scholar',href:LINKS.GOOGLE_SCHOLAR},{name:'OpenReview',href:LINKS.OPENREVIEW},{name:'GitHub',href:LINKS.GITHUB},{name:'LinkedIn',href:LINKS.LINKEDIN}].map(link=><li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.name} <span aria-hidden="true">↗</span></a></li>)}</ul></section>
+        <section><h2>Writing and teaching</h2><ul class="plain-link-list"><li><a href="/writings">Writing <span aria-hidden="true">→</span></a></li><li><a href="/community">Community <span aria-hidden="true">→</span></a></li><li><a href={LINKS.HASHNODE} target="_blank" rel="noopener noreferrer">Hashnode <span aria-hidden="true">↗</span></a></li><li><a href={LINKS.YOUTUBE} target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a></li><li><a href={LINKS.INSTAGRAM} target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a></li><li><a href="/feed.xml">RSS <span aria-hidden="true">→</span></a></li></ul></section>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

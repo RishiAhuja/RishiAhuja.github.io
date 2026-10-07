@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { resumeVersions } from '../data/archive';
+
+---
+<BaseLayout title="Archive · Rishi Ahuja" description="Earlier portfolios, résumés, and pieces of the site’s history.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Archive</h1></div>
+      <p class="page-lede">Earlier portfolios, résumés, and pieces of the site’s history.</p>
+      <div class="prose-sections">
+        <section><h2>Previous portfolios</h2><div class="archive-list">
+          <a href="https://new-port-14-02-2021.pages.dev/" target="_blank" rel="noopener noreferrer"><span><strong>First portfolio</strong><span class="quiet-meta">14 Feb 2021</span></span><span aria-hidden="true">↗</span></a>
+          <a href="https://rishiahuja.github.io/my-portfolio/" target="_blank" rel="noopener noreferrer"><span><strong>GitHub Pages portfolio</strong><span class="quiet-meta">Apr 2022–Aug 2024</span></span><span aria-hidden="true">↗</span></a>
+          <a href="https://my-portfolio-462ef.web.app/" target="_blank" rel="noopener noreferrer"><span><strong>Terminal portfolio</strong><span class="quiet-meta">Feb 2025 · Hosted on Firebase</span></span><span aria-hidden="true">↗</span></a>
+          <a href="https://rishia.in/" target="_blank" rel="noopener noreferrer"><span><strong>rishia.in</strong><span class="quiet-meta">From May 2025 · Builder and engineer portfolio</span></span><span aria-hidden="true">↗</span></a>
+        </div></section>
+        <section><h2>Résumés</h2><p>The <a href="/resume">latest engineering résumé and research CV</a> are available together. Earlier engineering résumé versions are preserved below.</p><div class="resume-version-list">{resumeVersions.map(resume => <a href={resume.url} target="_blank" rel="noopener noreferrer">Version {resume.version} <span aria-hidden="true">↗</span></a>)}</div></section>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

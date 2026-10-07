@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+---
+<BaseLayout title="Colophon · Rishi Ahuja" description="How this site is made, and the choices behind it.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Colophon</h1></div>
+      <p class="page-lede">How this site is made, and the choices behind it.</p>
+      <div class="prose-sections">
+        <section><h2>Design</h2><p>A quiet place for my research, work, teaching, and writing. Generous spacing and a clear type hierarchy keep the content easy to scan and comfortable to read.</p><p>The main typeface is Athletics. Charter is used for long-form reading. Blue marks an interaction; pale colours and abstract artwork give individual pieces their own character.</p><div class="colophon-swatches" aria-label="Site colour palette"><span><i style="background:#ffffff"></i>White · #FFFFFF</span><span><i style="background:#353535"></i>Text · #353535</span><span><i style="background:#174ea6"></i>Blue · #174EA6</span><span><i style="background:#f6f6f6"></i>Soft grey · #F6F6F6</span></div></section>
+        <section><h2>Artwork</h2><p>Abstract covers connect each paper, article, blurb, and lecture to an idea inside it. The artwork is generated with OpenAI’s image generation tools, then selected and prepared for the site. Organisation logos belong to their respective organisations.</p></section>
+        <section><h2>Built with</h2><p><a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and TypeScript, with static pages hosted on GitHub Pages. Images are served in AVIF and WebP. KaTeX renders equations, and highlight.js handles code.</p><p>The site builds its social preview images from the same content as its pages. Technical articles originally published on Hashnode retain a link and canonical reference to the original.</p></section>
+        <section><h2>Motion and access</h2><p>Interactions are brief: a small response to a button, a navigation indicator, or a cover moving into its detail page. Reduced-motion preferences keep these changes immediate.</p><p>Keyboard navigation, visible focus states, readable contrast, image descriptions, and a useful experience without JavaScript are part of the design.</p></section>
+        <section><h2>Source and history</h2><p><a href="https://github.com/RishiAhuja/RishiAhuja.github.io" target="_blank" rel="noopener noreferrer">Source code on GitHub <span aria-hidden="true">↗</span></a></p><p>This portfolio grew from a research site into a fuller record of my work. Earlier versions live in the <a href="/archive">Archive</a>.</p></section>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

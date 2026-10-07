@@ -1,7 +1,13 @@
 export const PORTRAIT = '/images/rishi-ahuja.jpg';
 
 export const LINKS = {
-  RESUME: 'https://rishia.in/research/resume',
+  RESUME: '/resume',
+  RESEARCH_RESUME: 'https://rishia.in/research/resume',
+  ENGINEERING_RESUME: 'https://rishia.in/resume',
+  CAL_COM: 'https://cal.com/rishi2220',
+  HASHNODE: 'https://rishi2220.hashnode.dev/',
+  YOUTUBE: 'https://www.youtube.com/@rishi2220',
+  INSTAGRAM: 'https://www.instagram.com/rishia2220/',
   TWITTER: 'https://twitter.com/Rishi2220',
   GITHUB: 'https://github.com/RishiAhuja',
   LINKEDIN: 'https://www.linkedin.com/in/rishi-ahuja-b1a224310',
