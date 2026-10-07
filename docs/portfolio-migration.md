@@ -23,13 +23,13 @@ Refinement: the original sitewide width is retained; role dates sit with their
 roles to avoid a large gap across experience rows. Annam AI roles are grouped, following the supplied LinkedIn
 reference dates (May–October 2025 and November 2025–March 2026). GDGC progression
 remains last, with the current lead role above the earlier core-member role. Rishi confirmed October 2026 for both the lead role and the MHI
-visiting-scholar role. The academic period is 2024–28, currently pre-final year.
+visiting-scholar role. The academic period is 2024–2028, currently pre-final year; its dates align right on desktop.
 The course's visible title omits CS404, and Community uses text-only rows.
 Older professional milestones are selected from the live site's ledger; personal
 purchases, birthdays, and concerts are omitted. Eight latest updates stay visible.
 
 The MHI title also identifies the undergraduate research role. Age appears
-subtly in About; the hero introduction stays unchanged.
+subtly in About and the hero introduction.
 
 Machine is a plain, structured profile linked from the footer. Research,
 experience, writing, and lecture records come from the current site data; stale

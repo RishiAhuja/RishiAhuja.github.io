@@ -1784,7 +1784,9 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .experience-meta, .quiet-meta { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
 .experience-meta { margin: 0; }
 .experience-date.is-upcoming { color: var(--accent); }
-.academic-row { padding-top: 0; }
+.academic-row { padding-top: 0; grid-template-columns: 60px minmax(0, 1fr) auto; }
+.academic-row .organisation-logo { width: 60px; height: 60px; }
+.academic-date { margin: 0; padding-top: 3px; font-size: 15px; line-height: 1.6; color: var(--text-muted); text-align: right; white-space: nowrap; }
 .supporting-page .page-lede { max-width: 720px; margin-bottom: 64px; }
 .prose-sections { max-width: 760px; display: grid; gap: 52px; }
 .prose-sections h2, .link-groups h2, .resume-list h2 { margin: 0 0 18px; font-size: 26px; }
@@ -1839,6 +1841,9 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 @media (max-width: 650px) {
   .experience-row { grid-template-columns: 48px minmax(0, 1fr); gap: 8px 18px; padding-block: 24px; }
   .organisation-logo { width: 48px; height: 48px; }
+  .academic-row { grid-template-columns: 56px minmax(0, 1fr); }
+  .academic-row .organisation-logo { width: 56px; height: 56px; }
+  .academic-date { grid-column: 2; padding: 0; font-size: 14px; text-align: left; }
   .experience-copy h3 { font-size: 21px; }
   .experience-role { font-size: 17px; }
   .experience-meta { font-size: 14px; }
