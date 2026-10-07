@@ -1,5 +1,5 @@
 export const COURSE = {
-  "title": "CS404: Applied Mobile Engineering",
+  "title": "Applied Mobile Engineering",
   "subtitle": "Flutter Development Bootcamp",
   "date": "18 Dec 2025\u201314 Jan 2026",
   "startDate": "2025-12-18",

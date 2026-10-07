@@ -6,7 +6,7 @@ import JsonLd from '../components/JsonLd.astro';
 import { COURSE, lectures } from '../data/teaching';
 const schema = { '@context': 'https://schema.org', '@type': 'Course', name: COURSE.title, description: 'A completed 14-lecture Flutter development bootcamp taught by Rishi Ahuja at GDGC NIT Jalandhar.', provider: { '@type': 'Person', name: 'Rishi Ahuja', url: new URL('/', Astro.site).href }, url: new URL('/flutter-bootcamp', Astro.site).href, inLanguage: 'en', hasCourseInstance: { '@type': 'CourseInstance', startDate: COURSE.startDate, endDate: COURSE.endDate, courseMode: 'online', instructor: { '@type': 'Person', name: 'Rishi Ahuja' } } };
 ---
-<BaseLayout title="Flutter Bootcamp · Rishi Ahuja" description="Fourteen recorded Flutter lectures, slides, and resources from CS404: Applied Mobile Engineering, taught from 18 December 2025 to 14 January 2026.">
+<BaseLayout title="Flutter Bootcamp · Rishi Ahuja" description="Fourteen recorded Flutter lectures, slides, and resources from Applied Mobile Engineering, taught from 18 December 2025 to 14 January 2026.">
   <JsonLd data={schema} />
   <main id="main-content" tabindex="-1">
     <section class="course-hero section-soft">
