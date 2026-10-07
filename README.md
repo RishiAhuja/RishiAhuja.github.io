@@ -57,3 +57,14 @@ viewport. Mobile covers stay visible at their full aspect ratio.
 After building, run `npm run verify:site` to check canonical policy, internal
 links, figure descriptions and dimensions, heading structure, discovery outputs,
 and reading-time behavior. `npm run build` also verifies all social cards.
+
+## Portfolio and teaching
+
+Experience and Academics live on the homepage. Community documents teaching,
+mentoring, GDGC leadership, and HackMol 7.0. The Flutter bootcamp is a completed
+course from 18 December 2025 to 14 January 2026; its 14 published videos and
+13 available slide links are preserved in `src/data/teaching.ts`. Lecture artwork
+is generated individually and served as AVIF/WebP. Final prompts live in
+`docs/teaching-artwork-prompts.json`. Colophon, Archive, Links, and Résumés are
+first-party supporting pages. Résumé links continue to use the existing live
+version resolvers on rishia.in.

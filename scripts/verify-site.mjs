@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, resolve, relative } from 'node:path';
 import ts from 'typescript';
+import sharp from 'sharp';
 
 const dist = resolve('dist');
 async function htmlFiles(directory) {
@@ -85,7 +86,7 @@ assert.equal(rows.length, 7, 'Homepage must collapse only the seven older update
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
-assert.equal(locations.length, 4 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
+assert.equal(locations.length, 10 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
 assert.ok(!locations.some((path) => /^\/writings\//.test(path)), 'Mirrored articles should not claim a local sitemap canonical');
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
@@ -114,3 +115,25 @@ assert.equal(getReadTimeBreakdown([...prose, {type: 'video', durationSeconds: 61
 assert.ok(getReadTimeBreakdown([...prose, {type:'carousel', images:Array(10).fill({src:'image',alt:'photo'})}]).mediaTime > getReadTimeBreakdown([...prose, {type:'carousel', images:[{src:'image',alt:'photo'}]}]).mediaTime);
 assert.equal(getReadTimeBreakdown([{type:'video'}]).totalTime, 2);
 console.log(`Verified ${pages.length} pages: canonical policy, internal links, headings, ${figures} described figures, ${contents} contents menus, discovery outputs, and reading estimates.`);
+
+// Archived teaching must retain all recorded lectures and their available resources.
+const teachingSource = await readFile('src/data/teaching.ts', 'utf8');
+const teachingJS = ts.transpileModule(teachingSource, {compilerOptions: {module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022}}).outputText;
+const { COURSE, lectures } = await import(`data:text/javascript;base64,${Buffer.from(teachingJS).toString('base64')}`);
+assert.equal(lectures.length, 14);
+assert.deepEqual(lectures.map(lecture => lecture.day), Array.from({length: 14}, (_, i) => i + 1));
+assert.equal(new Set(lectures.map(lecture => lecture.videoUrl)).size, 14);
+assert.equal(lectures.filter(lecture => lecture.slidesUrl).length, 13);
+assert.equal(COURSE.startDate, '2025-12-18');
+assert.equal(COURSE.endDate, '2026-01-14');
+const courseHtml = index.get('/flutter-bootcamp');
+for (const lecture of lectures) {
+  assert.ok(courseHtml.includes(`id="lecture-${lecture.day}"`));
+  assert.ok(courseHtml.includes(lecture.videoUrl.replaceAll('&', '&amp;')));
+  if (lecture.slidesUrl) assert.ok(courseHtml.includes(lecture.slidesUrl.replaceAll('&', '&amp;')));
+  for (const file of [lecture.artwork, lecture.avif]) {
+    const info = await sharp(join(dist, file)).metadata();
+    assert.equal(info.width, 1280); assert.equal(info.height, 720);
+  }
+}
+console.log('Verified archived course: 14 unique videos, 13 slide links, confirmed dates, and 28 landscape image variants.');
