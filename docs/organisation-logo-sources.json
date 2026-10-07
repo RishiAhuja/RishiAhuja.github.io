@@ -12,13 +12,14 @@
   },
   {
     "name": "stack",
-    "source": "https://cdn.stackwealth.in/union_69b8407ec1.webp",
-    "sourceBytes": 2036
+    "source": "https://media.licdn.com/dms/image/v2/D560BAQEarFi8vCvrTw/company-logo_200_200/B56ZrANTizI8AI-/0/1764161306521/stackwealthhq_logo?e=2147483647&v=beta&t=7A9_jXSY83FI4XRn8FXghIL4TBPSgUv1mFPCWRyBuUk",
+    "page": "https://www.linkedin.com/company/stackwealthhq/",
+    "preparation": "Public company logo, resized and encoded as WebP."
   },
   {
     "name": "level",
-    "source": "https://level.game/_next/static/media/logonew.c0685eca.png",
-    "sourceBytes": 46895
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/23/43/c4/2343c40a-f604-c25a-0a96-24094e5c1642/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg",
+    "preparation": "Official compact mark, resized and encoded as WebP."
   },
   {
     "name": "zenbase",
@@ -27,12 +28,20 @@
   },
   {
     "name": "annam",
-    "source": "https://res.cloudinary.com/dgwhmqdhr/image/upload/v1769143824/annam-color-with-icon_jsaz3l.png",
-    "page": "https://www.annam.ai/"
+    "source": "https://www.annam.ai/favicon.png",
+    "page": "https://www.annam.ai/",
+    "preparation": "Official compact mark, resized and encoded as WebP."
   },
   {
     "name": "cisco",
     "source": "simple-icons, installed dependency",
-    "page": "https://www.cisco.com/"
+    "page": "https://www.cisco.com/",
+    "preparation": "Official bridge bars retained; wordmark omitted."
+  },
+  {
+    "name": "mhi",
+    "source": "https://bagcilab.com/media/Bagcilab-logo-b7e52a518d.webp",
+    "page": "https://bagcilab.com/people/rishi-ahuja/",
+    "preparation": "Official lab mark, resized and encoded as WebP."
   }
 ]
