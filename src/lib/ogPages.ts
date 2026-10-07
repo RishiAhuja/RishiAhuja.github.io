@@ -53,6 +53,7 @@ export async function getOgCards(): Promise<OgCard[]> {
     { path: '/archive', kind: 'index', title: 'Archive', eyebrow: 'Rishi Ahuja', subtitle: 'Earlier portfolios and pieces of the site’s history.', metadata: 'A record since 2021', cover: 'mist' },
     { path: '/links', kind: 'index', title: 'Links', eyebrow: 'Rishi Ahuja', subtitle: 'Find me elsewhere, get in touch, or explore my work.', metadata: 'Research · Engineering · Teaching', cover: 'sky' },
     { path: '/resume', kind: 'index', title: 'Résumés', eyebrow: 'Rishi Ahuja', subtitle: 'Engineering experience and academic work.', metadata: 'Research CV · Engineering résumé', cover: 'rose' },
+    { path: '/machine', kind: 'index', title: 'Machine', eyebrow: 'Rishi Ahuja', subtitle: 'A readable profile with current research, experience, teaching, and links.', metadata: 'Profile · Research · Experience · Teaching', cover: 'mist' },
     { path: '/404', kind: 'index', title: 'Page not found', eyebrow: 'Rishi Ahuja', subtitle: 'Explore research, writing, and blurbs.', metadata: '404' },
     ...papers.map((paper: CollectionEntry<'research'>): OgCard => ({
       path: pubPath(paper.slug), kind: 'research', eyebrow: 'Research',

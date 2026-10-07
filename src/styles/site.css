@@ -1864,3 +1864,8 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .lecture-resources a:hover, .resume-version-list a:hover, .text-link:hover { color: var(--accent); }
 
 .organisation-logo img[src="/images/logos/stack.webp"], .organisation-logo img[src="/images/logos/level.webp"] { border-radius: 8px; }
+
+.machine-content h3 { margin: 0 0 12px; font-size: 22px; line-height: 1.4; }
+.machine-record + .machine-record { border-top: 1px solid var(--rule); margin-top: 32px; padding-top: 32px; }
+.machine-content ul:not(.plain-link-list), .machine-content ol { padding-left: 22px; margin: 0 0 18px; }
+.machine-content li + li { margin-top: 8px; }

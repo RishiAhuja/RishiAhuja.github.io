@@ -1,0 +1,136 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { experiences } from '../data/experience';
+import { COURSE, lectures } from '../data/teaching';
+import { LINKS } from '../lib/constants';
+import { getWritings, writingPath, formatPostDate } from '../lib/blogs';
+import { paperAwardMarks, pubPath } from '../lib/research';
+
+const papers = (await getCollection('research')).sort((a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime());
+const writings = await getWritings();
+const generatedAt = new Date().toISOString();
+const generatedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(generatedAt));
+const profileLinks = [
+  { label: 'Google Scholar', href: LINKS.GOOGLE_SCHOLAR },
+  { label: 'OpenReview', href: LINKS.OPENREVIEW },
+  { label: 'MHI profile', href: LINKS.MHI },
+  { label: 'GitHub', href: LINKS.GITHUB },
+  { label: 'LinkedIn', href: LINKS.LINKEDIN },
+  { label: 'Hashnode', href: LINKS.HASHNODE },
+  { label: 'YouTube', href: LINKS.YOUTUBE },
+  { label: 'X', href: LINKS.TWITTER },
+];
+const sitePages = [
+  { label: 'Home', href: '/' },
+  { label: 'Research', href: '/research' },
+  { label: 'Writing', href: '/writings' },
+  { label: 'Community', href: '/community' },
+  { label: 'Flutter bootcamp', href: '/flutter-bootcamp' },
+  { label: 'About', href: '/#about' },
+  { label: 'Résumés', href: '/resume' },
+  { label: 'Links', href: '/links' },
+  { label: 'Colophon', href: '/colophon' },
+  { label: 'Archive', href: '/archive' },
+  { label: 'RSS', href: '/feed.xml' },
+  { label: 'Sitemap', href: '/sitemap.xml' },
+];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Rishi Ahuja',
+  url: new URL('/', Astro.site).href,
+  jobTitle: 'Undergraduate Researcher',
+  affiliation: [
+    { '@type': 'CollegeOrUniversity', name: 'Dr. B.R. Ambedkar National Institute of Technology Jalandhar' },
+    { '@type': 'CollegeOrUniversity', name: 'Northwestern University', url: LINKS.MHI },
+  ],
+  sameAs: profileLinks.map((link) => link.href),
+  knowsAbout: ['AI evaluation', 'Language-model evaluation', 'Temporal retrieval', 'Conversational fraud detection'],
+};
+---
+<BaseLayout title="Machine · Rishi Ahuja" description="A structured profile of Rishi Ahuja: current research, experience, education, teaching, writing, and links.">
+  <JsonLd data={schema} />
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Machine</h1></div>
+      <p class="page-lede">A readable profile for crawlers, tools, and anyone who wants the full text.</p>
+      <div class="prose-sections machine-content">
+        <section aria-labelledby="profile-heading">
+          <h2 id="profile-heading">Rishi Ahuja</h2>
+          <p>Rishi Ahuja is an undergraduate researcher based in Jalandhar, India, pursuing a B.Tech. with Research in Information Technology at NIT Jalandhar. His research focuses on building and evaluating reliable AI systems, with current work in language-model evaluation, temporal retrieval, and conversational fraud detection.</p>
+          <p>He is a Visiting Scholar and Undergraduate Researcher at the <a href={LINKS.MHI}>Machine and Hybrid Intelligence Lab</a>, Northwestern University, and an incoming summer intern at Cisco.</p>
+          <p class="quiet-meta">Generated <time datetime={generatedAt}>{generatedDate}</time>. Research, experience, writing, and lectures use the same data as the rest of this portfolio.</p>
+        </section>
+        <section aria-labelledby="machine-research">
+          <h2 id="machine-research">Research</h2>
+          {papers.map((paper) => (
+            <article class="machine-record">
+              <h3><a href={pubPath(paper.slug)}>{paper.data.title}</a></h3>
+              <p>{paper.data.authors.map((author) => author.name).join(', ')}</p>
+              <p class="quiet-meta">{paper.data.venue} · {paper.data.status === 'published' ? 'Published' : 'Accepted'}</p>
+              {paper.data.event && <p>{paper.data.event.announcement}</p>}
+              {paperAwardMarks(paper.data).length > 0 && <p>{paperAwardMarks(paper.data).join(' · ')}</p>}
+              <p><strong>Summary:</strong> {paper.data.tldr}</p>
+              <p><strong>Abstract:</strong> {paper.data.abstract}</p>
+              <ul class="plain-link-list">{paper.data.links.map((link) => <li><a href={link.url}>{link.label}</a></li>)}</ul>
+            </article>
+          ))}
+        </section>
+        <section aria-labelledby="machine-experience">
+          <h2 id="machine-experience">Experience</h2>
+          {experiences.map((organisation) => (
+            <article class="machine-record">
+              <h3><a href={organisation.href}>{organisation.organisation}</a></h3>
+              {organisation.context && <p>{organisation.context}</p>}
+              <ul>{organisation.roles.map((role) => <li><strong>{role.title}</strong> — {role.date}{role.meta && <> · {role.meta}</>}</li>)}</ul>
+            </article>
+          ))}
+        </section>
+        <section aria-labelledby="machine-education">
+          <h2 id="machine-education">Education</h2>
+          <p><strong>B.Tech. with Research in Information Technology</strong><br />Dr. B.R. Ambedkar National Institute of Technology Jalandhar<br />Department of Information Technology<br />2024–28 · Pre-final year</p>
+        </section>
+        <section aria-labelledby="machine-community">
+          <h2 id="machine-community">Teaching and community</h2>
+          <h3><a href="/flutter-bootcamp">{COURSE.title}</a></h3>
+          <p>{COURSE.subtitle} · {COURSE.date} · Completed<br />Instructor and creator at GDGC, NIT Jalandhar. {lectures.length} recorded lectures · {COURSE.duration}.</p>
+          <ol>{lectures.map((lecture) => <li><a href={lecture.videoUrl}>{lecture.title}</a> — {lecture.description}</li>)}</ol>
+          <p><a href="/community#hackmol">HackMol 7.0</a> — Organizer and Judge Coordinator at NIT Jalandhar, 28–29 March 2026.</p>
+          <p>Bit N Build Punjab — Technical mentor at Thapar University, 6 September 2025.</p>
+          <p><a href="/community#gdgc">GDGC, NIT Jalandhar</a> — Mobile Development Lead since October 2026; previously a core member in mobile development since November 2024.</p>
+        </section>
+        <section aria-labelledby="machine-writing">
+          <h2 id="machine-writing">Writing</h2>
+          {writings.map((post) => (
+            <article class="machine-record">
+              <h3><a href={writingPath(post.slug)}>{post.data.title}</a></h3>
+              <p class="quiet-meta">{formatPostDate(post.data.dateAdded)} · {post.data.readTimeInMinutes} min read</p>
+              <p>{post.data.brief}</p>
+              <p><a href={post.data.hashnodeUrl}>Originally published on Hashnode</a></p>
+            </article>
+          ))}
+        </section>
+        <section aria-labelledby="machine-links">
+          <h2 id="machine-links">Links and contact</h2>
+          <ul class="plain-link-list">
+            {profileLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+            <li><a href={LINKS.RESEARCH_RESUME}>Research CV</a></li>
+            <li><a href={LINKS.ENGINEERING_RESUME}>Engineering résumé</a></li>
+            <li><a href={LINKS.EMAIL}>Email · {LINKS.EMAIL.replace('mailto:', '')}</a></li>
+            <li><a href={LINKS.CAL_COM}>Schedule a conversation</a></li>
+          </ul>
+        </section>
+        <section aria-labelledby="machine-pages">
+          <h2 id="machine-pages">Site pages</h2>
+          <ul class="plain-link-list">{sitePages.map((page) => <li><a href={page.href}>{page.label}</a></li>)}</ul>
+        </section>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+

@@ -30,3 +30,8 @@ purchases, birthdays, and concerts are omitted. Eight latest updates stay visibl
 
 The MHI title also identifies the undergraduate research role. Age appears
 subtly in About; the hero introduction stays unchanged.
+
+Machine is a plain, structured profile linked from the footer. Research,
+experience, writing, and lecture records come from the current site data; stale
+facts and unrelated project listings from the old machine page are not copied.
+It has its own social preview and canonical sitemap entry.

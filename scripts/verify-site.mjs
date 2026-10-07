@@ -77,6 +77,13 @@ for (const [path, html] of index) {
 }
 assert.equal(figures, expectedFigures, 'Every article figure must be described and dimensioned');
 const home = index.get('/');
+const machine = index.get('/machine');
+assert.ok(machine, 'Structured profile page must be built');
+for (const file of paperFiles) {
+  assert.ok(machine.includes('href="/pub/' + file.replace(/\.md$/, '') + '"'), 'Machine profile must include every current research paper');
+}
+assert.ok(home.includes('href="/machine"'), 'Structured profile must be discoverable from the footer');
+
 for (const match of home.matchAll(/<time datetime="([^"]+)">([A-Za-z]{3}) (\d{4})<\/time>/g)) {
   const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].indexOf(match[2]) + 1;
   assert.equal(match[1], `${match[3]}-${String(month).padStart(2, '0')}`, 'Update date metadata must match its visible month in every timezone');
@@ -89,7 +96,7 @@ assert.equal(rows.length, updates.length - 8, 'Homepage must show the latest eig
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
-assert.equal(locations.length, 10 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
+assert.equal(locations.length, 11 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
 assert.ok(!locations.some((path) => /^\/writings\//.test(path)), 'Mirrored articles should not claim a local sitemap canonical');
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
@@ -139,4 +146,5 @@ for (const lecture of lectures) {
     assert.equal(info.width, 1280); assert.equal(info.height, 720);
   }
 }
+assert.ok(lectures.every((lecture) => machine.includes(lecture.videoUrl.replaceAll('&', '&amp;'))), 'Machine profile must retain every current lecture link');
 console.log('Verified archived course: 14 unique videos, 13 slide links, confirmed dates, and 28 landscape image variants.');
