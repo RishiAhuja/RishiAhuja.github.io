@@ -10,6 +10,7 @@ import { getWritings, writingPath } from '../lib/blogs';
 import { paperArtwork, writingArtwork } from '../lib/artwork';
 import CoverArt from '../components/CoverArt.astro';
 import ExperienceList from '../components/ExperienceList.astro';
+import { updates } from '../data/updates';
 
 const papers = (await getCollection('research')).sort(
   (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime()
@@ -21,30 +22,7 @@ const featured = FEATURED_SLUGS.map((slug) => papers.find((entry) => entry.slug 
 
 const latestWritings = (await getWritings()).slice(0, 3);
 
-const updates = [
-  ['Sep 2026', 'Selected to attend the Google DeepMind APAC Research Symposium 2026 at Google Ananta.'],
-  ['Sep 2026', 'Selected to present ICFD-31k at ConfAI, Plaksha University.'],
-  ['Sep 2026', 'Selected as a summer intern at <a class="highlight" href="/blurb/cisco-interview">Cisco</a>.'],
-  // ['Sep 2026', 'Joined the Machine and Hybrid Intelligence Lab at Northwestern University as an undergraduate researcher.'],
-  ['Sep 2026', 'Served as a reviewer for GlobalSouthAI at NeurIPS 2026.'],
-  ['Sep 2026', 'ICFD-31k published in the IJCAI–ECAI 2026 proceedings.'],
-  ['Aug 2026', 'Presented ICFD-31k at IJCAI–ECAI 2026 in Bremen.'],
-  [
-    'Aug 2026',
-    'Received the Best Paper Presentation Award and placed runner-up in the GlobalSouthAI 3MT competition.',
-  ],
-  ['Aug 2026', 'Presented ScopeBench-PR at GlobalSouthAI, IJCAI–ECAI 2026.'],
-  ['Jul 2026', 'Served as a reviewer for the FSMD Workshop at ICML 2026.'],
-  ['Jul 2026', 'ScopeBench-PR accepted at GlobalSouthAI, IJCAI–ECAI 2026.'],
-  ['Jun 2026', 'Awarded an IJCAI–AIJ grant.'],
-  ['Apr 2026', 'ICFD-31k accepted to the IJCAI–ECAI 2026 main conference.'],
-  [
-    'Apr 2026',
-    'Presented retrieval-augmented time-series forecasting research at the ICLR 2026 TSALM Workshop.',
-  ],
-  ['Mar 2026', 'Awarded an ICLR 2026 grant.'],
-  ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
-];
+
 
 const monthDate = (label: string) => {
   const [month, year] = label.split(' ');
@@ -64,10 +42,11 @@ const schema = {
       '@type': 'CollegeOrUniversity',
       name: 'Dr. B.R. Ambedkar National Institute of Technology Jalandhar',
     },
-    // {
-    //   '@type': 'CollegeOrUniversity',
-    //   name: 'Northwestern University',
-    // },
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'Northwestern University',
+      url: LINKS.MHI,
+    },
   ],
   sameAs: [
     LINKS.GITHUB,
@@ -75,7 +54,7 @@ const schema = {
     LINKS.GOOGLE_SCHOLAR,
     LINKS.OPENREVIEW,
     LINKS.TWITTER,
-    // LINKS.MHI,
+    LINKS.MHI,
   ],
   knowsAbout: ['Trustworthy AI', 'Time Series Forecasting', 'Retrieval-Augmented Systems', 'Fraud Detection'],
 };
@@ -232,9 +211,8 @@ const schema = {
     <section class="section wrap" id="academics" aria-labelledby="academics-title">
       <h2 class="section-title" id="academics-title">Academics</h2>
       <article class="experience-row academic-row">
-        <div class="organisation-logo"><img src="/images/logos/nitj.webp" alt="" width="64" height="64" loading="lazy" decoding="async" /></div>
-        <div class="experience-copy"><h3><a class="organisation-name" href="https://www.nitj.ac.in/" target="_blank" rel="noopener noreferrer">NIT Jalandhar</a></h3><p class="experience-role">B.Tech. with Research in Information Technology</p><p class="experience-meta">Dr. B. R. Ambedkar National Institute of Technology</p></div>
-        <p class="experience-date">Present</p>
+        <div class="organisation-logo"><img src="/images/logos/nitj.webp" alt="" width="48" height="48" loading="lazy" decoding="async" /></div>
+        <div class="experience-copy"><h3><a class="organisation-name" href="https://www.nitj.ac.in/" target="_blank" rel="noopener noreferrer">NIT Jalandhar</a></h3><p class="experience-role">B.Tech. with Research in Information Technology</p><p class="experience-meta">Department of Information Technology</p><p class="experience-meta">2024–28 · Pre-final year</p></div>
       </article>
     </section>
 

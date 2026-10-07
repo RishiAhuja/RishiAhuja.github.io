@@ -82,7 +82,10 @@ for (const match of home.matchAll(/<time datetime="([^"]+)">([A-Za-z]{3}) (\d{4}
   assert.equal(match[1], `${match[3]}-${String(month).padStart(2, '0')}`, 'Update date metadata must match its visible month in every timezone');
 }
 const rows = [...home.matchAll(/<li\b[^>]*data-extra-update[^>]*>/g)];
-assert.equal(rows.length, 7, 'Homepage must collapse only the seven older updates');
+const updatesSource = await readFile('src/data/updates.ts', 'utf8');
+const updatesJS = ts.transpileModule(updatesSource, {compilerOptions: {module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022}}).outputText;
+const { updates } = await import(`data:text/javascript;base64,${Buffer.from(updatesJS).toString('base64')}`);
+assert.equal(rows.length, updates.length - 8, 'Homepage must show the latest eight updates and collapse all older milestones');
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
