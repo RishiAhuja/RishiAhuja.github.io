@@ -3,7 +3,13 @@
   "assets": [
     {
       "kind": "dumbbell",
-      "prompt": "Use case: stylized-concept. Style/medium: a restrained flat 2D editorial illustration for a calm research portfolio, tactile screen-printed pigment grain and cut-paper edges. Muted dusty teal, pale slate blue, warm ivory, small faded terracotta touches, cobalt blue #174ea6 as the accent. Entirely flat, compact and quiet, no realistic depth, cast shadows, glow, photography, scenery, faces, labels, letters, digits, words, logos, watermark or UI. Genuine transparent background around every shape. No rectangular background plane. Crisp enough to read at 80–160 CSS pixels.\nAsset type: one small personal illustration beside a short paragraph about training in the gym. Subject: ONE simple horizontal 2D dumbbell. A slim slate-grey handle connecting two pairs of broad rounded rectangular muted teal weight plates, a small cobalt-blue endcap or ink edge on each side, a little ivory highlight. Clear simple silhouette, gentle printed grain, no weight numbers, no perspective, no arm, no hand, no equipment scene. Centered with ample transparent padding in a square canvas. Keep the silhouette compact and friendly, like a tiny handmade print, ready for a brief CSS lifting animation."
+      "prompt": "Use case: precise-object-edit.\nAsset type: small transparent 2D dumbbell illustration beside the gym paragraph of a personal research portfolio.\nInput image role: edit target; preserve its horizontal centered composition and fine printed grain.\nPrimary request: replace the teal rounded weight plates with matte BLACK squarish rubber dumbbell heads. One compact chunky head on each end, near-square front faces with very slightly chamfered corners and a subtle charcoal edge. Make them clearly blocky, not round discs or tall pill-shaped plates. Use black and dark charcoal for the weights and endcaps, a slim neutral grey metal handle with a restrained light-grey grip detail. Remove all teal and blue accents from the dumbbell.\nStyle: flat 2D editorial illustration, subtle screen-print texture, simple silhouette, minimal highlights. Keep the friendly handmade character and horizontal pose of the reference. No realistic 3D rendering, glossy finish, dramatic lighting, cast shadows, numbers, letters, logos, extra weights, arms, hands, gym scene or background plane. Genuine transparent background. Entire dumbbell visible with clear padding, readable at 80–96 CSS pixels. Preserve the landscape 2:1 composition.",
+      "previousVersion": {
+        "path": "/images/personal/dumbbell.webp",
+        "prompt": "Use case: stylized-concept. Style/medium: a restrained flat 2D editorial illustration for a calm research portfolio, tactile screen-printed pigment grain and cut-paper edges. Muted dusty teal, pale slate blue, warm ivory, small faded terracotta touches, cobalt blue #174ea6 as the accent. Entirely flat, compact and quiet, no realistic depth, cast shadows, glow, photography, scenery, faces, labels, letters, digits, words, logos, watermark or UI. Genuine transparent background around every shape. No rectangular background plane. Crisp enough to read at 80–160 CSS pixels.\nAsset type: one small personal illustration beside a short paragraph about training in the gym. Subject: ONE simple horizontal 2D dumbbell. A slim slate-grey handle connecting two pairs of broad rounded rectangular muted teal weight plates, a small cobalt-blue endcap or ink edge on each side, a little ivory highlight. Clear simple silhouette, gentle printed grain, no weight numbers, no perspective, no arm, no hand, no equipment scene. Centered with ample transparent padding in a square canvas. Keep the silhouette compact and friendly, like a tiny handmade print, ready for a brief CSS lifting animation."
+      },
+      "reference": "/images/personal/dumbbell.webp",
+      "revision": "Black squarish rubber heads, requested 10 October 2026."
     },
     {
       "kind": "curriculum",
@@ -37,10 +43,10 @@
   "optimization": "Alpha-preserving cell extraction and padding normalization, resized to at most 480px and encoded as WebP quality 90. Atlas cells are exported as independent layers; the original illustration texture is preserved.",
   "savedAssets": [
     {
-      "path": "/images/personal/dumbbell.webp",
+      "path": "/images/personal/dumbbell-black.webp",
       "width": 480,
       "height": 240,
-      "bytes": 28140,
+      "bytes": 19794,
       "alphaRange": [
         0,
         255
