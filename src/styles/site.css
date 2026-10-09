@@ -1734,10 +1734,10 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 ::view-transition-group(site-header) { animation: none; }
 ::view-transition-old(site-header) { display: none; }
 ::view-transition-new(site-header) { animation: none; }
-::view-transition-group(nav-indicator) { animation-duration: 160ms; }
+::view-transition-group(nav-indicator) { animation-duration: 240ms; }
 .site-nav { position: relative; }
 .nav-panel { display: contents; }
-.nav-indicator { position: absolute; left: 0; top: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--page-accent); pointer-events: none; transform: translate(var(--dot-x), var(--dot-y)); transition: transform 160ms cubic-bezier(.2,.7,.2,1); }
+.nav-indicator { position: absolute; left: 0; top: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--page-accent); pointer-events: none; transform: translate(var(--dot-x), var(--dot-y)); transition: transform 240ms cubic-bezier(.2,.7,.2,1); }
 .site-nav[data-indicator-ready] .nav-links a[data-active='true']::after { display: none; }
 .nav-links a, .nav-social a { transition: color 110ms ease-out; }
 .nav-links a:hover, .nav-links a:focus-visible, .nav-social a:hover, .nav-social a:focus-visible { color: var(--accent); }

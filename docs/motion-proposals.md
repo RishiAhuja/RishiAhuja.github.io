@@ -6,13 +6,13 @@ The site uses restrained typography, a blue interaction accent, pale cover colou
 
 ## Locations and behaviour
 
-Scripted animations are capped at 200 ms. Shared cover movement uses 300 ms; page fades and navigation-dot timings stay unchanged. Native navigation is enabled only in supporting browsers; other browsers keep regular page navigation.
+Scripted animations are capped at 200 ms. Shared cover movement uses 300 ms; page fades stay unchanged, and the navigation dot glides over 240 ms. Native navigation is enabled only in supporting browsers; other browsers keep regular page navigation.
 
 | Priority | Location and source | Trigger | Animation | Timing |
 | --- | --- | --- | --- | --- |
 | Start | Internal page navigation: `src/layouts/BaseLayout.astro` and all page `<main>` elements | Home / Research / Writing / Blurbs / publication navigation, including Back | Crossfade the main content while the shared navigation stays visually steady. Avoid sliding an entire long page. Restore scroll on Back and move focus appropriately on new-page navigation. | 70 ms out; 130 ms in |
 | Start | Cover links in `src/pages/index.astro`, `src/pages/research/index.astro`, `src/pages/writings/index.astro`, and `src/pages/blurb/index.astro`; destination hero covers in the detail routes | Open a paper, article, or blurb | Let the clicked cover move and resize into the destination hero cover. Fade the surrounding content. Use the reverse connection on Back where the cover is visible; fall back to the page fade otherwise. | 300 ms |
-| Consider | Active navigation dot: `src/components/Header.astro`, `.nav-links` in `src/styles/site.css` | Selected route or observed homepage section changes | Move one indicator to the new link, with a small opacity fade when the navigation layout changes. Keep Research selected on publication pages and Writing on article pages. Blurbs selects no unrelated nav item. | 160 ms |
+| Consider | Active navigation dot: `src/components/Header.astro`, `.nav-links` in `src/styles/site.css` | Pointer hover / keyboard focus, selected route, or observed homepage section changes | Slide one dot horizontally to the hovered or focused link, then return to the selected link when the preview ends. Hover leaves the current-page state unchanged. Keep Research selected on publication pages and Writing on article pages. Blurbs selects no unrelated nav item. | 240 ms |
 | Consider | Navbar text and social icons: `Header.astro` | Pointer hover / keyboard focus | Ease the colour into the blue accent. Keep the focus ring immediate and the text and icon positions steady. | 110 ms |
 | Start | Mobile navigation panel: `Header.astro`, `.site-nav[data-open]` | Open / close menu | Fade the panel and move its links down 4 px into position as a single group. Close slightly faster. Focus trapping, Escape, inert background, and focus restoration take effect immediately. | 160 ms open; 120 ms close |
 | Consider | Hamburger control: `Header.astro`, `.nav-toggle-bars` | Menu opens / closes | Turn the outer bars into a close icon and fade the middle bar. Keep the 44 px control fixed. | 160 ms |
@@ -56,7 +56,7 @@ Prefer CSS opacity, transforms, and colour transitions. Reserve measured height 
 
 - Production build: 24 pages and 24 OG cards, with the existing accessibility and discovery checks passing.
 - TypeScript: `npx tsc --noEmit` passed.
-- Motion suite: 13 checks cover request races and failures, page disposal, reduced motion and changes to that preference, the Astro 4 plain-event contract, Back focus restoration, and aborted navigation.
+- Motion suite: 15 checks cover request races and failures, page disposal, reduced motion and changes to that preference, the Astro 4 plain-event contract, Back focus restoration, aborted navigation, hover/focus previews that preserve route state, and indicator cleanup.
 - Browser QA at 1440 × 1000 and 390 × 844: navigation through Home, Research, publications, Writing, articles, and Blurbs; Back restoration; correct active dots; Copy feedback; menu Escape/focus/background release; updates expansion/collapse; mobile contents selection; stable carousel dimensions and counters during rapid clicks and keyboard changes; no horizontal overflow on checked pages.
 - Native videos retain controls, posters, and user-initiated playback without autoplay or looping. No-JavaScript navigation and disclosure fallbacks were reviewed in the generated markup and CSS.
 - Reduced-motion script behaviour is covered by automated tests; the preference was not changed at the operating-system level during browser QA.

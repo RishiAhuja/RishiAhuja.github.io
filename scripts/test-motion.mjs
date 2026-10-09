@@ -144,4 +144,89 @@ await test('aborted navigation removes temporary cover names', async () => {
   assert.equal(fixture.old.style.viewTransitionName, ''); assert.equal(fixture.next.style.viewTransitionName, '');
   assert.equal(fixture.oldRoot.style.getPropertyValue('--shared-cover-duration'), ''); assert.equal(fixture.nextRoot.style.getPropertyValue('--shared-cover-duration'), '');
 });
+// The indicator previews a destination without changing the selected route.
+const headerSource = await readFile(new URL('../src/scripts/motionHeader.ts', import.meta.url), 'utf8');
+const headerJS = ts.transpileModule(headerSource, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
+let headerFixtureCount = 0;
+async function headerFixture(activeId = 'home') {
+  class Element extends EventTarget {
+    dataset = {}; hidden = false; inert = false;
+    attributes = new Map();
+    style = { values: {}, setProperty(name, value) { this.values[name] = value; }, removeProperty(name) { delete this.values[name]; } };
+    constructor(rect = { left: 0, top: 0, width: 0, bottom: 0 }) { super(); this.rect = rect; }
+    setAttribute(name, value) { this.attributes.set(name, value); }
+    getAttribute(name) { return this.attributes.get(name); }
+    removeAttribute(name) { this.attributes.delete(name); }
+    getBoundingClientRect() { return this.rect; }
+    querySelector() { return null; }
+    querySelectorAll() { return []; }
+  }
+  const nav = new Element({ left: 0, top: 0, width: 600, bottom: 60 });
+  const toggle = new Element(), panel = new Element(), indicator = new Element(), list = new Element();
+  indicator.hidden = true;
+  const links = ['home', 'research', 'writings'].map((id, i) => {
+    const link = new Element({ left: 20 + i * 160, top: 20, width: 80, bottom: 60 });
+    link.dataset = { navId: id, active: String(id === activeId) };
+    if (id === activeId) link.setAttribute('aria-current', 'page');
+    return link;
+  });
+  list.querySelectorAll = () => links;
+  nav.querySelector = (selector) => ({ '.nav-toggle': toggle, '.nav-panel': panel, '.nav-indicator': indicator, '.nav-links': list })[selector]
+    || (selector.includes('[data-active="true"]') ? links.find(link => link.dataset.active === 'true') : null);
+  nav.querySelectorAll = () => links;
+  const document = {
+    querySelector: () => nav,
+    querySelectorAll: () => [],
+    body: { classList: { remove() {} } },
+    fonts: { ready: Promise.resolve() },
+  };
+  const desktop = new Media(); desktop.matches = true;
+  const frames = new Map(); let frameId = 0;
+  const context = {
+    document, window: new EventTarget(), location: { pathname: '/research' },
+    matchMedia: () => desktop,
+    requestAnimationFrame: callback => { frames.set(++frameId, callback); return frameId; },
+    cancelAnimationFrame: id => frames.delete(id),
+  };
+  globalThis.__headerFixture = context;
+  const prefix = `const {${Object.keys(context).join(',')}} = globalThis.__headerFixture;\n`;
+  const { mountHeader } = await import(`data:text/javascript;base64,${Buffer.from(prefix + headerJS + `\n// header fixture ${++headerFixtureCount}`).toString('base64')}`);
+  delete globalThis.__headerFixture;
+  const scope = new MotionScope(new Media());
+  mountHeader(scope); await flush();
+  const measure = () => { const pending = [...frames.values()]; frames.clear(); pending.forEach(callback => callback()); };
+  const enter = (link, pointerType = 'mouse') => { link.dispatchEvent(Object.assign(new Event('pointerenter'), { pointerType })); measure(); };
+  return { links, list, indicator, scope, frames, measure, enter };
+}
+
+await test('navigation hover and keyboard focus preview links without changing the active route', async () => {
+  const fixture = await headerFixture(), [home, research, writing] = fixture.links;
+  const position = () => fixture.indicator.style.values['--dot-x'];
+  const baseline = fixture.indicator.style.values['--dot-y'];
+  assert.equal(position(), '56px');
+  fixture.enter(research); assert.equal(position(), '216px');
+  fixture.enter(writing); assert.equal(position(), '376px');
+  assert.equal(fixture.indicator.style.values['--dot-y'], baseline);
+  assert.equal(home.getAttribute('aria-current'), 'page');
+  assert.equal(research.getAttribute('aria-current'), undefined);
+  fixture.list.dispatchEvent(new Event('pointerleave')); fixture.measure();
+  assert.equal(position(), '56px');
+  research.dispatchEvent(new Event('focus')); fixture.measure(); assert.equal(position(), '216px');
+  research.dispatchEvent(new Event('blur')); fixture.measure(); assert.equal(position(), '56px');
+  fixture.enter(writing, 'touch'); assert.equal(position(), '56px');
+  fixture.scope.dispose();
+});
+
+await test('hover previews end cleanly on unselected pages and after page disposal', async () => {
+  const fixture = await headerFixture('none');
+  assert.equal(fixture.indicator.hidden, true);
+  fixture.enter(fixture.links[1]); assert.equal(fixture.indicator.hidden, false);
+  fixture.list.dispatchEvent(new Event('pointerleave')); fixture.measure();
+  assert.equal(fixture.indicator.hidden, true);
+  fixture.links[2].dispatchEvent(Object.assign(new Event('pointerenter'), { pointerType: 'mouse' }));
+  assert.ok(fixture.frames.size > 0);
+  fixture.scope.dispose(); assert.equal(fixture.frames.size, 0);
+  fixture.enter(fixture.links[0]); assert.equal(fixture.indicator.hidden, true);
+});
+
 console.log(`Motion verification passed: ${passed} checks.`);

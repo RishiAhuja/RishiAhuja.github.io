@@ -12,6 +12,9 @@ export function mountHeader(scope: MotionScope) {
   let panelAnimation: Animation | null = null;
   let blocked: { element: HTMLElement; inert: boolean }[] = [];
   let measureFrame = 0;
+  let hoveredLink: HTMLElement | null = null;
+  let focusedLink: HTMLElement | null = null;
+  const navLinks = nav.querySelector<HTMLElement>('.nav-links');
   nav.dataset.menuReady = 'true';
   const restoreBackground = () => {
     blocked.forEach(({ element, inert }) => { element.inert = inert; });
@@ -70,12 +73,14 @@ export function mountHeader(scope: MotionScope) {
     measureFrame = 0;
     if (!indicator) return;
     const active = nav.querySelector<HTMLElement>('.nav-links [data-active="true"]');
-    if (!active || !desktop.matches) { indicator.hidden = true; return; }
+    const target = hoveredLink || focusedLink || active;
+    if (!target || !desktop.matches) { indicator.hidden = true; return; }
     const instant = !animate || indicator.hidden;
-    const item = active.getBoundingClientRect(), frame = nav.getBoundingClientRect();
+    const item = target.getBoundingClientRect(), frame = nav.getBoundingClientRect();
+    const baseline = (active || target).getBoundingClientRect().bottom;
     if (instant) indicator.style.transition = 'none';
     indicator.style.setProperty('--dot-x', `${item.left - frame.left + item.width / 2 - 4}px`);
-    indicator.style.setProperty('--dot-y', `${item.bottom - frame.top - 8}px`);
+    indicator.style.setProperty('--dot-y', `${baseline - frame.top - 8}px`);
     indicator.hidden = false;
     nav.dataset.indicatorReady = 'true';
     if (instant) {
@@ -87,10 +92,31 @@ export function mountHeader(scope: MotionScope) {
   const requestMeasure = () => {
     if (!measureFrame) measureFrame = requestAnimationFrame(() => measureIndicator());
   };
+  // Preview hovered or focused links without changing the current page.
+  navLinks?.querySelectorAll<HTMLElement>('[data-nav-id]').forEach((link) => {
+    link.addEventListener('pointerenter', (event) => {
+      if (!desktop.matches || event.pointerType === 'touch') return;
+      hoveredLink = link;
+      requestMeasure();
+    }, { signal });
+    link.addEventListener('focus', () => {
+      hoveredLink = null;
+      focusedLink = link;
+      requestMeasure();
+    }, { signal });
+    link.addEventListener('blur', () => {
+      focusedLink = null;
+      requestMeasure();
+    }, { signal });
+  });
+  navLinks?.addEventListener('pointerleave', () => {
+    hoveredLink = null;
+    requestMeasure();
+  }, { signal });
   const resizeIndicator = () => { cancelAnimationFrame(measureFrame); measureIndicator(false); };
   measureIndicator(false);
   window.addEventListener('resize', resizeIndicator, { signal });
-  desktop.addEventListener('change', () => { setOpen(false, false, false); resizeIndicator(); }, { signal });
+  desktop.addEventListener('change', () => { hoveredLink = null; focusedLink = null; setOpen(false, false, false); resizeIndicator(); }, { signal });
   if (location.pathname === '/') {
     const sections = ['home', 'research', 'writings', 'about'].map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
     const observer = new IntersectionObserver((entries) => {
