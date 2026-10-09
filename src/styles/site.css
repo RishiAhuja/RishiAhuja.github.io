@@ -1801,6 +1801,10 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .organisation-name:hover { color: var(--accent); }
 .organisation-context { margin: -2px 0 10px; font-size: 15px; color: var(--text-muted); }
 .experience-roles { list-style: none; padding: 0; margin: 0; }
+.experience-roles > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 4px 24px; }
+.experience-roles .experience-role { margin: 0; }
+.experience-roles .experience-meta { grid-column: 1; }
+.experience-date { margin: 0; color: var(--text-muted); font-size: 15px; line-height: 1.6; text-align: right; white-space: nowrap; }
 .experience-roles > li + li { margin-top: 20px; }
 .experience-roles.has-progression { padding-left: 20px; margin-top: 15px; }
 .has-progression > li { position: relative; }
@@ -1864,6 +1868,10 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .resume-list .info-label { margin-bottom: 18px; }
 .resume-list p { margin-bottom: 24px; }
 @media (max-width: 1100px) { .lecture-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .link-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 768px) {
+  .experience-roles > li { grid-template-columns: minmax(0, 1fr); }
+  .experience-date { text-align: left; white-space: normal; font-size: 14px; }
+}
 @media (max-width: 650px) {
   .experience-row { grid-template-columns: 48px minmax(0, 1fr); gap: 8px 18px; padding-block: 24px; }
   .organisation-logo { width: 48px; height: 48px; }

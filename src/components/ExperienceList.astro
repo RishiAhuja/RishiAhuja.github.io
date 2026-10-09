@@ -14,7 +14,8 @@ import { experiences } from '../data/experience';
             {item.roles.map((role) => (
               <li>
                 <p class="experience-role">{role.title}</p>
-                <p class="experience-meta"><span class:list={['experience-date', { 'is-upcoming': role.upcoming }]}>{role.date}</span>{role.meta && <> · {role.meta}</>}</p>
+                <p class:list={['experience-date', { 'is-upcoming': role.upcoming }]}>{role.date}</p>
+                {role.meta && <p class="experience-meta">{role.meta}</p>}
               </li>
             ))}
           </ol>
