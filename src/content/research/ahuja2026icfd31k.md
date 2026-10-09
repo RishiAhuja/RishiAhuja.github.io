@@ -44,6 +44,8 @@ links:
     url: "https://www.ijcai.org/proceedings/2026/0786.pdf"
   - label: "Code"
     url: "https://github.com/SPELLAILab/ICFD-31k"
+  - label: "Dataset"
+    url: "https://huggingface.co/datasets/rishia2220/icfd-31k"
   - label: "Conference site"
     url: "https://2026.ijcai.org/"
 bibtex: |
@@ -66,6 +68,7 @@ same_as:
   - "https://www.ijcai.org/proceedings/2026/786"
   - "https://doi.org/10.24963/ijcai.2026/786"
   - "https://github.com/SPELLAILab/ICFD-31k"
+  - "https://huggingface.co/datasets/rishia2220/icfd-31k"
   - "https://2026.ijcai.org/"
 ---
 
