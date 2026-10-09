@@ -1,14 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
+import SupportingIntro from '../components/SupportingIntro.astro';
 import { COURSE } from '../data/teaching';
 ---
 <BaseLayout title="Community · Rishi Ahuja" description="Teaching, mentoring, and building developer communities.">
   <main id="main-content" tabindex="-1">
     <section class="section wrap supporting-page">
-      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Community</h1></div>
-      <p class="page-lede">Teaching, mentoring, and building developer communities.</p>
+      <SupportingIntro title="Community" description="Teaching, mentoring, and building developer communities." artwork="community" />
       <div class="community-list">
         <article class="community-entry" id="teaching">
           <p class="info-label">Teaching · {COURSE.date}</p>

@@ -1,14 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
+import SupportingIntro from '../components/SupportingIntro.astro';
 
 ---
 <BaseLayout title="Colophon · Rishi Ahuja" description="How this site is made, and the choices behind it.">
   <main id="main-content" tabindex="-1">
     <section class="section wrap supporting-page">
-      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Colophon</h1></div>
-      <p class="page-lede">How this site is made, and the choices behind it.</p>
+      <SupportingIntro title="Colophon" description="How this site is made, and the choices behind it." artwork="colophon" />
       <div class="prose-sections">
         <section><h2>Design</h2><p>A quiet place for my research, work, teaching, and writing. Generous spacing and a clear type hierarchy keep the content easy to scan and comfortable to read.</p><p>The main typeface is Athletics. Charter is used for long-form reading. Blue marks an interaction; pale colours and abstract artwork give individual pieces their own character.</p><div class="colophon-swatches" aria-label="Site colour palette"><span><i style="background:#ffffff"></i>White · #FFFFFF</span><span><i style="background:#353535"></i>Text · #353535</span><span><i style="background:#174ea6"></i>Blue · #174EA6</span><span><i style="background:#f6f6f6"></i>Soft grey · #F6F6F6</span></div></section>
         <section><h2>Artwork</h2><p>Abstract covers connect each paper, article, blurb, and lecture to an idea inside it. Organisation logos belong to their respective organisations.</p></section>

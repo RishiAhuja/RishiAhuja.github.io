@@ -1,0 +1,57 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  artwork: 'colophon' | 'archive' | 'community' | 'links';
+}
+
+const { title, description, artwork } = Astro.props;
+---
+
+<header class="supporting-intro">
+  <div class="supporting-intro-copy">
+    <div class="page-path">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
+      <h1 class="page-title">{title}</h1>
+    </div>
+    <p class="page-lede">{description}</p>
+  </div>
+  <img
+    class="supporting-intro-art"
+    src={`/images/supporting/${artwork}.webp`}
+    width="480"
+    height="480"
+    alt=""
+    decoding="async"
+  />
+</header>
+
+<style>
+  .supporting-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 168px;
+    align-items: center;
+    gap: clamp(24px, 4vw, 48px);
+    max-width: 980px;
+    margin-bottom: 64px;
+  }
+
+  .supporting-intro-copy { min-width: 0; }
+  .supporting-intro .page-lede { margin-bottom: 0; }
+  .supporting-intro-art { width: 168px; height: 168px; object-fit: contain; }
+
+  @media (max-width: 650px) {
+    .supporting-intro {
+      grid-template-columns: minmax(0, 1fr) 88px;
+      gap: 18px;
+      margin-bottom: 42px;
+    }
+
+    .supporting-intro-copy { display: contents; }
+    .page-path { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+    .supporting-intro-art { grid-column: 2; grid-row: 1; width: 88px; height: 88px; }
+    .supporting-intro .page-lede { grid-column: 1 / -1; grid-row: 2; }
+  }
+</style>
