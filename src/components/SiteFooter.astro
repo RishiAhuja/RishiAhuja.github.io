@@ -4,29 +4,45 @@ import { LINKS } from '../lib/constants';
 
 <footer class="site-footer">
   <div class="wrap">
-    <ul class="footer-links">
-      <li><a href="/research">Research</a></li>
-      <li><a href="/writings">Writing</a></li>
-      <li><a href="/community">Community</a></li>
-      <li><a href="/links">Links</a></li>
-      <li><a href="/colophon">Colophon</a></li>
-      <li><a href="/archive">Archive</a></li>
-      <li><a href="/machine">Machine</a></li>
-      <li><a href="/feed.xml">RSS</a></li>
-      <li><a href={LINKS.GOOGLE_SCHOLAR} target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
-      <li><a href={LINKS.OPENREVIEW} target="_blank" rel="noopener noreferrer">OpenReview</a></li>
-      <li><a href={LINKS.GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a></li>
-      <li><a href={LINKS.LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      <li><a href={LINKS.EMAIL}>Email</a></li>
-      <li><a href={LINKS.RESUME}>Résumés</a></li>
-    </ul>
-    <div class="footer-bottom">
-      <p class="signoff">Made with <span class="heart">♥</span> in Jalandhar.</p>
-      <a class="footer-blurbs" href="/blurb">
-        <span class="blurb-mark" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span class="footer-blurbs-label">Blurbs</span>
-        <span aria-hidden="true">→</span>
+    <div class="footer-heading">
+      <div>
+        <p class="footer-eyebrow">A small corner of the internet</p>
+        <h2 class="footer-title">Rishi Ahuja<span aria-hidden="true">.</span></h2>
+        <p class="footer-intro">Research, things I build, and things I’m still figuring out.</p>
+      </div>
+      <a class="footer-stamp" href="/blurb" aria-label="Read Blurbs: trips, conferences and personal stories">
+        <img src="/images/footer/travel-stamp.webp" width="400" height="400" alt="" loading="lazy" decoding="async" />
       </a>
     </div>
+    <div class="footer-columns">
+      <nav class="footer-group" aria-label="Explore">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="/research">Research</a></li>
+          <li><a href="/writings">Writing</a></li>
+          <li><a href="/community">Community &amp; teaching</a></li>
+          <li><a class="footer-blurbs" href="/blurb">Blurbs <span aria-hidden="true">↗</span><small>Trips, conferences &amp; personal stories</small></a></li>
+        </ul>
+      </nav>
+      <nav class="footer-group" aria-label="Elsewhere">
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href={LINKS.GITHUB} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></li>
+          <li><a href={LINKS.GOOGLE_SCHOLAR} target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a></li>
+          <li><a href="/links">All links</a></li>
+          <li><a href={LINKS.RESUME}>Résumés</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-group" aria-label="This site">
+        <h3>This site</h3>
+        <ul>
+          <li><a href="/colophon">Colophon</a></li>
+          <li><a href="/archive">Archive</a></li>
+          <li><a href="/machine">For agents</a></li>
+          <li><a href="/feed.xml">RSS</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="signoff">Made with <span class="heart">♥</span> in Jalandhar.</p>
   </div>
 </footer>

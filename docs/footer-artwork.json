@@ -1,0 +1,8 @@
+{
+  "asset": "/images/footer/travel-stamp.webp",
+  "mode": "Built-in image generation; transparent background",
+  "dimensions": [400, 400],
+  "prompt": "Use case: stylized-concept. Asset type: a very small decorative illustration linking to travel blurbs in a calm academic portfolio footer. Generate ONE isolated artwork with a real transparent background, not a website mockup. Style: restrained editorial paper collage, delicate printed texture, shallow layering, warm ivory with muted dusty teal and faded terracotta, one small cobalt-blue accent #194FA8. Flat, softly lit, little depth, barely any shadow. Compact silhouette centered in a square canvas with transparent padding around every edge. It must remain legible at 90 CSS pixels. No words, lettering, labels, people, emoji, frame around the canvas, background plane, watermark, dramatic lighting, floating pieces, or elaborate scenery. Less visual weight than an open pop-up notebook. Subject: one small square ivory postage stamp with restrained perforated paper edges, tilted very slightly. Its printed picture is just two broad textured color shapes: a muted teal rounded Rio hill silhouette blending into a single terracotta Bremen stepped-gable suggestion, with lots of cream paper around it. Thin faint blue ink border inside the stamp and a tiny partial postmark arc, no characters or digits. Almost flat screen-printed paper, not a glossy badge. The outer stamp is the only physical object. Understated resting state.",
+  "optimization": "Downscaled to 400×400 WebP, quality 90, with the generated alpha preserved.",
+  "interaction": "Rotate −2° on hover or keyboard focus over 200ms, then rest. No transform for reduced motion. Link opens /blurb."
+}

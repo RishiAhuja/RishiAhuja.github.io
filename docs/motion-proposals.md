@@ -28,7 +28,7 @@ Scripted animations are capped at 200 ms. Shared cover movement uses 300 ms; pag
 | Optional | Blog figures and blurb photos: `src/lib/blogMarkdown.ts`, `src/components/blurb/BlurbContent.astro` | Image finishes loading | Fade the loaded image over its reserved frame once. Leave already cached images immediate. Keep dimensions stable and avoid shimmer or repeated scroll reveals. | 110 ms |
 | Optional | Blurb videos: `BlurbContent.astro` | First decoded frame after the user presses Play | If an extra poster layer is worthwhile, fade it away when playback actually starts. Keep native controls and pause/end behaviour; this must not introduce autoplay. | 110 ms |
 | Optional | Long writing and blurb pages: their detail routes | Reader scrolls through the article body | A thin 2 px progress line at the viewport top can track article-body progress. Update its transform directly with scrolling. It starts after the hero and finishes before related content; decorative and hidden from assistive technology. | Continuous; no trailing tween |
-| Consider | Footer Blurbs link: `src/components/SiteFooter.astro`, `.footer-blurbs` | Hover / keyboard focus | Move its arrow 2 px to the right and ease the text colour into blue. Keep the small cover-colour mark still so the footer stays quiet. | 110 ms |
+| Implemented | Footer travel stamp: `src/components/SiteFooter.astro`, `.footer-stamp` | Hover / keyboard focus | Tilt the paper stamp 2° and rest; clicking opens Blurbs. Keep the motion off for reduced-motion preferences. | 200 ms |
 
 ## Implementation details
 
