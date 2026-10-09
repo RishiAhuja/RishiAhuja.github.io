@@ -1,5 +1,6 @@
 ---
 import Breadcrumbs from './Breadcrumbs.astro';
+import DecorativeArt from './DecorativeArt.astro';
 
 interface Props {
   title: string;
@@ -18,14 +19,7 @@ const { title, description, artwork } = Astro.props;
     </div>
     <p class="page-lede">{description}</p>
   </div>
-  <img
-    class="supporting-intro-art"
-    src={`/images/supporting/${artwork}.webp`}
-    width="480"
-    height="480"
-    alt=""
-    decoding="async"
-  />
+  <div class="supporting-intro-art"><DecorativeArt kind={artwork} loading="eager" /></div>
 </header>
 
 <style>
@@ -40,7 +34,7 @@ const { title, description, artwork } = Astro.props;
 
   .supporting-intro-copy { min-width: 0; }
   .supporting-intro .page-lede { margin-bottom: 0; }
-  .supporting-intro-art { width: 168px; height: 168px; object-fit: contain; }
+  .supporting-intro-art { width: 168px; height: 168px; }
 
   @media (max-width: 650px) {
     .supporting-intro {

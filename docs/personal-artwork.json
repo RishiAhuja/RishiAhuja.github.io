@@ -1,0 +1,160 @@
+{
+  "mode": "Built-in image generation; transparent output. Archive and Community were generated as layer atlases from their existing artwork. The curriculum asset uses the user-requested simpler revision.",
+  "assets": [
+    {
+      "kind": "dumbbell",
+      "prompt": "Use case: stylized-concept. Style/medium: a restrained flat 2D editorial illustration for a calm research portfolio, tactile screen-printed pigment grain and cut-paper edges. Muted dusty teal, pale slate blue, warm ivory, small faded terracotta touches, cobalt blue #174ea6 as the accent. Entirely flat, compact and quiet, no realistic depth, cast shadows, glow, photography, scenery, faces, labels, letters, digits, words, logos, watermark or UI. Genuine transparent background around every shape. No rectangular background plane. Crisp enough to read at 80–160 CSS pixels.\nAsset type: one small personal illustration beside a short paragraph about training in the gym. Subject: ONE simple horizontal 2D dumbbell. A slim slate-grey handle connecting two pairs of broad rounded rectangular muted teal weight plates, a small cobalt-blue endcap or ink edge on each side, a little ivory highlight. Clear simple silhouette, gentle printed grain, no weight numbers, no perspective, no arm, no hand, no equipment scene. Centered with ample transparent padding in a square canvas. Keep the silhouette compact and friendly, like a tiny handmade print, ready for a brief CSS lifting animation."
+    },
+    {
+      "kind": "curriculum",
+      "prompt": "Use case: precise-object-edit. Edit the supplied curriculum illustration to be much simpler and quieter. Replace the two busy sheets and detailed smartphone mockup with ONE small flat warm-ivory paper offcut, almost empty. On it, only three small broad printed blocks in muted dusty teal and pale slate, one thin cobalt-blue #174ea6 margin rule, and two very short blue annotation strokes. Composition: a single coherent sheet tilted only slightly, centered in a square canvas with lots of genuinely transparent padding. Medium: restrained flat editorial screen print with delicate pigment grain, like a little paper fragment from an abstract book cover. Avoid stock educational illustration styling. Keep the texture soft and subtle. No smartphone, app mockup, realistic interface, check badges, circles with ticks, decorative rays, loops, arrow, curled line, pen, multiple pages, handwriting, text, letters, numbers, logo, 3D, perspective, cast shadow, glow or background plane. The entire artwork is one nearly empty printed paper fragment. Preserve the muted palette and transparent background of the reference."
+    },
+    {
+      "kind": "bookmark",
+      "prompt": "Use case: stylized-concept. Style/medium: a restrained flat 2D editorial illustration for a calm research portfolio, tactile screen-printed pigment grain and cut-paper edges. Muted dusty teal, pale slate blue, warm ivory, small faded terracotta touches, cobalt blue #174ea6 as the accent. Entirely flat, compact and quiet, no realistic depth, cast shadows, glow, photography, scenery, faces, labels, letters, digits, words, logos, watermark or UI. Genuine transparent background around every shape. No rectangular background plane. Crisp enough to read at 80–160 CSS pixels.\nAsset type: one tiny horizontal printed bookplate placed at the end of a personal technical article. Subject: a single warm ivory paper strip with one small cobalt-blue ribbon bookmark, its lower end gently notched, overlapping near the right edge. Two faint blue horizontal ink strokes and a very small muted teal printed fragment suggest a personal mark without any letters. Flat, sparse and tactile. Use a landscape 3:2 canvas, the compact bookplate centered with ample real transparent padding. No signature lettering, author name, words, notebook, cover illustration, pen, frame, realistic fold or scenery. Understated, readable at 90 CSS pixels."
+    },
+    {
+      "kind": "archive-layers",
+      "prompt": "Use case: stylized-concept. Style/medium: a restrained flat 2D editorial illustration for a calm research portfolio, tactile screen-printed pigment grain and cut-paper edges. Muted dusty teal, pale slate blue, warm ivory, small faded terracotta touches, cobalt blue #174ea6 as the accent. Entirely flat, compact and quiet, no realistic depth, cast shadows, glow, photography, scenery, faces, labels, letters, digits, words, logos, watermark or UI. Genuine transparent background around every shape. No rectangular background plane. Crisp enough to read at 80–160 CSS pixels.\nInput image role: style and subject reference for the archive cards, not a scene to reproduce as one flattened stack. Primary request: export the three cards as a transparent sprite atlas so they can be layered and animated with CSS. Composition: THREE equal cells arranged in ONE horizontal row on a wide canvas, ideally 1536×512. No dividers, cell backgrounds or labels. Each cell contains ONE complete isolated card centered with transparent padding, all cards the SAME width and height, landscape proportions, front-on and unrotated. Left cell: the FRONT ivory card, fine blue horizontal rules and tiny grid of blue dashes, a muted slate semicircle, a small blue index tab on its upper-right edge. Middle cell: the MIDDLE pale slate card with faint blue rules and an ivory partial circle. Right cell: the BACK muted teal card with faint rules and a small faded terracotta corner shape. Never stack or overlap cards within a cell. Exactly three complete objects; no duplicates; no letters or numbers. Retain the restrained print texture and colour relationships of the supplied image.",
+      "reference": "/images/supporting/archive.webp"
+    },
+    {
+      "kind": "community-layers",
+      "prompt": "Use case: stylized-concept. Style/medium: a restrained flat 2D editorial illustration for a calm research portfolio, tactile screen-printed pigment grain and cut-paper edges. Muted dusty teal, pale slate blue, warm ivory, small faded terracotta touches, cobalt blue #174ea6 as the accent. Entirely flat, compact and quiet, no realistic depth, cast shadows, glow, photography, scenery, faces, labels, letters, digits, words, logos, watermark or UI. Genuine transparent background around every shape. No rectangular background plane. Crisp enough to read at 80–160 CSS pixels.\nInput image role: reference for the five textured pieces and blue connecting thread. Primary request: a transparent SIX-CELL sprite atlas to assemble a subtle CSS animation. Canvas layout: THREE equal columns and TWO equal rows, ideally1536×1024, each cell containing ONE isolated complete element centered with generous transparent padding. No dividers or backgrounds or labels. Top-left cell: warm ivory broad irregular rounded trapezoid, like the upper paper piece in the reference. Top-middle cell: cobalt-blue irregular rounded vertical paper piece, like the left piece. Top-right cell: dusty teal irregular rounded vertical piece, like the right piece. Bottom-left cell: pale slate broad irregular horizontal piece, like the lower-left piece. Bottom-middle cell: small faded terracotta irregular rounded vertical piece, like the lower-right piece. Bottom-right cell: ONLY a very thin cobalt-blue thread forming a loose nearly circular loop, with two tiny knots, empty transparent centre. There must be exactly FIVE separate paper pieces plus ONE thread loop, each wholly inside its own equal cell. Pieces have fine pigment grain and simple edges, no cords attached to the five paper pieces, no extra fragments. Do not assemble the circle in the atlas; the website will position the isolated layers.",
+      "reference": "/images/supporting/community.webp"
+    }
+  ],
+  "motion": {
+    "dumbbell": "Five CSS poses in one 320ms lift on hover; one bitmap keeps every pose consistent.",
+    "archive": "Three separately rendered cards fan slightly over 220ms.",
+    "community": "Five pieces draw 1–2px together over 220ms.",
+    "colophon": "Lift 2px and tilt 1.5 degrees over 220ms.",
+    "links": "Expand 2.5% over 220ms.",
+    "curriculum": "Lift 2px and tilt 1 degree over 220ms.",
+    "bookmark": "Lift 2px and tilt 1 degree over 220ms.",
+    "preferences": "All new hover motion is gated to fine-pointer hover and prefers-reduced-motion: no-preference. No loops or added focus stops."
+  },
+  "optimization": "Alpha-preserving cell extraction and padding normalization, resized to at most 480px and encoded as WebP quality 90. Atlas cells are exported as independent layers; the original illustration texture is preserved.",
+  "savedAssets": [
+    {
+      "path": "/images/personal/dumbbell.webp",
+      "width": 480,
+      "height": 240,
+      "bytes": 28140,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/personal/curriculum.webp",
+      "width": 480,
+      "height": 480,
+      "bytes": 24800,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/personal/bookmark.webp",
+      "width": 480,
+      "height": 320,
+      "bytes": 20618,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/archive-layers/front.webp",
+      "width": 360,
+      "height": 270,
+      "bytes": 20534,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/archive-layers/middle.webp",
+      "width": 360,
+      "height": 270,
+      "bytes": 20336,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/archive-layers/back.webp",
+      "width": 360,
+      "height": 270,
+      "bytes": 22770,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/community-layers/ivory.webp",
+      "width": 256,
+      "height": 193,
+      "bytes": 11860,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/community-layers/blue.webp",
+      "width": 185,
+      "height": 256,
+      "bytes": 17302,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/community-layers/teal.webp",
+      "width": 169,
+      "height": 256,
+      "bytes": 15074,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/community-layers/slate.webp",
+      "width": 256,
+      "height": 172,
+      "bytes": 14260,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/community-layers/clay.webp",
+      "width": 196,
+      "height": 256,
+      "bytes": 16576,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "/images/supporting/community-layers/thread.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 11996,
+      "alphaRange": [
+        0,
+        255
+      ]
+    }
+  ]
+}
