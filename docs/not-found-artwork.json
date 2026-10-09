@@ -1,0 +1,12 @@
+{
+  "asset": "/images/not-found/lost-route.webp",
+  "mode": "Built-in image generation; transparent background",
+  "dimensions": [
+    960,
+    640
+  ],
+  "prompt": "Use case: stylized-concept. Asset type: an isolated abstract illustration for the 404 page of a calm editorial research portfolio. Primary request: a lost route, interpreted as sparse flat screen-printed collage rather than any realistic physical object. Subject: three restrained irregular map-like fragments in muted dusty teal, pale slate blue, and warm ivory, with one very small faded terracotta fragment. A thin cobalt-blue #174ea6 path meanders from the printed fragments into empty space, breaks once, and ends at a small empty outlined circle. The break and blank destination quietly suggest an address that cannot be found. The fragments are broad abstract shapes with delicate dry brush and grain textures; at most a few faint contour traces. Style/medium: contemporary abstract editorial print, tactile subtle pigment grain like an abstract book cover, entirely flat and calm. Composition: centered compact composition in a landscape 3:2 canvas, plenty of transparent empty padding around every edge, connected horizontal rhythm. Color is restrained, cream and desaturated teal with the portfolio blue as the only vivid accent. Do not put the artwork inside a rectangle or frame. Background must be genuinely transparent. Constraints: no envelope, notebook, realistic paper folds, scenery, detailed map, recognizable buildings, route labels, map pin, perspective, 3D extrusion, cast shadow, glow, gradient background, words, digits, lettering, 404 text, faces, mascot, watermark or UI. The printed fragments and a fine interrupted blue line should be the whole illustration. Readable and understated at around 340 CSS pixels wide.",
+  "optimization": "Downscaled to 960×640 WebP, quality 90, with the generated alpha preserved.",
+  "concept": "Lost route: textured abstract map fragments, an interrupted blue path, and an empty destination circle.",
+  "interaction": "Static illustration. Go home uses the existing brief button feedback; no new scripted motion."
+}

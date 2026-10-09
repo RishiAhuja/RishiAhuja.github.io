@@ -2,10 +2,70 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 ---
-<BaseLayout title="Page not found · Rishi Ahuja" description="This page could not be found. Explore Rishi Ahuja’s research, writing, and blurbs." indexable={false}>
-  <main id="main-content" tabindex="-1"><section class="section wrap">
-    <p class="project-venue">404</p><h1 class="page-title">This page wandered off.</h1>
-    <p class="page-lede">You can find my work in Research or Writing.</p>
-    <div class="hero-actions"><a class="button" href="/">Go home</a><a class="button" href="/research">Research</a><a class="button" href="/writings">Writing</a></div>
-  </section></main><SiteFooter />
+<BaseLayout title="Page not found · Rishi Ahuja" description="This address couldn’t be found. Head home to explore Rishi Ahuja’s work." indexable={false}>
+  <main id="main-content" tabindex="-1">
+    <section class="not-found wrap" aria-labelledby="not-found-title">
+      <div class="not-found-copy">
+        <p class="not-found-code">404</p>
+        <h1 id="not-found-title">This address couldn’t be found.</h1>
+        <p class="not-found-message">The page may have moved, or the link may be incomplete.</p>
+        <a class="button" href="/">Go home</a>
+      </div>
+      <img class="not-found-art" src="/images/not-found/lost-route.webp" width="960" height="640" alt="" decoding="async" fetchpriority="high" />
+    </section>
+  </main>
+  <SiteFooter />
 </BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    min-height: 62svh;
+    padding-block: clamp(48px, 8vh, 88px);
+  }
+
+  .not-found-code {
+    margin: 0 0 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: .08em;
+  }
+
+  h1 {
+    max-width: 14ch;
+    margin: 0;
+    font-size: clamp(32px, 3.4vw, 56px);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .not-found-message {
+    max-width: 32ch;
+    margin: 20px 0 24px;
+    color: var(--text-muted);
+  }
+
+  .not-found-art {
+    width: 100%;
+    max-width: 440px;
+    justify-self: center;
+  }
+
+  @media (max-width: 768px) {
+    .not-found {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: auto;
+      padding-block: 24px 56px;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .not-found-art { grid-row: 1; max-width: 300px; }
+    h1 { margin-inline: auto; }
+    .not-found-code { margin-bottom: 12px; }
+    .not-found-message { margin-inline: auto; }
+  }
+</style>
