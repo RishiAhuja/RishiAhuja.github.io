@@ -1890,3 +1890,14 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .machine-record + .machine-record { border-top: 1px solid var(--rule); margin-top: 32px; padding-top: 32px; }
 .machine-content ul:not(.plain-link-list), .machine-content ol { padding-left: 22px; margin: 0 0 18px; }
 .machine-content li + li { margin-top: 8px; }
+
+/* The original teaching curriculum reads alongside the recorded course. */
+.curriculum-content > section + section { margin-top: 3rem; }
+.curriculum-content h2 { margin-top: 0; }
+.curriculum-session { padding-block: 1.75rem; border-bottom: 1px solid var(--rule); }
+.curriculum-session:last-child { border-bottom: 0; }
+.curriculum-session .lecture-number { margin-bottom: .5rem; }
+.curriculum-session h3 { margin: 0 0 1rem; font-size: 1.1em; }
+.curriculum-session li { margin-bottom: .45em; }
+.curriculum-assignment { padding: 1rem 1.2rem; background: var(--cover-blue); margin-block: 1.25rem .5rem; }
+.curriculum-content .text-link { font-size: .9em; }

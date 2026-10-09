@@ -5,7 +5,7 @@ export const COURSE = {
   "startDate": "2025-12-18",
   "endDate": "2026-01-14",
   "duration": "23+ hours",
-  "curriculum": "https://artifacts.rishia.in/bootcamp/cs404_curriculum-3.pdf"
+  "curriculum": "/flutter-bootcamp/curriculum"
 } as const;
 
 export interface Lecture { day: number; title: string; description: string; videoUrl: string; slidesUrl?: string; resources: {label: string; url: string}[]; artwork: string; avif: string; }

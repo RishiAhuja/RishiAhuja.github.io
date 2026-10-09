@@ -99,7 +99,7 @@ assert.equal(rows.length, updates.length - 8, 'Homepage must show the latest eig
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
-assert.equal(locations.length, 11 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
+assert.equal(locations.length, 12 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
 assert.ok(!locations.some((path) => /^\/writings\//.test(path)), 'Mirrored articles should not claim a local sitemap canonical');
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
@@ -140,6 +140,14 @@ assert.equal(lectures.filter(lecture => lecture.slidesUrl).length, 13);
 assert.equal(COURSE.startDate, '2025-12-18');
 assert.equal(COURSE.endDate, '2026-01-14');
 const courseHtml = index.get('/flutter-bootcamp');
+const curriculumHtml = index.get(COURSE.curriculum);
+assert.ok(curriculumHtml, 'Course curriculum must be available on the portfolio');
+assert.ok(courseHtml.includes(`href="${COURSE.curriculum}"`), 'Course archive must link to its local curriculum');
+for (let day = 1; day <= 14; day++) {
+  assert.ok(curriculumHtml.includes(`id="session-${day}"`), `Curriculum session ${day} missing`);
+  assert.ok(curriculumHtml.includes(`href="/flutter-bootcamp#lecture-${day}"`), `Curriculum session ${day} must link back to its recording`);
+}
+assert.ok(curriculumHtml.includes('Personal information card UI') && curriculumHtml.includes('Play App Signing infrastructure'), 'Curriculum must retain its original assignments and final deployment topics');
 for (const lecture of lectures) {
   assert.ok(courseHtml.includes(`id="lecture-${lecture.day}"`));
   assert.ok(courseHtml.includes(lecture.videoUrl.replaceAll('&', '&amp;')));

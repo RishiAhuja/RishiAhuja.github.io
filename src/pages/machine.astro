@@ -30,6 +30,7 @@ const sitePages = [
   { label: 'Writing', href: '/writings' },
   { label: 'Community', href: '/community' },
   { label: 'Flutter bootcamp', href: '/flutter-bootcamp' },
+  { label: 'Course curriculum', href: COURSE.curriculum },
   { label: 'About', href: '/#about' },
   { label: 'Résumés', href: '/resume' },
   { label: 'Links', href: '/links' },
@@ -99,6 +100,7 @@ const schema = {
           <h2 id="machine-community">Teaching and community</h2>
           <h3><a href="/flutter-bootcamp">{COURSE.title}</a></h3>
           <p>{COURSE.subtitle} · {COURSE.date} · Completed<br />Instructor and creator at GDGC, NIT Jalandhar. {lectures.length} recorded lectures · {COURSE.duration}.</p>
+          <p><a href={COURSE.curriculum}>Course curriculum</a></p>
           <ol>{lectures.map((lecture) => <li><a href={lecture.videoUrl}>{lecture.title}</a> — {lecture.description}</li>)}</ol>
           <p><a href="/community#hackmol">HackMol 7.0</a> — Organizer and Judge Coordinator at NIT Jalandhar, 28–29 March 2026.</p>
           <p>Bit N Build Punjab — Technical mentor at Thapar University, 6 September 2025.</p>

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { COURSE, lectures } from '../../data/teaching';
+import { curriculum } from '../../data/curriculum';
+import type { TocItem } from '../../lib/blogMarkdown';
+
+const headings: TocItem[] = [
+  { depth: 2, id: 'course-description', text: 'Course description' },
+  { depth: 2, id: 'learning-objectives', text: 'Learning objectives' },
+  { depth: 2, id: 'course-schedule', text: 'Course schedule' },
+  ...curriculum.sessions.map((session) => ({ depth: 3, id: `session-${session.day}`, text: `${String(session.day).padStart(2, '0')} / ${session.title}` })),
+  { depth: 2, id: 'required-materials', text: 'Required materials' },
+  { depth: 2, id: 'academic-integrity', text: 'Academic integrity' },
+];
+const schema = {
+  '@context': 'https://schema.org', '@type': 'WebPage',
+  name: `${COURSE.title} · Course curriculum`,
+  description: 'The original fourteen-session Flutter bootcamp curriculum, learning objectives, assignments, and required materials.',
+  url: new URL(COURSE.curriculum, Astro.site).href,
+  isPartOf: { '@type': 'Course', name: COURSE.title, url: new URL('/flutter-bootcamp', Astro.site).href },
+};
+---
+
+<BaseLayout title="Course curriculum · Flutter Bootcamp · Rishi Ahuja" description="The complete Applied Mobile Engineering curriculum: fourteen sessions covering Flutter, Dart, networking, cloud services, AI inference, and deployment." cover="blue">
+  <JsonLd data={schema} />
+  <main id="main-content" tabindex="-1">
+    <section class="course-hero">
+      <div class="wrap">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Community', href: '/community' }, { label: 'Flutter bootcamp', href: '/flutter-bootcamp' }]} />
+        <p class="info-label">Completed course · {COURSE.date}</p>
+        <h1>Course curriculum</h1>
+        <p class="course-subtitle">{COURSE.title} &amp; Systems Architecture</p>
+        <p class="page-lede">The original curriculum for the Flutter Development Bootcamp, with the concepts and assignments across fourteen teaching sessions.</p>
+        <p class="quiet-meta">Taught by Rishi Ahuja · GDGC, NIT Jalandhar · {lectures.length} recordings · {COURSE.duration}</p>
+        <a class="button" href="/flutter-bootcamp#course-lectures">Browse recordings <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <article class="project-body wrap writing-with-toc has-toc curriculum-page">
+      <TableOfContents items={headings} />
+      <div class="blog-main">
+        <div class="blog-content curriculum-content">
+          <section aria-labelledby="course-description">
+            <h2 id="course-description">Course description</h2>
+            <p>{curriculum.description}</p>
+          </section>
+          <section aria-labelledby="learning-objectives">
+            <h2 id="learning-objectives">Learning objectives</h2>
+            <p>Upon successful completion of this course, students will be able to:</p>
+            <ul>{curriculum.objectives.map((objective) => <li>{objective}</li>)}</ul>
+          </section>
+          <section aria-labelledby="course-schedule">
+            <h2 id="course-schedule">Course schedule</h2>
+            {curriculum.sessions.map((session) => (
+              <section class="curriculum-session" aria-labelledby={`session-${session.day}`}>
+                <p class="lecture-number">Session {String(session.day).padStart(2, '0')}</p>
+                <h3 id={`session-${session.day}`}>{session.title}</h3>
+                <ul>{session.topics.map((topic) => <li>{topic}</li>)}</ul>
+                {'assignment' in session && <p class="curriculum-assignment"><strong>Assignment</strong><br />{session.assignment}</p>}
+                <a class="text-link" href={`/flutter-bootcamp#lecture-${session.day}`}>Recording and resources <span aria-hidden="true">→</span></a>
+              </section>
+            ))}
+          </section>
+          <section aria-labelledby="required-materials">
+            <h2 id="required-materials">Required materials</h2>
+            <ul>{curriculum.materials.map((material) => <li>{material}</li>)}</ul>
+          </section>
+          <section aria-labelledby="academic-integrity">
+            <h2 id="academic-integrity">Academic integrity</h2>
+            <p>{curriculum.integrity}</p>
+          </section>
+        </div>
+      </div>
+    </article>
+  </main>
+  <SiteFooter />
+</BaseLayout>
