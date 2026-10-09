@@ -4,6 +4,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import JsonLd from '../../components/JsonLd.astro';
+import DecorativeArt from '../../components/DecorativeArt.astro';
 import { COURSE, lectures } from '../../data/teaching';
 import { curriculum } from '../../data/curriculum';
 import type { TocItem } from '../../lib/blogMarkdown';
@@ -31,12 +32,17 @@ const schema = {
     <section class="course-hero">
       <div class="wrap">
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Community', href: '/community' }, { label: 'Flutter bootcamp', href: '/flutter-bootcamp' }]} />
-        <p class="info-label">Completed course · {COURSE.date}</p>
-        <h1>Course curriculum</h1>
-        <p class="course-subtitle">{COURSE.title} &amp; Systems Architecture</p>
-        <p class="page-lede">The original curriculum for the Flutter Development Bootcamp, with the concepts and assignments across fourteen teaching sessions.</p>
-        <p class="quiet-meta">Taught by Rishi Ahuja · GDGC, NIT Jalandhar · {lectures.length} recordings · {COURSE.duration}</p>
-        <a class="button" href="/flutter-bootcamp/#course-lectures">Browse recordings <span aria-hidden="true">→</span></a>
+        <div class="curriculum-intro">
+          <div class="curriculum-copy">
+            <p class="info-label">Completed course · {COURSE.date}</p>
+            <h1>Course curriculum</h1>
+            <p class="course-subtitle">{COURSE.title} &amp; Systems Architecture</p>
+            <p class="page-lede">The original curriculum for the Flutter Development Bootcamp, with the concepts and assignments across fourteen teaching sessions.</p>
+            <p class="quiet-meta">Taught by Rishi Ahuja · GDGC, NIT Jalandhar · {lectures.length} recordings · {COURSE.duration}</p>
+            <a class="button" href="/flutter-bootcamp/#course-lectures">Browse recordings <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="curriculum-art"><DecorativeArt kind="curriculum" loading="eager" /></div>
+        </div>
       </div>
     </section>
 
@@ -79,3 +85,16 @@ const schema = {
   </main>
   <SiteFooter />
 </BaseLayout>
+
+<style>
+  .curriculum-intro { display: grid; grid-template-columns: minmax(0, 1fr) 168px; gap: clamp(24px, 4vw, 48px); align-items: center; }
+  .curriculum-copy { min-width: 0; }
+  .curriculum-art { width: 168px; }
+  @media (max-width: 650px) {
+    .curriculum-intro { grid-template-columns: minmax(0, 1fr) 72px; column-gap: 18px; }
+    .curriculum-copy { display: contents; }
+    .curriculum-copy > * { grid-column: 1 / -1; }
+    .curriculum-copy h1 { grid-column: 1; grid-row: 2; }
+    .curriculum-art { grid-column: 2; grid-row: 2; width: 72px; }
+  }
+</style>

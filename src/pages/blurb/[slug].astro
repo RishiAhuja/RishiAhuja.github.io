@@ -5,6 +5,7 @@ import { paperBlurbs, publishedBlurbs, blurbPath } from '../../lib/blurbs';
 import { pubPath } from '../../lib/research';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
+import ArticleSignature from '../../components/ArticleSignature.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CoverArt from '../../components/CoverArt.astro';
 import CoverPreload from '../../components/CoverPreload.astro';
@@ -72,6 +73,7 @@ const hasTwitter = post.content.some((item) => item.type === 'twitter' && item.t
       <TableOfContents items={headings} />
       <div class="blog-main blurb-page">
         <BlurbContent content={post.content} />
+        <ArticleSignature />
       </div>
     </article>
     {relatedPapers.length > 0 && <section class="section wrap"><h2 class="section-title">Research from this trip</h2><div class="related-grid">{relatedPapers.map((paper) => <a class="related-card" href={pubPath(paper.slug)}><p class="project-venue">{paper.data.venue}</p><h3>{paper.data.short_name}</h3><p>{paper.data.blurb}</p></a>)}</div></section>}

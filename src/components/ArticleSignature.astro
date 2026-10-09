@@ -1,0 +1,17 @@
+---
+import DecorativeArt from './DecorativeArt.astro';
+interface Props { author?: string; }
+const { author = 'Rishi Ahuja' } = Astro.props;
+---
+
+<footer class="article-signature">
+  <div class="signature-mark"><DecorativeArt kind="bookmark" /></div>
+  <p>{author}</p>
+</footer>
+
+<style>
+  .article-signature { display: flex; align-items: center; gap: 10px; max-width: 42em; margin-top: 32px; }
+  .signature-mark { width: 76px; flex: 0 0 76px; }
+  .article-signature p { margin: 0; font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif; font-size: 16px; font-style: italic; color: var(--text-muted); }
+  @media (max-width: 650px) { .signature-mark { width: 64px; flex-basis: 64px; } }
+</style>

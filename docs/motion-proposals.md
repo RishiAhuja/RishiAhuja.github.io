@@ -1,6 +1,6 @@
 # Motion proposals for the researcher portfolio
 
-Status: implemented after approval. Interaction feedback stays within 200 ms; the cover-to-hero transition takes 300 ms after the requested timing adjustment. Reduced motion keeps state changes immediate.
+Status: implemented after approval. Scripted feedback stays within 200 ms. Decorative artwork responds over 220 ms, and the five-pose dumbbell lift completes once in 320 ms. The cover-to-hero transition takes 300 ms after the requested timing adjustment. Reduced motion keeps state changes immediate.
 
 The site uses restrained typography, a blue interaction accent, pale cover colours, and abstract artwork. Motion should explain a click, connect a cover to its page, or acknowledge a change. Keep the introduction's bold links and the existing CTA appearance. Blurbs remain a quiet footer discovery.
 
@@ -29,6 +29,13 @@ Scripted animations are capped at 200 ms. Shared cover movement uses 300 ms; pag
 | Optional | Blurb videos: `BlurbContent.astro` | First decoded frame after the user presses Play | If an extra poster layer is worthwhile, fade it away when playback actually starts. Keep native controls and pause/end behaviour; this must not introduce autoplay. | 110 ms |
 | Optional | Long writing and blurb pages: their detail routes | Reader scrolls through the article body | A thin 2 px progress line at the viewport top can track article-body progress. Update its transform directly with scrolling. It starts after the hero and finishes before related content; decorative and hidden from assistive technology. | Continuous; no trailing tween |
 | Implemented | Footer travel stamp: `src/components/SiteFooter.astro`, `.footer-stamp` | Hover / keyboard focus | Tilt the paper stamp 2° and rest; clicking opens Blurbs. Keep the motion off for reduced-motion preferences. | 200 ms |
+| Implemented | Colophon and Links introduction artwork | Fine-pointer hover over the artwork | A 2px lift and slight tilt for the proof; a 2.5% expansion for Links. Settle while hovered and return smoothly on leave. | 220 ms |
+| Implemented | Archive introduction artwork | Fine-pointer hover | Three separately generated cards fan by a few pixels and at most 2 degrees. | 220 ms |
+| Implemented | Community introduction artwork | Fine-pointer hover | Five separate pieces move 1–2px inward; the thread contracts by 1%. | 220 ms |
+| Implemented | About, beside the gym paragraph | Fine-pointer hover over the dumbbell | One CSS lift through five poses: rest, small lift, peak, small lift, rest. No repetition while hovered. | 320 ms once |
+| Implemented | Course curriculum introduction | Fine-pointer hover | Lift the simple lesson sheet 2px and tilt 1 degree. | 220 ms |
+| Implemented | Bookmark signature after blog and blurb bodies | Fine-pointer hover | Lift the printed bookplate 2px and tilt 1 degree. | 220 ms |
+
 
 ## Implementation details
 
@@ -60,3 +67,5 @@ Prefer CSS opacity, transforms, and colour transitions. Reserve measured height 
 - Browser QA at 1440 × 1000 and 390 × 844: navigation through Home, Research, publications, Writing, articles, and Blurbs; Back restoration; correct active dots; Copy feedback; menu Escape/focus/background release; updates expansion/collapse; mobile contents selection; stable carousel dimensions and counters during rapid clicks and keyboard changes; no horizontal overflow on checked pages.
 - Native videos retain controls, posters, and user-initiated playback without autoplay or looping. No-JavaScript navigation and disclosure fallbacks were reviewed in the generated markup and CSS.
 - Reduced-motion script behaviour is covered by automated tests; the preference was not changed at the operating-system level during browser QA.
+
+The new artwork uses CSS only, adds no focus stops or buttons, and stays static on touch-primary devices and when reduced motion is requested. `/machine` receives no new artwork. The five dumbbell poses share one bitmap to keep the illustration consistent between poses.

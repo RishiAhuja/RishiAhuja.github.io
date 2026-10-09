@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
+import ArticleSignature from '../../components/ArticleSignature.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import { hasWritingToc, renderBlogMarkdown } from '../../lib/blogMarkdown';
@@ -94,6 +95,7 @@ const related = (await getCollection('blogs'))
           <img class="blog-image blog-cover-photo" src={post.data.coverImage} alt="" loading="lazy" decoding="async" />
         )}
         <div class="blog-content" set:html={htmlContent} />
+        <ArticleSignature author={post.data.author} />
       </div>
     </article>
 

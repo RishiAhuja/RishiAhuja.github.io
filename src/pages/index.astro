@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import JsonLd from '../components/JsonLd.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import DecorativeArt from '../components/DecorativeArt.astro';
 import { ArrowDownIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import { LINKS, PORTRAIT } from '../lib/constants';
 import { FEATURED_SLUGS, paperCardAward, pubPath } from '../lib/research';
@@ -265,10 +266,13 @@ const schema = {
                 <a href="/writings">Writing</a>. I also teach mobile development and
                 help organise developer events through <a href="/community">Community</a>.
               </p>
-              <p>
-                Outside work, I train hard in the gym and have lost a significant
-                amount of weight over the past year.
-              </p>
+              <div class="gym-note">
+                <div class="gym-art"><DecorativeArt kind="dumbbell" /></div>
+                <p>
+                  Outside work, I train hard in the gym and have lost a significant
+                  amount of weight over the past year.
+                </p>
+              </div>
             </div>
           </article>
         </div>
@@ -278,3 +282,10 @@ const schema = {
 
   <SiteFooter />
 </BaseLayout>
+
+<style>
+  .gym-note { display: flow-root; margin-top: 12px; }
+  .gym-art { float: right; width: 96px; margin: 0 0 6px 20px; }
+  .gym-note p { margin: 0; }
+  @media (max-width: 650px) { .gym-art { width: 80px; margin-left: 14px; } }
+</style>
