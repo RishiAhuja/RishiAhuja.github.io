@@ -129,18 +129,20 @@ const schema = {
             >
               <div class={`project-cover ${paper.data.cover}`}>
                 {paperArtwork(paper.slug) && (
-                  <CoverArt cover={paperArtwork(paper.slug)!} variant="card" />
+                  <CoverArt cover={paperArtwork(paper.slug)!} variant="tile" />
                 )}
               </div>
             </a>
-            <h3>
-              <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
-            </h3>
-            {awardLine && (
-              <p class="project-award-line">★ {awardLine}</p>
-            )}
-            <p class="project-desc">{paper.data.blurb}</p>
-            <p class="project-venue">{paper.data.venue}</p>
+            <div class="project-copy">
+              <h3>
+                <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
+              </h3>
+              {awardLine && (
+                <p class="project-award-line">★ {awardLine}</p>
+              )}
+              <p class="project-desc">{paper.data.blurb}</p>
+              <p class="project-venue">{paper.data.venue}</p>
+            </div>
           </article>
           );
         })}
@@ -186,17 +188,19 @@ const schema = {
             >
               <div class={`project-cover ${post.data.cover}`}>
                 {writingArtwork(post.slug) && (
-                  <CoverArt cover={writingArtwork(post.slug)!} variant="card" />
+                  <CoverArt cover={writingArtwork(post.slug)!} variant="tile" />
                 )}
               </div>
             </a>
-            <h3>
-              <a class="project-name" href={writingPath(post.slug)}>{post.data.title}</a>
-            </h3>
-            <p class="project-desc">{post.data.brief}</p>
-            <p class="project-venue">
-              {post.data.dateAdded.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
-            </p>
+            <div class="project-copy">
+              <h3>
+                <a class="project-name" href={writingPath(post.slug)}>{post.data.title}</a>
+              </h3>
+              <p class="project-desc">{post.data.brief}</p>
+              <p class="project-venue">
+                {post.data.dateAdded.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+              </p>
+            </div>
           </article>
         ))}
       </div>

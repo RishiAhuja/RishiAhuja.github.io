@@ -3,7 +3,7 @@ import type { CoverSet } from '../lib/artwork';
 
 interface Props {
   cover: CoverSet;
-  variant?: 'card' | 'hero';
+  variant?: 'card' | 'tile' | 'hero';
   priority?: boolean;
 }
 
@@ -12,7 +12,9 @@ const { cover, variant = 'card', priority = false } = Astro.props;
 const sizes =
   variant === 'hero'
     ? '(max-width: 900px) min(88vw, 28rem), min(36vw, 30rem)'
-    : '(max-width: 620px) min(88vw, 26rem), (max-width: 900px) 42vw, 22vw';
+    : variant === 'tile'
+      ? '(max-width: 620px) clamp(5.5rem, 28vw, 8rem), (max-width: 900px) 42vw, 22vw'
+      : '(max-width: 620px) min(88vw, 26rem), (max-width: 900px) 42vw, 22vw';
 
 const avifSrcset = `${cover.cardAvif} 640w, ${cover.heroAvif} 1086w`;
 const webpSrcset = `${cover.cardWebp} 640w, ${cover.heroWebp} 1086w`;

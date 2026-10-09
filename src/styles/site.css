@@ -1355,8 +1355,20 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
 @media (max-width: 620px) {
   .project-grid {
     grid-template-columns: 1fr;
-    row-gap: 4rem;
+    row-gap: 2rem;
   }
+
+  .project-grid .project-tile {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 28vw, 8rem) minmax(0, 1fr);
+    align-items: start;
+    gap: 1rem;
+  }
+
+  .project-copy { min-width: 0; }
+  .project-grid .project-tile h2, .project-grid .project-tile h3 { margin: 0 0 .45rem; }
+  .project-grid .project-desc { line-height: 1.5; }
+  .project-grid .project-venue { margin-top: .5rem; font-size: 13px; line-height: 1.5; }
 }
 
 @media screen and (min-width: 769px) {
