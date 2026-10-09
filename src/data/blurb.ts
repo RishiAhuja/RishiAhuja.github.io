@@ -16,6 +16,7 @@ export interface BlurbContent {
   domain?: string; // for link embeds
   images?: { src: string; alt: string }[]; // for carousel
   caption?: string; // for carousel
+  aspectRatio?: number; // first-photo ratio, reserved before carousel images load
   poster?: string;
   captions?: string;
   transcript?: string;
@@ -369,6 +370,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 1.333333,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/IMG_3843.jpeg",
@@ -399,6 +401,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.937778,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/IMG_3853.jpeg",
@@ -447,6 +450,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/nitj.jpeg",
@@ -503,6 +507,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/uber_stop1.jpeg",
@@ -528,6 +533,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/mcd.jpeg",
@@ -563,6 +569,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 1.333333,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/bus_stop1.jpeg",
@@ -602,6 +609,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/katie.jpeg",
@@ -688,6 +696,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/poster1.jpeg",
@@ -709,6 +718,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 1.333333,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/img_after_conf1.jpeg",
@@ -788,6 +798,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/christ1.jpeg",
@@ -842,6 +853,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 0.750000,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/sugarloaf1.jpeg",
@@ -912,6 +924,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 1.333333,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/bot1.jpeg",
@@ -950,6 +963,7 @@ int main() {
     },
     {
       type: "carousel",
+      aspectRatio: 1.333333,
       images: [
         {
           src: "https://artifacts.rishia.in/blurbs/iclr-2026-rio-de-janeiro/final1.jpeg",
@@ -1296,6 +1310,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790896820973_WhatsApp_Image_2026-10-02_at_04.46.50.jpeg",
@@ -1323,6 +1338,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790897411345_WhatsApp_Image_2026-10-02_at_04.59.05_1_.jpeg",
@@ -1362,6 +1378,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790897912095_WhatsApp_Image_2026-10-02_at_05.07.00_1_.jpeg",
@@ -1417,6 +1434,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790899003936_WhatsApp_Image_2026-10-02_at_05.26.09.jpeg",
@@ -1447,6 +1465,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.752344,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790899179710_WhatsApp_Image_2026-10-02_at_05.28.18_1_.jpeg",
@@ -1491,6 +1510,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975355116_WhatsApp_Image_2026-10-03_at_02.38.11.jpeg",
@@ -1526,6 +1546,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790975663030_WhatsApp_Image_2026-10-03_at_02.43.04.jpeg",
@@ -1593,6 +1614,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790976650098_WhatsApp_Image_2026-10-03_at_02.59.07.jpeg",
@@ -1620,6 +1642,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790977095661_WhatsApp_Image_2026-10-03_at_03.07.50.jpeg",
@@ -1634,6 +1657,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790977270482_WhatsApp_Image_2026-10-03_at_03.10.26_2_.jpeg",
@@ -1678,6 +1702,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790977686937_WhatsApp_Image_2026-10-03_at_03.17.36.jpeg",
@@ -1708,6 +1733,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790977893315_WhatsApp_Image_2026-10-03_at_03.20.32.jpeg",
@@ -1742,6 +1768,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790978181469_WhatsApp_Image_2026-10-03_at_03.24.58.jpeg",
@@ -1776,6 +1803,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790978430463_WhatsApp_Image_2026-10-03_at_03.30.09.jpeg",
@@ -1834,6 +1862,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790979317332_WhatsApp_Image_2026-10-03_at_03.42.09.jpeg",
@@ -1890,6 +1919,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790979981422_WhatsApp_Image_2026-10-03_at_03.55.22.jpeg",
@@ -1908,6 +1938,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980338453_WhatsApp_Image_2026-10-03_at_04.00.09.jpeg",
@@ -1964,6 +1995,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980473961_WhatsApp_Image_2026-10-03_at_04.00.10_8_.jpeg",
@@ -1992,6 +2024,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980621554_WhatsApp_Image_2026-10-03_at_04.06.16_3_.jpeg",
@@ -2026,6 +2059,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 1.333333,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980737844_WhatsApp_Image_2026-10-03_at_04.08.21_1_.jpeg",
@@ -2059,6 +2093,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790980862217_WhatsApp_Image_2026-10-03_at_04.09.56.jpeg",
@@ -2095,6 +2130,7 @@ int main() {
     },
     {
       "type": "carousel",
+      "aspectRatio": 0.750000,
       "images": [
         {
           "src": "https://artifacts.rishia.in/blurbs/my-ijcai-ecai-2026-and-germany-experience-in-bremen/1790981151178_WhatsApp_Image_2026-10-03_at_04.14.16.jpeg",

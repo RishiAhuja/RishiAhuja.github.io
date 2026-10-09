@@ -16,6 +16,7 @@ const inline = (value = '') => value.split(/(`[^`]+`|\[[^\]\n]+\]\(https?:\/\/[^
   const local = url.hostname === 'rishiahuja.github.io';
   return `<a href="${escape(local ? url.pathname + url.search + url.hash : url.href)}"${local ? '' : ' target="_blank" rel="noopener noreferrer"'}>${escape(link[1])}</a>`;
 }).join('');
+const paragraphs = (value = '') => value.split(/\r?\n[ \t]*\r?\n/).filter((part) => part.trim());
 const youtubeId = (url: string) => url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/)?.[1];
 ---
 <div class="blurb-content">
@@ -26,7 +27,7 @@ const youtubeId = (url: string) => url.match(/(?:youtu\.be\/|youtube\.com\/(?:wa
       const id = level <= 3 ? headings[headingIndex++]?.id : undefined;
       return <Tag id={id}>{item.content}</Tag>;
     }
-    if (item.type === 'paragraph') return <p><Fragment set:html={inline(item.content)} /></p>;
+    if (item.type === 'paragraph') return paragraphs(item.content).map((paragraph) => <p><Fragment set:html={inline(paragraph)} /></p>);
     if (item.type === 'quote') return <blockquote><p><Fragment set:html={inline(item.content)} /></p></blockquote>;
     if (item.type === 'list') return <ul>{item.items?.map((text) => <li><Fragment set:html={inline(text)} /></li>)}</ul>;
     if (item.type === 'code') return <div class="blurb-code">{item.language && <p class="code-language">{item.language}</p>}<pre tabindex="0" aria-label={`${item.language || ''} code example`}><code>{item.content}</code></pre></div>;
@@ -37,7 +38,7 @@ const youtubeId = (url: string) => url.match(/(?:youtu\.be\/|youtube\.com\/(?:wa
       {item.alt && <figcaption>{item.alt}</figcaption>}
       {item.type === 'tweetImage' && item.tweetUrl && <p class="tweet-source"><a href={item.tweetUrl} target="_blank" rel="noopener noreferrer">View original post <span aria-hidden="true">↗</span></a></p>}
     </figure>;
-    if (item.type === 'carousel') return <ImageCarousel images={item.images || []} caption={item.caption} />;
+    if (item.type === 'carousel') return <ImageCarousel images={item.images || []} caption={item.caption} aspectRatio={item.aspectRatio} />;
     if (item.type === 'linkEmbed') return <a class="blurb-link-card" href={item.content} target="_blank" rel="noopener noreferrer">
       {item.image && <img src={item.image} alt="" width="160" height="120" loading="lazy" decoding="async" />}
       <span><span class="blurb-link-domain">{item.domain || new URL(item.content || 'https://example.com').hostname}</span>

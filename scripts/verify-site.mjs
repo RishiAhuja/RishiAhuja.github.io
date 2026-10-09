@@ -76,6 +76,9 @@ for (const [path, html] of index) {
   }
 }
 assert.equal(figures, expectedFigures, 'Every article figure must be described and dimensioned');
+// Author-written blank lines must become separate semantic paragraphs.
+const bremen = index.get('/blurb/my-ijcai-ecai-2026-and-germany-experience-in-bremen');
+assert.match(bremen, /<p>João turned out to be a full-time engineer at Amazon\./, 'Bremen paragraph breaks must survive rendering');
 const home = index.get('/');
 const machine = index.get('/machine');
 assert.ok(machine, 'Structured profile page must be built');

@@ -2,12 +2,15 @@
 interface Props {
   images: { src: string; alt: string }[];
   caption?: string;
+  aspectRatio?: number;
 }
-const { images, caption } = Astro.props;
+const { images, caption, aspectRatio = 16 / 10 } = Astro.props;
 const first = images[0];
+const frameRatio = Number.isFinite(aspectRatio) ? Math.min(16 / 9, Math.max(3 / 4, aspectRatio)) : 16 / 10;
 ---
 {first && (
   <figure class="media-carousel" data-images={JSON.stringify(images)} data-caption={caption ?? ''}
+    style={`--carousel-aspect-ratio: ${frameRatio}`}
     tabindex={images.length > 1 ? 0 : undefined}
     aria-roledescription={images.length > 1 ? 'carousel' : undefined}
     aria-label={caption || `Image carousel with ${images.length} images`}>

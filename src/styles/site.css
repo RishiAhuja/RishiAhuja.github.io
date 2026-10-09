@@ -1682,7 +1682,11 @@ main:focus, [tabindex='-1']:focus { outline: none; }
   .blurb-entry .project-cover-link { width: 100%; max-width: 17rem; }
   .blurb-media-frame { aspect-ratio: 3 / 4; }
   .youtube-frame { aspect-ratio: 16 / 9; }
-  .carousel-stage { gap: .25rem; }
+  .carousel-stage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem 1rem; }
+  .carousel-stage > .blurb-media-frame { grid-column: 1 / -1; grid-row: 1; aspect-ratio: var(--carousel-aspect-ratio, 16 / 10); }
+  .carousel-arrow { grid-row: 2; }
+  .carousel-arrow[data-direction="-1"] { grid-column: 1; justify-self: end; }
+  .carousel-arrow[data-direction="1"] { grid-column: 2; justify-self: start; }
   .blurb-link-card { align-items: flex-start; gap: .8rem; }
   .blurb-link-card > img { width: 65px; height: 65px; }
 }
