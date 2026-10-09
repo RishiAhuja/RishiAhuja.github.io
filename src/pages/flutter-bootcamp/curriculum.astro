@@ -36,7 +36,7 @@ const schema = {
         <p class="course-subtitle">{COURSE.title} &amp; Systems Architecture</p>
         <p class="page-lede">The original curriculum for the Flutter Development Bootcamp, with the concepts and assignments across fourteen teaching sessions.</p>
         <p class="quiet-meta">Taught by Rishi Ahuja · GDGC, NIT Jalandhar · {lectures.length} recordings · {COURSE.duration}</p>
-        <a class="button" href="/flutter-bootcamp#course-lectures">Browse recordings <span aria-hidden="true">→</span></a>
+        <a class="button" href="/flutter-bootcamp/#course-lectures">Browse recordings <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -61,7 +61,7 @@ const schema = {
                 <h3 id={`session-${session.day}`}>{session.title}</h3>
                 <ul>{session.topics.map((topic) => <li>{topic}</li>)}</ul>
                 {'assignment' in session && <p class="curriculum-assignment"><strong>Assignment</strong><br />{session.assignment}</p>}
-                <a class="text-link" href={`/flutter-bootcamp#lecture-${session.day}`}>Recording and resources <span aria-hidden="true">→</span></a>
+                <a class="text-link" href={`/flutter-bootcamp/#lecture-${session.day}`}>Recording and resources <span aria-hidden="true">→</span></a>
               </section>
             ))}
           </section>

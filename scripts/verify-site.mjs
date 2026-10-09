@@ -145,7 +145,7 @@ assert.ok(curriculumHtml, 'Course curriculum must be available on the portfolio'
 assert.ok(courseHtml.includes(`href="${COURSE.curriculum}"`), 'Course archive must link to its local curriculum');
 for (let day = 1; day <= 14; day++) {
   assert.ok(curriculumHtml.includes(`id="session-${day}"`), `Curriculum session ${day} missing`);
-  assert.ok(curriculumHtml.includes(`href="/flutter-bootcamp#lecture-${day}"`), `Curriculum session ${day} must link back to its recording`);
+  assert.ok(curriculumHtml.includes(`href="/flutter-bootcamp/#lecture-${day}"`), `Curriculum session ${day} must link back to its recording`);
 }
 assert.ok(curriculumHtml.includes('Personal information card UI') && curriculumHtml.includes('Play App Signing infrastructure'), 'Curriculum must retain its original assignments and final deployment topics');
 for (const lecture of lectures) {
