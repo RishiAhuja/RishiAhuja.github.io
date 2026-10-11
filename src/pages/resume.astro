@@ -1,4 +1,5 @@
 ---
+import InlineIcon from '../components/InlineIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
@@ -10,8 +11,8 @@ import { LINKS } from '../lib/constants';
       <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Résumés</h1></div>
       <p class="page-lede">Engineering experience and academic work, in two focused documents.</p>
       <div class="resume-list">
-        <article><p class="info-label">01 / Research</p><h2>Research CV</h2><p>Papers, academic work, research experience, and service.</p><a class="button" href={LINKS.RESEARCH_RESUME} target="_blank" rel="noopener noreferrer">Open research CV <span aria-hidden="true">↗</span></a></article>
-        <article><p class="info-label">02 / Engineering</p><h2>Engineering résumé</h2><p>Software engineering, internships, and experience building systems.</p><a class="button" href={LINKS.ENGINEERING_RESUME} target="_blank" rel="noopener noreferrer">Open engineering résumé <span aria-hidden="true">↗</span></a></article>
+        <article><p class="info-label">01 / Research</p><h2>Research CV</h2><p>Papers, academic work, research experience, and service.</p><a class="button" href={LINKS.RESEARCH_RESUME} target="_blank" rel="noopener noreferrer">Open research CV <InlineIcon name="arrow-up-right" /></a></article>
+        <article><p class="info-label">02 / Engineering</p><h2>Engineering résumé</h2><p>Software engineering, internships, and experience building systems.</p><a class="button" href={LINKS.ENGINEERING_RESUME} target="_blank" rel="noopener noreferrer">Open engineering résumé <InlineIcon name="arrow-up-right" /></a></article>
       </div>
     </section>
   </main>

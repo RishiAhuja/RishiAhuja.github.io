@@ -1,4 +1,5 @@
 ---
+import InlineIcon from '../../components/InlineIcon.astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -26,7 +27,7 @@ const papers = (await getCollection('research')).sort((a, b) => b.data.sort_date
             {paperAwardMarks(paper.data).map((award) => <p class="project-award-line"><span aria-hidden="true">★</span> {award}</p>)}
             <p class="project-desc">{paper.data.blurb}</p>
             <ul class="project-links" aria-label={`Resources for ${paper.data.short_name}`}>
-              {paper.data.links.map((link) => <li><a href={link.url} target="_blank" rel="noopener noreferrer">{resourceLabel(link.label)} <span aria-hidden="true">↗</span></a></li>)}
+              {paper.data.links.map((link) => <li><a href={link.url} target="_blank" rel="noopener noreferrer">{resourceLabel(link.label)} <InlineIcon name="arrow-up-right" /></a></li>)}
               <li><a href={pubPath(paper.slug)}>Details <span aria-hidden="true">→</span></a></li>
             </ul>
           </div>

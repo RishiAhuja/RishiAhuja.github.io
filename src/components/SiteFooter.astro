@@ -1,4 +1,5 @@
 ---
+import InlineIcon from './InlineIcon.astro';
 import { LINKS } from '../lib/constants';
 ---
 
@@ -20,14 +21,14 @@ import { LINKS } from '../lib/constants';
           <li><a href="/research">Research</a></li>
           <li><a href="/writings">Writing</a></li>
           <li><a href="/community">Community &amp; teaching</a></li>
-          <li><a class="footer-blurbs" href="/blurb">Blurbs <span aria-hidden="true">↗</span><small>Trips, conferences &amp; personal stories</small></a></li>
+          <li><a class="footer-blurbs" href="/blurb">Blurbs <InlineIcon name="arrow-up-right" /><small>Trips, conferences &amp; personal stories</small></a></li>
         </ul>
       </nav>
       <nav class="footer-group" aria-label="Elsewhere">
         <h3>Elsewhere</h3>
         <ul>
-          <li><a href={LINKS.GITHUB} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></li>
-          <li><a href={LINKS.GOOGLE_SCHOLAR} target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a></li>
+          <li><a href={LINKS.GITHUB} target="_blank" rel="noopener noreferrer">GitHub <InlineIcon name="arrow-up-right" /></a></li>
+          <li><a href={LINKS.GOOGLE_SCHOLAR} target="_blank" rel="noopener noreferrer">Google Scholar <InlineIcon name="arrow-up-right" /></a></li>
           <li><a href="/links">All links</a></li>
           <li><a href={LINKS.RESUME}>Résumés</a></li>
         </ul>
@@ -42,6 +43,6 @@ import { LINKS } from '../lib/constants';
         </ul>
       </nav>
     </div>
-    <p class="signoff">Made with <span class="heart">♥</span> in Jalandhar.</p>
+    <p class="signoff">Made with <InlineIcon name="heart" class="heart" /><span class="sr-only">love</span> in Jalandhar.</p>
   </div>
 </footer>

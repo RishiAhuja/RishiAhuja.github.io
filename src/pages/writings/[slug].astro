@@ -1,4 +1,5 @@
 ---
+import InlineIcon from '../../components/InlineIcon.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -72,7 +73,7 @@ const related = (await getCollection('blogs'))
             <div class="original-publication">
               <a href={post.data.hashnodeUrl} target="_blank" rel="noopener noreferrer">
                 Originally published on Hashnode
-                <span aria-hidden="true">↗</span>
+                <InlineIcon name="arrow-up-right" />
               </a>
             </div>
             <p class="project-info">

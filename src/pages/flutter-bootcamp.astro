@@ -1,4 +1,5 @@
 ---
+import InlineIcon from '../components/InlineIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
@@ -32,7 +33,7 @@ const schema = { '@context': 'https://schema.org', '@type': 'Course', name: COUR
             <p class="lecture-number">Lecture {String(lecture.day).padStart(2, '0')}</p>
             <h3><a href={lecture.videoUrl} target="_blank" rel="noopener noreferrer">{lecture.title}</a></h3>
             <p class="lecture-description">{lecture.description}</p>
-            <div class="lecture-resources"><a href={lecture.videoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Watch lecture ${lecture.day}`}>Watch <span aria-hidden="true">↗</span></a>{lecture.slidesUrl && <a href={lecture.slidesUrl} target="_blank" rel="noopener noreferrer" aria-label={`Slides for lecture ${lecture.day}`}>Slides <span aria-hidden="true">↗</span></a>}</div>
+            <div class="lecture-resources"><a href={lecture.videoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Watch lecture ${lecture.day}`}>Watch <InlineIcon name="arrow-up-right" /></a>{lecture.slidesUrl && <a href={lecture.slidesUrl} target="_blank" rel="noopener noreferrer" aria-label={`Slides for lecture ${lecture.day}`}>Slides <InlineIcon name="arrow-up-right" /></a>}</div>
           </article>
         ))}
       </div>
