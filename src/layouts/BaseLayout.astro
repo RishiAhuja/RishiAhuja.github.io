@@ -66,13 +66,14 @@ const isInner = Astro.url.pathname !== '/';
     <ViewTransitions fallback="none" />
     <slot name="head" />
   </head>
-  <body data-archive-origin={ARCHIVE_ORIGIN} class={[isInner ? 'is-inner' : 'is-home', cover && `cover-${cover}`].filter(Boolean).join(' ')}>
+  <body data-analytics-endpoint={import.meta.env.PUBLIC_ANALYTICS_ENDPOINT || 'https://rishia.in/api/visitors'} data-archive-origin={ARCHIVE_ORIGIN} class={[isInner ? 'is-inner' : 'is-home', cover && `cover-${cover}`].filter(Boolean).join(' ')}>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
     <slot />
     <script>
       import '../scripts/siteMotion';
       import '../scripts/legacyFragments';
+      import '../scripts/analytics';
     </script>
   </body>
 </html>

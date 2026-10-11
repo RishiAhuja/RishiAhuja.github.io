@@ -8,3 +8,6 @@ public/images/covers-opt/
 
 public/images/teaching/
 .vercel
+
+.env*
+!.env.example
