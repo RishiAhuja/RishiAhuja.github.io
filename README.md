@@ -1,6 +1,6 @@
 # Rishi Ahuja
 
-Personal site: [rishiahuja.github.io](https://rishiahuja.github.io)
+Personal site: [rishiahuja.github.io](https://rishiahuja.github.io), with the custom-domain migration prepared for [rishia.in](https://rishia.in).
 
 
 ## Open Graph images
@@ -68,3 +68,24 @@ is generated individually and served as AVIF/WebP. Final prompts live in
 `docs/teaching-artwork-prompts.json`. Colophon, Archive, Links, and Résumés are
 first-party supporting pages. Résumé links continue to use the existing live
 version resolvers on rishia.in.
+
+## Vercel and domain migration
+
+The `rishi-portfolio` Vercel project serves the same static build. `vercel.json`
+contains the permanent compatibility redirects for old publication, blog,
+journey, and archive-only URLs. `/resume` remains the new listing page.
+
+Build origins are configured with `PORTFOLIO_SITE_URL` and
+`PORTFOLIO_ARCHIVE_ORIGIN`. Vercel production and previews use
+`https://rishia.in` and `https://archive.rishia.in`. Without these variables,
+GitHub Pages continues to use its current origin and the current live résumé
+resolvers on rishia.in. Uploaded PDFs and media remain on artifacts.rishia.in.
+
+Run `npm run verify:migration` after building. To check the real deployed HTTP
+routes, pass `-- --url https://<deployment-host>` with the same origin environment
+variables used for the build. This checks the full known URL inventory, slash
+variants, permanent status codes and query preservation.
+
+The domain reassignment is manual: first attach archive.rishia.in to the existing
+`my-portfolio` project and verify it; then move rishia.in to `rishi-portfolio`.
+The implementation record and handoff are in `docs/portfolio-domain-migration.md`.
