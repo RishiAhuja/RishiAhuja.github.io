@@ -3,6 +3,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, resolve, relative } from 'node:path';
 import ts from 'typescript';
 import sharp from 'sharp';
+import { SITE_ORIGIN } from '../src/lib/siteConfig.mjs';
 
 const dist = resolve('dist');
 async function htmlFiles(directory) {
@@ -44,7 +45,7 @@ for (const [path, html] of index) {
   const canonical = new URL(attributes(canonicals[0][0]).href);
   assert.equal(canonical.protocol, 'https:');
   if (/^\/writings\/[^/]+/.test(path)) assert.equal(canonical.hostname, 'rishi2220.hashnode.dev', `${path}: mirror must credit original canonical`);
-  else assert.equal(canonical.hostname, 'rishiahuja.github.io', `${path}: first-party content must remain canonical here`);
+  else assert.equal(canonical.origin, SITE_ORIGIN, `${path}: first-party content must use the configured canonical origin`);
   if (path.startsWith('/blurb/')) assert.ok(!/<meta[^>]*content="[^"]*noindex/.test(html), `${path}: published blurb unexpectedly hidden`);
   for (const match of html.matchAll(/<img\b[^>]*>/g)) {
     const attrs = attributes(match[0]);
@@ -60,7 +61,7 @@ for (const [path, html] of index) {
     if (match[2].includes('class="cover-art"')) assert.ok(attrs['aria-label']?.trim(), `${path}: cover link is unnamed`);
     const href = attrs.href;
     if (!href || !/^(\/[^/]|#)/.test(href)) continue;
-    const target = new URL(href, `https://rishiahuja.github.io${path === '/' ? '/' : path + '/'}`);
+    const target = new URL(href, `${SITE_ORIGIN}${path === '/' ? '/' : path + '/'}`);
     const targetPath = target.pathname.replace(/\/$/, '') || '/';
     if (targetPath.endsWith('.xml') || targetPath.endsWith('.txt')) {
       assert.ok((await stat(join(dist, targetPath))).isFile(), `${path}: missing ${href}`);

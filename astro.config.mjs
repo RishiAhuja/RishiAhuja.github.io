@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
+import { SITE_ORIGIN } from './src/lib/siteConfig.mjs';
 
 export default defineConfig({
   integrations: [
@@ -9,5 +10,5 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
-  site: 'https://rishiahuja.github.io',
+  site: SITE_ORIGIN,
 });

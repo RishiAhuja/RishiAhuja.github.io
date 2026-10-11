@@ -1,9 +1,12 @@
+import { ARCHIVE_ORIGIN } from './siteConfig.mjs';
+
 export const PORTRAIT = '/images/rishi-ahuja.jpg';
 
 export const LINKS = {
   RESUME: '/resume',
-  RESEARCH_RESUME: 'https://rishia.in/research/resume',
-  ENGINEERING_RESUME: 'https://rishia.in/resume',
+  ARCHIVE: ARCHIVE_ORIGIN,
+  RESEARCH_RESUME: `${ARCHIVE_ORIGIN}/research/resume`,
+  ENGINEERING_RESUME: `${ARCHIVE_ORIGIN}/resume`,
   CAL_COM: 'https://cal.com/rishi2220',
   HASHNODE: 'https://rishi2220.hashnode.dev/',
   YOUTUBE: 'https://www.youtube.com/@rishi2220',

@@ -1,0 +1,8 @@
+.git
+.astro
+node_modules
+dist
+.vercel
+.env*
+docs/*
+!docs/portfolio-domain-migration.json
