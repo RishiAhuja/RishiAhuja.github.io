@@ -1,5 +1,5 @@
 {
-  "status": "implemented-awaiting-domain-assignment",
+  "status": "live",
   "prepared": "2026-10-11",
   "primaryOrigin": "https://rishia.in",
   "archiveOrigin": "https://archive.rishia.in",
@@ -877,5 +877,12 @@
     }
   ],
   "routingConfiguration": "vercel.json",
-  "deploymentProject": "rishi-portfolio"
+  "deploymentProject": "rishi-portfolio",
+  "cutoverCompleted": "2026-10-11",
+  "liveVerification": {
+    "primaryHeadRequests": 183,
+    "archiveTargets": 52,
+    "wwwRedirectStatus": 308,
+    "pdfResolvers": "302 to latest artifacts.rishia.in PDFs"
+  }
 }

@@ -1,6 +1,6 @@
 # Portfolio domain migration
 
-Implemented on 11 October 2026 in the new `rishi-portfolio` Vercel project. Existing domain assignments remain unchanged; the user will perform the cutover manually.
+Implemented on 11 October 2026 in the new `rishi-portfolio` Vercel project. Domain cutover completed on 11 October 2026 using the authenticated Vercel API and Cloudflare dashboard.
 
 ## Intended addresses
 
@@ -148,7 +148,7 @@ The source paths below refer to rishia.in. The mapped redirects are implemented 
 ## Implemented deployment setup
 
 - New Vercel project: `rishi-portfolio` in `rishiahujas-projects`.
-- Existing project: `my-portfolio`; its code, environment values and domain assignments were not changed by this implementation.
+- Existing project: `my-portfolio`; its code and environment values remain unchanged. It now serves archive.rishia.in; the primary and www domains moved to the new project.
 - GitHub repository: `RishiAhuja/RishiAhuja.github.io`, connected for subsequent Vercel deployments.
 - Production and preview build variables: `PORTFOLIO_SITE_URL=https://rishia.in`, `PORTFOLIO_ARCHIVE_ORIGIN=https://archive.rishia.in`.
 - `vercel.json` implements 89 rules: exact mapped URLs first, sitemap aliases, the old dynamic /og endpoint and safe legacy-family fallbacks. New /research, /blurb, /_astro and /og/*.png URLs are preserved.
@@ -156,12 +156,13 @@ The source paths below refer to rishia.in. The mapped redirects are implemented 
 - Legacy /#blog, /#education and /#contact links have matching anchors. Only the old reading/upstream/side-quest fragments leave for the archived homepage.
 - `npm run build` verifies the migration inventory in addition to all existing checks. `npm run verify:migration -- --url <deployment-origin>` exercises the deployed HTTP routes.
 
-### Manual domain handoff
+### Completed domain cutover
 
-1. In Vercel's existing `my-portfolio` project, add `archive.rishia.in`, complete the indicated DNS setup if required, and wait for HTTPS to become valid. Keep rishia.in on the old project while checking the archive.
-2. Verify archive.rishia.in, a project, a gallery collection, /blurb/openlearn, /resume and /research/resume. The PDF URLs should resolve to the latest files.
-3. Move rishia.in from `my-portfolio` to `rishi-portfolio`. If www.rishia.in is configured, assign it to the new project as well and redirect it to rishia.in. Vercel may require only project reassignment when existing DNS already points to Vercel; follow its domain instructions rather than changing unrelated DNS records.
-4. After the archive assignment, rebuild the old portfolio with its site metadata origin set to https://archive.rishia.in. Its currently hardcoded site origin and publication metadata were recorded in the initial audit; avoid changing this before the old domain move. This improves the archive's own canonical and sharing metadata without affecting the new project's compatibility redirects.
-5. Leave artifacts.rishia.in and other service subdomains in their current projects. Check the 92-route map on the primary domain after the swap.
+- `rishia.in` is assigned to `rishi-portfolio` and serves the new portfolio.
+- `www.rishia.in` is assigned to the same project with a permanent 308 redirect to `rishia.in`, retaining paths and query strings.
+- `archive.rishia.in` is assigned to `my-portfolio`. Cloudflare has an A record pointing to `76.76.21.21`, with proxying enabled and TTL Auto. Vercel issued its HTTPS certificate.
+- Existing apex and www DNS records, nameservers, Cloudflare security settings, artifacts.rishia.in and unrelated service subdomains were preserved.
+- Verified all 183 primary-domain HEAD requests and 52 unique archive targets. The archive homepage and old-only pages return 200; both resume resolvers return 302 to their latest PDFs. Verified the engineering PDF itself returns 200.
+- The old project's site metadata still uses its former primary origin. A separate archive metadata cleanup can update self-canonicals for archive-only pages and point copied content at the corresponding primary page. This does not affect the completed domain routing or PDF resolution.
 
-Until step 1 completes, links from the new deployment to archive-only pages and PDF resolvers cannot reach the future archive hostname. The main new pages and same-project publication/blog redirects can be tested before that step.
+For rollback, reassign rishia.in and www.rishia.in to my-portfolio; retain the archive domain and its DNS record. No DNS change is required for the apex or www records used in this cutover.
