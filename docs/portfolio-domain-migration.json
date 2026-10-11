@@ -1,0 +1,881 @@
+{
+  "status": "implemented-awaiting-domain-assignment",
+  "prepared": "2026-10-11",
+  "primaryOrigin": "https://rishia.in",
+  "archiveOrigin": "https://archive.rishia.in",
+  "sitemapUrl": "https://rishia.in/sitemap-0.xml",
+  "sitemapUrlCount": 73,
+  "mappedUrlCount": 92,
+  "publishedLegacyBlurbs": [
+    "cisco-interview",
+    "fern",
+    "iclr-2026-rio-de-janeiro",
+    "level-supermind-hackathon",
+    "my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+    "openlearn"
+  ],
+  "publishedNewBlurbs": [
+    "cisco-interview",
+    "fern",
+    "iclr-2026-rio-de-janeiro",
+    "my-ijcai-ecai-2026-and-germany-experience-in-bremen"
+  ],
+  "preserveQueryStrings": true,
+  "redirectsAreHostScoped": true,
+  "hostRecommendation": "Keep the existing Vercel project for archive.rishia.in. Deploy the new static portfolio as a separate Vercel project serving rishia.in, with server-side 308 redirects. GitHub Pages can remain available.",
+  "resumeDecision": "Confirmed by the user: keep /resume as the new resume listing page. Its engineering PDF button must use https://archive.rishia.in/resume. Preserve /research/resume and /rsh/resume as latest research-PDF links.",
+  "scope": "Known public page URLs and source aliases. Analytics/Search Console backlinks, custom legacy asset URLs and API integrations still require a pre-cutover check.",
+  "routes": [
+    {
+      "source": "/",
+      "destination": "https://rishia.in/",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/admin",
+      "destination": "https://archive.rishia.in/admin",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/archive",
+      "destination": "https://rishia.in/archive",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/blogs",
+      "destination": "https://rishia.in/writings",
+      "behavior": "308",
+      "note": "Writing archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/blogs/art",
+      "destination": "https://rishia.in/writings/art",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/bits-of-trust-the-elegance-of-aes",
+      "destination": "https://rishia.in/writings/bits-of-trust-the-elegance-of-aes",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/building-rosenblatts-perceptron-from-scratch-a-comprehensive-technical-deep-dive",
+      "destination": "https://rishia.in/writings/building-rosenblatts-perceptron-from-scratch-a-comprehensive-technical-deep-dive",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/comprehensive-arch-linux-guide",
+      "destination": "https://rishia.in/writings/comprehensive-arch-linux-guide",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/getting-cracked-at-clean-and-bloc-architecture",
+      "destination": "https://rishia.in/writings/getting-cracked-at-clean-and-bloc-architecture",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/getting-started-at-bloc-architecture",
+      "destination": "https://rishia.in/writings/getting-started-at-bloc-architecture",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/go-beneath-the-abstraction-building-interactive-uis-with-fernkit",
+      "destination": "https://rishia.in/writings/go-beneath-the-abstraction-building-interactive-uis-with-fernkit",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/resource-management-with-probabilistic-scheduling-in-the-context-of-linux",
+      "destination": "https://rishia.in/writings/resource-management-with-probabilistic-scheduling-in-the-context-of-linux",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/shamirs-secret-sharing-scheme-and-multi-party-computation",
+      "destination": "https://rishia.in/writings/shamirs-secret-sharing-scheme-and-multi-party-computation",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/towards-the-modern-transformer-architecture",
+      "destination": "https://rishia.in/writings/towards-the-modern-transformer-architecture",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/you-dont-know-websockets-yet",
+      "destination": "https://rishia.in/writings/you-dont-know-websockets-yet",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blogs/your-hardest-hello-world-text-rasterization-1",
+      "destination": "https://rishia.in/writings/your-hardest-hello-world-text-rasterization-1",
+      "behavior": "308",
+      "note": "Matching local article; keep its existing Hashnode canonical policy.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/blurb/cisco-interview",
+      "destination": "https://rishia.in/blurb/cisco-interview",
+      "behavior": "serve",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/blurb/fern",
+      "destination": "https://rishia.in/blurb/fern",
+      "behavior": "serve",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/blurb/iclr-2026-rio-de-janeiro",
+      "destination": "https://rishia.in/blurb/iclr-2026-rio-de-janeiro",
+      "behavior": "serve",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/blurb/level-supermind-hackathon",
+      "destination": "https://archive.rishia.in/blurb/level-supermind-hackathon",
+      "behavior": "308",
+      "note": "Keep the existing blurb on the archive; do not publish drafts to create a redirect target.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/blurb/my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+      "destination": "https://rishia.in/blurb/my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+      "behavior": "serve",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/blurb/openlearn",
+      "destination": "https://archive.rishia.in/blurb/openlearn",
+      "behavior": "308",
+      "note": "Keep the existing blurb on the archive; do not publish drafts to create a redirect target.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/cal",
+      "destination": "https://archive.rishia.in/cal",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/colophon",
+      "destination": "https://rishia.in/colophon",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/community",
+      "destination": "https://rishia.in/community",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/flutter-bootcamp",
+      "destination": "https://rishia.in/flutter-bootcamp",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery",
+      "destination": "https://archive.rishia.in/gallery",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/2023",
+      "destination": "https://archive.rishia.in/gallery/2023",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/2024",
+      "destination": "https://archive.rishia.in/gallery/2024",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/apr-2025",
+      "destination": "https://archive.rishia.in/gallery/apr-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/apr-2026",
+      "destination": "https://archive.rishia.in/gallery/apr-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/aug-2026",
+      "destination": "https://archive.rishia.in/gallery/aug-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/dec-2025",
+      "destination": "https://archive.rishia.in/gallery/dec-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/feb-2025",
+      "destination": "https://archive.rishia.in/gallery/feb-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/feb-2026",
+      "destination": "https://archive.rishia.in/gallery/feb-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/jan-2025",
+      "destination": "https://archive.rishia.in/gallery/jan-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/jan-2026",
+      "destination": "https://archive.rishia.in/gallery/jan-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/jul-2025",
+      "destination": "https://archive.rishia.in/gallery/jul-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/jul-2026",
+      "destination": "https://archive.rishia.in/gallery/jul-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/jun-2025",
+      "destination": "https://archive.rishia.in/gallery/jun-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/jun-2026",
+      "destination": "https://archive.rishia.in/gallery/jun-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/mar-2025",
+      "destination": "https://archive.rishia.in/gallery/mar-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/mar-2026",
+      "destination": "https://archive.rishia.in/gallery/mar-2026",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/may-2025",
+      "destination": "https://archive.rishia.in/gallery/may-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/nov-2025",
+      "destination": "https://archive.rishia.in/gallery/nov-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/oct-2025",
+      "destination": "https://archive.rishia.in/gallery/oct-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/gallery/sep-2025",
+      "destination": "https://archive.rishia.in/gallery/sep-2025",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/github",
+      "destination": "https://archive.rishia.in/github",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/graph",
+      "destination": "https://archive.rishia.in/graph",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/ig",
+      "destination": "https://archive.rishia.in/ig",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/instagram",
+      "destination": "https://archive.rishia.in/instagram",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/journey/cisco-interview",
+      "destination": "https://rishia.in/blurb/cisco-interview",
+      "behavior": "308",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/journey/fern",
+      "destination": "https://rishia.in/blurb/fern",
+      "behavior": "308",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/journey/iclr-2026-rio-de-janeiro",
+      "destination": "https://rishia.in/blurb/iclr-2026-rio-de-janeiro",
+      "behavior": "308",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/journey/level-supermind-hackathon",
+      "destination": "https://archive.rishia.in/blurb/level-supermind-hackathon",
+      "behavior": "308",
+      "note": "Keep the existing blurb on the archive; do not publish drafts to create a redirect target.",
+      "evidence": [
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/journey/my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+      "destination": "https://rishia.in/blurb/my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+      "behavior": "308",
+      "note": "Published blurb in the new portfolio.",
+      "evidence": [
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/journey/openlearn",
+      "destination": "https://archive.rishia.in/blurb/openlearn",
+      "behavior": "308",
+      "note": "Keep the existing blurb on the archive; do not publish drafts to create a redirect target.",
+      "evidence": [
+        "published legacy blurb"
+      ]
+    },
+    {
+      "source": "/ledger",
+      "destination": "https://archive.rishia.in/ledger",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/linkedin",
+      "destination": "https://archive.rishia.in/linkedin",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/links",
+      "destination": "https://rishia.in/links",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/machine",
+      "destination": "https://rishia.in/machine",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/axon",
+      "destination": "https://archive.rishia.in/projects/axon",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/blood4life",
+      "destination": "https://archive.rishia.in/projects/blood4life",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/fern",
+      "destination": "https://archive.rishia.in/projects/fern",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/fingenie",
+      "destination": "https://archive.rishia.in/projects/fingenie",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/ipqs",
+      "destination": "https://archive.rishia.in/projects/ipqs",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/kisaanmithraa",
+      "destination": "https://archive.rishia.in/projects/kisaanmithraa",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/nexus",
+      "destination": "https://archive.rishia.in/projects/nexus",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/openlearn",
+      "destination": "https://archive.rishia.in/projects/openlearn",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/sahlplus",
+      "destination": "https://archive.rishia.in/projects/sahlplus",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/projects/soulbuddy",
+      "destination": "https://archive.rishia.in/projects/soulbuddy",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/research",
+      "destination": "https://rishia.in/research",
+      "behavior": "serve",
+      "note": "Use the new portfolio page at the same address.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/research/ahuja2026icfd31k",
+      "destination": "https://rishia.in/pub/ahuja2026icfd31k",
+      "behavior": "308",
+      "note": "Redirect directly to the matching publication.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/research/ahuja2026retrieval",
+      "destination": "https://rishia.in/pub/ahuja2026retrieval",
+      "behavior": "308",
+      "note": "Redirect directly to the matching publication.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/research/ahuja2026scopebenchpr",
+      "destination": "https://rishia.in/pub/ahuja2026scopebenchpr",
+      "behavior": "308",
+      "note": "Redirect directly to the matching publication.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/research/resume",
+      "destination": "https://archive.rishia.in/research/resume",
+      "behavior": "308",
+      "note": "Preserve the existing latest-PDF resolver; its final PDF redirect remains temporary (302).",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/resume",
+      "destination": "https://rishia.in/resume",
+      "behavior": "serve",
+      "note": "User-approved behavior: show the new resume listing page instead of immediately opening the engineering PDF.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/rsh",
+      "destination": "https://rishia.in/research",
+      "behavior": "308",
+      "note": "Research archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/rsh/ahuja2026icfd31k",
+      "destination": "https://rishia.in/pub/ahuja2026icfd31k",
+      "behavior": "308",
+      "note": "Redirect directly to the matching publication.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/rsh/ahuja2026retrieval",
+      "destination": "https://rishia.in/pub/ahuja2026retrieval",
+      "behavior": "308",
+      "note": "Redirect directly to the matching publication.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/rsh/ahuja2026scopebenchpr",
+      "destination": "https://rishia.in/pub/ahuja2026scopebenchpr",
+      "behavior": "308",
+      "note": "Redirect directly to the matching publication.",
+      "evidence": [
+        "live sitemap 2026-10-11",
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/rsh/resume",
+      "destination": "https://archive.rishia.in/research/resume",
+      "behavior": "308",
+      "note": "Preserve the existing latest-PDF resolver; its final PDF redirect remains temporary (302).",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/stats",
+      "destination": "https://archive.rishia.in/stats",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled",
+      "destination": "https://archive.rishia.in/uncompiled",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled/conditional-architecture",
+      "destination": "https://archive.rishia.in/uncompiled/conditional-architecture",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled/the-defensive-reframe",
+      "destination": "https://archive.rishia.in/uncompiled/the-defensive-reframe",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled/the-horizon-effect",
+      "destination": "https://archive.rishia.in/uncompiled/the-horizon-effect",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled/the-receipts-problem",
+      "destination": "https://archive.rishia.in/uncompiled/the-receipts-problem",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled/the-utility-of-ego",
+      "destination": "https://archive.rishia.in/uncompiled/the-utility-of-ego",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/uncompiled/writing-on-water",
+      "destination": "https://archive.rishia.in/uncompiled/writing-on-water",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/youtube",
+      "destination": "https://archive.rishia.in/youtube",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    },
+    {
+      "source": "/yt",
+      "destination": "https://archive.rishia.in/yt",
+      "behavior": "308",
+      "note": "Preserve the original page or short-link resolver on the archive.",
+      "evidence": [
+        "legacy source route"
+      ]
+    }
+  ],
+  "routingConfiguration": "vercel.json",
+  "deploymentProject": "rishi-portfolio"
+}

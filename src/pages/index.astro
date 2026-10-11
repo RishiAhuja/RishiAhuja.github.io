@@ -35,7 +35,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Rishi Ahuja',
-  url: 'https://rishia.in',
+  url: new URL('/', Astro.site).href,
   image: new URL(PORTRAIT, Astro.site).toString(),
   jobTitle: 'Undergraduate Researcher',
   affiliation: [
@@ -177,6 +177,7 @@ const schema = {
     </section>
 
     <section class="section wrap-wide" id="writings">
+      <div id="blog" aria-hidden="true"></div>
       <h2 class="section-title">Writing</h2>
       <div class="project-grid writing-grid">
         {latestWritings.map((post) => (
@@ -214,6 +215,7 @@ const schema = {
     </section>
 
     <section class="section wrap" id="academics" aria-labelledby="academics-title">
+      <div id="education" aria-hidden="true"></div>
       <h2 class="section-title" id="academics-title">Academics</h2>
       <article class="experience-row academic-row">
         <div class="organisation-logo"><img src="/images/logos/nitj.webp" alt="" width="60" height="60" loading="lazy" decoding="async" /></div>

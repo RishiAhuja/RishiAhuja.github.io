@@ -1,0 +1,456 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "astro",
+  "buildCommand": "npm run build",
+  "installCommand": "npm ci",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://archive.rishia.in/admin",
+      "permanent": true
+    },
+    {
+      "source": "/blogs",
+      "destination": "/writings",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/art",
+      "destination": "/writings/art",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/bits-of-trust-the-elegance-of-aes",
+      "destination": "/writings/bits-of-trust-the-elegance-of-aes",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/building-rosenblatts-perceptron-from-scratch-a-comprehensive-technical-deep-dive",
+      "destination": "/writings/building-rosenblatts-perceptron-from-scratch-a-comprehensive-technical-deep-dive",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/comprehensive-arch-linux-guide",
+      "destination": "/writings/comprehensive-arch-linux-guide",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/getting-cracked-at-clean-and-bloc-architecture",
+      "destination": "/writings/getting-cracked-at-clean-and-bloc-architecture",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/getting-started-at-bloc-architecture",
+      "destination": "/writings/getting-started-at-bloc-architecture",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/go-beneath-the-abstraction-building-interactive-uis-with-fernkit",
+      "destination": "/writings/go-beneath-the-abstraction-building-interactive-uis-with-fernkit",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/resource-management-with-probabilistic-scheduling-in-the-context-of-linux",
+      "destination": "/writings/resource-management-with-probabilistic-scheduling-in-the-context-of-linux",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/shamirs-secret-sharing-scheme-and-multi-party-computation",
+      "destination": "/writings/shamirs-secret-sharing-scheme-and-multi-party-computation",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/towards-the-modern-transformer-architecture",
+      "destination": "/writings/towards-the-modern-transformer-architecture",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/you-dont-know-websockets-yet",
+      "destination": "/writings/you-dont-know-websockets-yet",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/your-hardest-hello-world-text-rasterization-1",
+      "destination": "/writings/your-hardest-hello-world-text-rasterization-1",
+      "permanent": true
+    },
+    {
+      "source": "/blurb/level-supermind-hackathon",
+      "destination": "https://archive.rishia.in/blurb/level-supermind-hackathon",
+      "permanent": true
+    },
+    {
+      "source": "/blurb/openlearn",
+      "destination": "https://archive.rishia.in/blurb/openlearn",
+      "permanent": true
+    },
+    {
+      "source": "/cal",
+      "destination": "https://archive.rishia.in/cal",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "destination": "https://archive.rishia.in/gallery",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/2023",
+      "destination": "https://archive.rishia.in/gallery/2023",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/2024",
+      "destination": "https://archive.rishia.in/gallery/2024",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/apr-2025",
+      "destination": "https://archive.rishia.in/gallery/apr-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/apr-2026",
+      "destination": "https://archive.rishia.in/gallery/apr-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/aug-2026",
+      "destination": "https://archive.rishia.in/gallery/aug-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/dec-2025",
+      "destination": "https://archive.rishia.in/gallery/dec-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/feb-2025",
+      "destination": "https://archive.rishia.in/gallery/feb-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/feb-2026",
+      "destination": "https://archive.rishia.in/gallery/feb-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/jan-2025",
+      "destination": "https://archive.rishia.in/gallery/jan-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/jan-2026",
+      "destination": "https://archive.rishia.in/gallery/jan-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/jul-2025",
+      "destination": "https://archive.rishia.in/gallery/jul-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/jul-2026",
+      "destination": "https://archive.rishia.in/gallery/jul-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/jun-2025",
+      "destination": "https://archive.rishia.in/gallery/jun-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/jun-2026",
+      "destination": "https://archive.rishia.in/gallery/jun-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/mar-2025",
+      "destination": "https://archive.rishia.in/gallery/mar-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/mar-2026",
+      "destination": "https://archive.rishia.in/gallery/mar-2026",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/may-2025",
+      "destination": "https://archive.rishia.in/gallery/may-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/nov-2025",
+      "destination": "https://archive.rishia.in/gallery/nov-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/oct-2025",
+      "destination": "https://archive.rishia.in/gallery/oct-2025",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/sep-2025",
+      "destination": "https://archive.rishia.in/gallery/sep-2025",
+      "permanent": true
+    },
+    {
+      "source": "/github",
+      "destination": "https://archive.rishia.in/github",
+      "permanent": true
+    },
+    {
+      "source": "/graph",
+      "destination": "https://archive.rishia.in/graph",
+      "permanent": true
+    },
+    {
+      "source": "/ig",
+      "destination": "https://archive.rishia.in/ig",
+      "permanent": true
+    },
+    {
+      "source": "/instagram",
+      "destination": "https://archive.rishia.in/instagram",
+      "permanent": true
+    },
+    {
+      "source": "/journey/cisco-interview",
+      "destination": "/blurb/cisco-interview",
+      "permanent": true
+    },
+    {
+      "source": "/journey/fern",
+      "destination": "/blurb/fern",
+      "permanent": true
+    },
+    {
+      "source": "/journey/iclr-2026-rio-de-janeiro",
+      "destination": "/blurb/iclr-2026-rio-de-janeiro",
+      "permanent": true
+    },
+    {
+      "source": "/journey/level-supermind-hackathon",
+      "destination": "https://archive.rishia.in/blurb/level-supermind-hackathon",
+      "permanent": true
+    },
+    {
+      "source": "/journey/my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+      "destination": "/blurb/my-ijcai-ecai-2026-and-germany-experience-in-bremen",
+      "permanent": true
+    },
+    {
+      "source": "/journey/openlearn",
+      "destination": "https://archive.rishia.in/blurb/openlearn",
+      "permanent": true
+    },
+    {
+      "source": "/ledger",
+      "destination": "https://archive.rishia.in/ledger",
+      "permanent": true
+    },
+    {
+      "source": "/linkedin",
+      "destination": "https://archive.rishia.in/linkedin",
+      "permanent": true
+    },
+    {
+      "source": "/projects/axon",
+      "destination": "https://archive.rishia.in/projects/axon",
+      "permanent": true
+    },
+    {
+      "source": "/projects/blood4life",
+      "destination": "https://archive.rishia.in/projects/blood4life",
+      "permanent": true
+    },
+    {
+      "source": "/projects/fern",
+      "destination": "https://archive.rishia.in/projects/fern",
+      "permanent": true
+    },
+    {
+      "source": "/projects/fingenie",
+      "destination": "https://archive.rishia.in/projects/fingenie",
+      "permanent": true
+    },
+    {
+      "source": "/projects/ipqs",
+      "destination": "https://archive.rishia.in/projects/ipqs",
+      "permanent": true
+    },
+    {
+      "source": "/projects/kisaanmithraa",
+      "destination": "https://archive.rishia.in/projects/kisaanmithraa",
+      "permanent": true
+    },
+    {
+      "source": "/projects/nexus",
+      "destination": "https://archive.rishia.in/projects/nexus",
+      "permanent": true
+    },
+    {
+      "source": "/projects/openlearn",
+      "destination": "https://archive.rishia.in/projects/openlearn",
+      "permanent": true
+    },
+    {
+      "source": "/projects/sahlplus",
+      "destination": "https://archive.rishia.in/projects/sahlplus",
+      "permanent": true
+    },
+    {
+      "source": "/projects/soulbuddy",
+      "destination": "https://archive.rishia.in/projects/soulbuddy",
+      "permanent": true
+    },
+    {
+      "source": "/research/ahuja2026icfd31k",
+      "destination": "/pub/ahuja2026icfd31k",
+      "permanent": true
+    },
+    {
+      "source": "/research/ahuja2026retrieval",
+      "destination": "/pub/ahuja2026retrieval",
+      "permanent": true
+    },
+    {
+      "source": "/research/ahuja2026scopebenchpr",
+      "destination": "/pub/ahuja2026scopebenchpr",
+      "permanent": true
+    },
+    {
+      "source": "/research/resume",
+      "destination": "https://archive.rishia.in/research/resume",
+      "permanent": true
+    },
+    {
+      "source": "/rsh",
+      "destination": "/research",
+      "permanent": true
+    },
+    {
+      "source": "/rsh/ahuja2026icfd31k",
+      "destination": "/pub/ahuja2026icfd31k",
+      "permanent": true
+    },
+    {
+      "source": "/rsh/ahuja2026retrieval",
+      "destination": "/pub/ahuja2026retrieval",
+      "permanent": true
+    },
+    {
+      "source": "/rsh/ahuja2026scopebenchpr",
+      "destination": "/pub/ahuja2026scopebenchpr",
+      "permanent": true
+    },
+    {
+      "source": "/rsh/resume",
+      "destination": "https://archive.rishia.in/research/resume",
+      "permanent": true
+    },
+    {
+      "source": "/stats",
+      "destination": "https://archive.rishia.in/stats",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled",
+      "destination": "https://archive.rishia.in/uncompiled",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/conditional-architecture",
+      "destination": "https://archive.rishia.in/uncompiled/conditional-architecture",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/the-defensive-reframe",
+      "destination": "https://archive.rishia.in/uncompiled/the-defensive-reframe",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/the-horizon-effect",
+      "destination": "https://archive.rishia.in/uncompiled/the-horizon-effect",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/the-receipts-problem",
+      "destination": "https://archive.rishia.in/uncompiled/the-receipts-problem",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/the-utility-of-ego",
+      "destination": "https://archive.rishia.in/uncompiled/the-utility-of-ego",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/writing-on-water",
+      "destination": "https://archive.rishia.in/uncompiled/writing-on-water",
+      "permanent": true
+    },
+    {
+      "source": "/youtube",
+      "destination": "https://archive.rishia.in/youtube",
+      "permanent": true
+    },
+    {
+      "source": "/yt",
+      "destination": "https://archive.rishia.in/yt",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap-index.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap-0.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/og",
+      "destination": "https://archive.rishia.in/og",
+      "permanent": true
+    },
+    {
+      "source": "/projects/:path*",
+      "destination": "https://archive.rishia.in/projects/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/:path*",
+      "destination": "https://archive.rishia.in/gallery/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/uncompiled/:path*",
+      "destination": "https://archive.rishia.in/uncompiled/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/:path*",
+      "destination": "https://archive.rishia.in/blogs/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/rsh/:path*",
+      "destination": "https://archive.rishia.in/rsh/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/research/:slug",
+      "destination": "https://archive.rishia.in/research/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/journey/:path*",
+      "destination": "https://archive.rishia.in/blurb/:path*",
+      "permanent": true
+    }
+  ]
+}
