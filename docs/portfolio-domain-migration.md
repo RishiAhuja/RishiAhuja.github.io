@@ -20,7 +20,7 @@ Keep /resume as the new resume listing page. The user accepts that an old /resum
 
 ## Redirect behavior
 
-Use permanent HTTP 308 redirects for moved page URLs, directly to the closest matching page. Retain queries, case, and trailing-slash variants appropriately. Limit legacy path-family redirects to known families: /projects, /gallery, /uncompiled, /blurb entries missing from the new site, /ledger, /graph, /stats, and existing short links. Use the exact publication and article maps first, with /research/resume and /rsh/resume before research rules. Never blanket-redirect every path to the homepage or redirect the archive host back to itself. Keep old-only content on the archive. Keep the new /archive page as its own history index and update its old-portfolio entry to archive.rishia.in.
+Use permanent HTTP 308 redirects for moved page URLs, directly to the closest matching page. Retain queries, case, and trailing-slash variants appropriately. Limit legacy path-family redirects to known families: /projects, /gallery, /uncompiled, /blurb entries missing from the new site, /ledger, /graph, and existing short links. Use the exact publication and article maps first, with /research/resume and /rsh/resume before research rules. Never blanket-redirect every path to the homepage or redirect the archive host back to itself. Keep old-only content on the archive. Keep the new /archive page as its own history index and update its old-portfolio entry to archive.rishia.in.
 
 There are 6 published legacy blurbs and 4 published new blurbs. A published old blurb absent from the new site goes to its original archive page. A draft should not become public merely to satisfy a wildcard rule.
 
@@ -127,7 +127,7 @@ The source paths below refer to rishia.in. The mapped redirects are implemented 
 | `/rsh/ahuja2026retrieval` | 308 | `https://rishia.in/pub/ahuja2026retrieval` |
 | `/rsh/ahuja2026scopebenchpr` | 308 | `https://rishia.in/pub/ahuja2026scopebenchpr` |
 | `/rsh/resume` | 308 | `https://archive.rishia.in/research/resume` |
-| `/stats` | 308 | `https://archive.rishia.in/stats` |
+| `/stats` | serve | `https://rishia.in/stats` |
 | `/uncompiled` | 308 | `https://archive.rishia.in/uncompiled` |
 | `/uncompiled/conditional-architecture` | 308 | `https://archive.rishia.in/uncompiled/conditional-architecture` |
 | `/uncompiled/the-defensive-reframe` | 308 | `https://archive.rishia.in/uncompiled/the-defensive-reframe` |
@@ -151,7 +151,7 @@ The source paths below refer to rishia.in. The mapped redirects are implemented 
 - Existing project: `my-portfolio`; its code and environment values remain unchanged. It now serves archive.rishia.in; the primary and www domains moved to the new project.
 - GitHub repository: `RishiAhuja/RishiAhuja.github.io`, connected for subsequent Vercel deployments.
 - Production and preview build variables: `PORTFOLIO_SITE_URL=https://rishia.in`, `PORTFOLIO_ARCHIVE_ORIGIN=https://archive.rishia.in`.
-- `vercel.json` implements 89 rules: exact mapped URLs first, sitemap aliases, the old dynamic /og endpoint and safe legacy-family fallbacks. New /research, /blurb, /_astro and /og/*.png URLs are preserved.
+- `vercel.json` implements 88 rules: exact mapped URLs first, sitemap aliases, the old dynamic /og endpoint and safe legacy-family fallbacks. New /research, /blurb, /_astro and /og/*.png URLs are preserved.
 - Canonical URLs, feeds, sitemaps, social-image URLs, JSON-LD, archive links and PDF buttons use the configured build origins. The GitHub Pages build keeps its existing defaults.
 - Legacy /#blog, /#education and /#contact links have matching anchors. Only the old reading/upstream/side-quest fragments leave for the archived homepage.
 - `npm run build` verifies the migration inventory in addition to all existing checks. `npm run verify:migration -- --url <deployment-origin>` exercises the deployed HTTP routes.
@@ -166,3 +166,17 @@ The source paths below refer to rishia.in. The mapped redirects are implemented 
 - The old project's site metadata still uses its former primary origin. A separate archive metadata cleanup can update self-canonicals for archive-only pages and point copied content at the corresponding primary page. This does not affect the completed domain routing or PDF resolution.
 
 For rollback, reassign rishia.in and www.rishia.in to my-portfolio; retain the archive domain and its DNS record. No DNS change is required for the apex or www records used in this cutover.
+
+### Shared visitor statistics (12 October 2026)
+
+`/stats` now serves the new portfolio's Statistics page. `/api/visitors` is a Vercel Node function using the original anonymous Supabase connection and the existing `log_visit`, `get_total_visitors`, and `get_daily_stats` functions. The existing 5,747-visitor legacy offset is retained once. The RPC signatures stay compatible with the archive. The SQL correction in `sql/2026-10-12-fix-visitor-counts.sql` repairs the counting logic without deleting visit records or page-view history. It saves the original daily totals in a private backup table.
+
+The footer counter and Statistics page share the total. Daily charts and an accessible table offer 7-, 30-, and 90-day periods. The GitHub Pages mirror reads the primary Vercel endpoint. Tracking reuses `visitor_session_id` in session storage, records the page path without query strings or fragments, and honours Do Not Track and Global Privacy Control. Local development and Vercel previews read totals without logging visits.
+
+`ANALYTICS_SUPABASE_URL` and `ANALYTICS_SUPABASE_KEY` are server-only Vercel variables. For local development, put those two values in the ignored `.env.local` and run `npm run dev:api` alongside `npm run dev`. The old portfolio continues using its existing database configuration.
+
+The previous `log_visit` function incremented visitors and page views together on every call. The correction counts each session once per UTC day for daily visitors, counts each session once across the complete database for the all-time total, and records each page load as a page view. Historical session counts are reconstructed from all 7,896 stored visits (4,677 distinct sessions at the audit). The 5,747 legacy baseline remains unchanged. Earlier page-view totals may include duplicate recordings from the archive footer; its responsive counters now share one recording.
+
+The SQL correction was applied in the existing production Supabase SQL Editor on 12 October 2026. Its checks passed; the final result was 4,677 recorded sessions, 10,424 including the legacy baseline, and 7,896 preserved page logs. The migration reconciles historical daily page-view totals with stored records, locks the analytics tables during the transaction, backs up the original totals, and runs a smoke check whose test records are rolled back. Any failed check rolls back the migration. `npm run test:analytics:sql` verifies it against a temporary local PostgreSQL instance, including concurrent requests, session deduplication across days, private raw records/backup, and safe reruns. PostgreSQL binaries must be on PATH, or set `PG_BIN` to their directory. The normal website build does not require PostgreSQL.
+
+Function definitions pin an empty search path and qualify their tables, following [Supabase's database-function guidance](https://supabase.com/docs/guides/database/functions). Transaction-level advisory locks serialize same-session/day recordings, using [PostgreSQL's documented locking function](https://www.postgresql.org/docs/15/functions-admin.html).

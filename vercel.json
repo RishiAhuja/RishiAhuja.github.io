@@ -353,11 +353,6 @@
       "permanent": true
     },
     {
-      "source": "/stats",
-      "destination": "https://archive.rishia.in/stats",
-      "permanent": true
-    },
-    {
       "source": "/uncompiled",
       "destination": "https://archive.rishia.in/uncompiled",
       "permanent": true

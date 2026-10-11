@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+<BaseLayout title="Statistics · Rishi Ahuja" description="Visitor counts and daily activity, continuing the history of this portfolio.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap stats-page" data-statistics>
+      <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
+      <h1 class="page-title">Statistics</h1></div>
+      <p class="page-lede">A little window into the people visiting this site, continuing the history of my earlier portfolio.</p>
+      <div class="stats-controls"><label for="stats-period">Period</label><select id="stats-period"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select></div>
+      <p class="stats-status quiet-meta" role="status" aria-live="polite">Loading statistics…</p>
+      <button class="button stats-retry" type="button" hidden>Try again</button>
+      <div class="stats-results" hidden>
+        <dl class="stats-totals"><div><dt>Total visitors</dt><dd data-stat="total">—</dd><small>Recorded sessions + legacy count</small></div><div><dt>Page views</dt><dd data-stat="views">—</dd><small data-period-label>In the last 30 days</small></div><div><dt>Daily average</dt><dd data-stat="average">—</dd><small>Visitors per day in this period</small></div></dl>
+        <div class="stats-charts"><section><h2>Daily visitors</h2><div class="stats-chart" data-chart="visitors"></div></section><section><h2>Page views</h2><div class="stats-chart" data-chart="pageViews"></div></section></div>
+        <details class="stats-history"><summary>Daily figures</summary><div class="stats-table-scroll"><table><caption class="sr-only">Daily visitors and page views for the selected period</caption><thead><tr><th scope="col">Date (UTC)</th><th scope="col">Visitors</th><th scope="col">Page views</th></tr></thead><tbody></tbody></table></div></details>
+      </div>
+      <noscript><p>JavaScript is needed to load the live figures.</p></noscript>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

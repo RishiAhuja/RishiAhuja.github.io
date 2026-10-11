@@ -787,11 +787,12 @@
     },
     {
       "source": "/stats",
-      "destination": "https://archive.rishia.in/stats",
-      "behavior": "308",
-      "note": "Preserve the original page or short-link resolver on the archive.",
+      "destination": "https://rishia.in/stats",
+      "behavior": "serve",
+      "note": "Serve the new Statistics page with the shared historical visitor counter.",
       "evidence": [
-        "live sitemap 2026-10-11"
+        "live sitemap 2026-10-11",
+        "Statistics migration 2026-10-12"
       ]
     },
     {

@@ -100,7 +100,7 @@ assert.equal(rows.length, updates.length - 8, 'Homepage must show the latest eig
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
-assert.equal(locations.length, 12 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
+assert.equal(locations.length, 13 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
 assert.ok(!locations.some((path) => /^\/writings\//.test(path)), 'Mirrored articles should not claim a local sitemap canonical');
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
