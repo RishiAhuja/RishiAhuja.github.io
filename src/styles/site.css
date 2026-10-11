@@ -1919,3 +1919,15 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .curriculum-session li { margin-bottom: .45em; }
 .curriculum-assignment { padding: 1rem 1.2rem; background: var(--cover-blue); margin-block: 1.25rem .5rem; }
 .curriculum-content .text-link { font-size: .9em; }
+
+/* Public attendee listings for the completed Flutter course. */
+.course-attendees { padding-top: 0; }
+.attendee-disclosure { border-top: 1px solid var(--rule); }
+.attendee-disclosure summary { cursor: pointer; min-height: 44px; padding-block: 16px; font-weight: 600; }
+.attendee-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+.attendee-list li { padding-block: 22px; border-bottom: 1px solid var(--rule); min-width: 0; }
+.attendee-list h3 { font-size: 20px; margin: 0 0 8px; }
+.attendee-list p { margin: 0 0 8px; }
+.attendee-links { display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 16px; }
+.attendee-links a { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; }
+@media (max-width: 700px) { .attendee-list { grid-template-columns: 1fr; } }

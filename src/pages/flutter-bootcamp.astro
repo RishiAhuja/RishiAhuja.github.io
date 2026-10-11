@@ -5,6 +5,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { COURSE, lectures } from '../data/teaching';
+import { bootcampAttendees } from '../data/bootcamp-attendees';
 const schema = { '@context': 'https://schema.org', '@type': 'Course', name: COURSE.title, description: 'A completed 14-lecture Flutter development bootcamp taught by Rishi Ahuja at GDGC NIT Jalandhar.', provider: { '@type': 'Person', name: 'Rishi Ahuja', url: new URL('/', Astro.site).href }, url: new URL('/flutter-bootcamp', Astro.site).href, inLanguage: 'en', hasCourseInstance: { '@type': 'CourseInstance', startDate: COURSE.startDate, endDate: COURSE.endDate, courseMode: 'online', instructor: { '@type': 'Person', name: 'Rishi Ahuja' } } };
 ---
 <BaseLayout title="Flutter Bootcamp · Rishi Ahuja" description="Fourteen recorded Flutter lectures, slides, and resources from Applied Mobile Engineering, taught from 18 December 2025 to 14 January 2026.">
@@ -37,6 +38,24 @@ const schema = { '@context': 'https://schema.org', '@type': 'Course', name: COUR
           </article>
         ))}
       </div>
+    </section>
+    <section class="section wrap-wide course-attendees" aria-labelledby="course-attendees">
+      <h2 class="section-title" id="course-attendees">Attendees</h2>
+      <details class="attendee-disclosure">
+        <summary>View attendees <span class="quiet-meta">({bootcampAttendees.length})</span></summary>
+        <ul class="attendee-list">
+          {bootcampAttendees.map((attendee) => (
+            <li>
+              <h3>{attendee.name}</h3>
+              {attendee.college && <p class="quiet-meta">{attendee.college}</p>}
+              <div class="attendee-links">
+                <a href={attendee.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${attendee.name} on LinkedIn`}>LinkedIn <InlineIcon name="arrow-up-right" /></a>
+                {attendee.post && <a href={attendee.post} target="_blank" rel="noopener noreferrer" aria-label={`${attendee.name}'s course post`}>Course post <InlineIcon name="arrow-up-right" /></a>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </details>
     </section>
   </main>
   <SiteFooter />
