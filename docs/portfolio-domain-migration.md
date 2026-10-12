@@ -8,7 +8,7 @@ Implemented on 11 October 2026 in the new `rishi-portfolio` Vercel project. Doma
 - Existing portfolio: https://archive.rishia.in
 - Keep artifacts.rishia.in and every other existing service subdomain unchanged.
 
-The audit combines 73 URLs in the live old sitemap with route files and published content. It maps 92 known URLs. All destinations on the new portfolio exist in the current static build. Archive destinations are the original paths; attaching and verifying archive.rishia.in is the first manual cutover step. This inventory does not claim to cover all historic backlinks: check Search Console and traffic logs before cutover.
+The audit combines 73 URLs in the live old sitemap with route files and published content. It maps 93 known URLs. All destinations on the new portfolio exist in the current static build. Archive destinations are the original paths; attaching and verifying archive.rishia.in is the first manual cutover step. This inventory does not claim to cover all historic backlinks: check Search Console and traffic logs before cutover.
 
 ## Hosting recommendation
 
@@ -151,7 +151,7 @@ The source paths below refer to rishia.in. The mapped redirects are implemented 
 - Existing project: `my-portfolio`; its code and environment values remain unchanged. It now serves archive.rishia.in; the primary and www domains moved to the new project.
 - GitHub repository: `RishiAhuja/RishiAhuja.github.io`, connected for subsequent Vercel deployments.
 - Production and preview build variables: `PORTFOLIO_SITE_URL=https://rishia.in`, `PORTFOLIO_ARCHIVE_ORIGIN=https://archive.rishia.in`.
-- `vercel.json` implements 88 rules: exact mapped URLs first, sitemap aliases, the old dynamic /og endpoint and safe legacy-family fallbacks. New /research, /blurb, /_astro and /og/*.png URLs are preserved.
+- `vercel.json` implements 90 rules: exact mapped URLs first, sitemap aliases, the old dynamic /og endpoint and safe legacy-family fallbacks. New /research, /blurb, /_astro and /og/*.png URLs are preserved.
 - Canonical URLs, feeds, sitemaps, social-image URLs, JSON-LD, archive links and PDF buttons use the configured build origins. The GitHub Pages build keeps its existing defaults.
 - Legacy /#blog, /#education and /#contact links have matching anchors. Only the old reading/upstream/side-quest fragments leave for the archived homepage.
 - `npm run build` verifies the migration inventory in addition to all existing checks. `npm run verify:migration -- --url <deployment-origin>` exercises the deployed HTTP routes.
@@ -180,3 +180,7 @@ The previous `log_visit` function incremented visitors and page views together o
 The SQL correction was applied in the existing production Supabase SQL Editor on 12 October 2026. Its checks passed; the final result was 4,677 recorded sessions, 10,424 including the legacy baseline, and 7,896 preserved page logs. The migration reconciles historical daily page-view totals with stored records, locks the analytics tables during the transaction, backs up the original totals, and runs a smoke check whose test records are rolled back. Any failed check rolls back the migration. `npm run test:analytics:sql` verifies it against a temporary local PostgreSQL instance, including concurrent requests, session deduplication across days, private raw records/backup, and safe reruns. PostgreSQL binaries must be on PATH, or set `PG_BIN` to their directory. The normal website build does not require PostgreSQL.
 
 Function definitions pin an empty search path and qualify their tables, following [Supabase's database-function guidance](https://supabase.com/docs/guides/database/functions). Transaction-level advisory locks serialize same-session/day recordings, using [PostgreSQL's documented locking function](https://www.postgresql.org/docs/15/functions-admin.html).
+
+### Singular blog compatibility (12 October 2026)
+
+`/blog` now permanently redirects to `/writings`, and `/blog/<slug>` redirects to the matching `/writings/<slug>` article. The existing `/blogs` redirects remain. Migration verification exercises the singular article aliases against every mapped published writing destination, including their deployed slash variants and query strings.

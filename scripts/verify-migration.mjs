@@ -22,6 +22,19 @@ for (const route of plan.routes) {
     await access(`dist${route.source === '/' ? '' : route.source}/index.html`);
   }
 }
+// The singular blog spelling must resolve the same published articles as /blogs.
+const singularBlog = bySource.get('/blog/:slug');
+assert.equal(singularBlog?.permanent, true, 'Missing permanent singular-blog article alias');
+assert.equal(singularBlog.destination, '/writings/:slug');
+const blogAliases = plan.routes.filter(route => route.source.startsWith('/blogs/')).map(route => {
+  const slug = route.source.slice('/blogs/'.length);
+  const destination = singularBlog.destination.replace(':slug', slug);
+  assert.equal(new URL(destination, plan.primaryOrigin).href, route.destination);
+  return { ...route, source: `/blog/${slug}` };
+});
+assert.ok(blogAliases.length > 0, 'No published blog aliases exercised');
+for (const route of blogAliases) await access(`dist${new URL(route.destination).pathname}/index.html`);
+
 // Catch a broad archive redirect before it can swallow the new site or assets.
 for (const source of ['/:path*', '/blurb/:path*', '/blurb/:slug', '/_astro/:path*', '/og/:path*', '/research/:path*', '/writings/:path*', '/pub/:path*']) {
   assert.ok(!bySource.has(source), `Unsafe archive catch-all: ${source}`);
@@ -59,7 +72,7 @@ const urlIndex = process.argv.indexOf('--url');
 if (urlIndex >= 0) {
   const deployment = new URL(process.argv[urlIndex + 1]).origin;
   let completed = 0;
-  const queue = plan.routes.flatMap(route => [route.source, ...(route.source === '/' ? [] : [route.source + '/'])].map(path => ({route,path})));
+  const queue = [...plan.routes, ...blogAliases].flatMap(route => [route.source, ...(route.source === '/' ? [] : [route.source + '/'])].map(path => ({route,path})));
   const failures = [];
   async function worker() {
     while (queue.length) {

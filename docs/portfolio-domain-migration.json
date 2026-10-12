@@ -5,7 +5,7 @@
   "archiveOrigin": "https://archive.rishia.in",
   "sitemapUrl": "https://rishia.in/sitemap-0.xml",
   "sitemapUrlCount": 73,
-  "mappedUrlCount": 92,
+  "mappedUrlCount": 93,
   "publishedLegacyBlurbs": [
     "cisco-interview",
     "fern",
@@ -51,6 +51,15 @@
       "note": "Use the new portfolio page at the same address.",
       "evidence": [
         "live sitemap 2026-10-11"
+      ]
+    },
+    {
+      "source": "/blog",
+      "destination": "https://rishia.in/writings",
+      "behavior": "308",
+      "note": "Singular blog listing alias; matching /blog/<slug> URLs redirect to the corresponding writing page.",
+      "evidence": [
+        "User-reported missing compatibility route 2026-10-12"
       ]
     },
     {

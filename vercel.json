@@ -13,6 +13,16 @@
       "permanent": true
     },
     {
+      "source": "/blog",
+      "destination": "/writings",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/writings/:slug",
+      "permanent": true
+    },
+    {
       "source": "/blogs",
       "destination": "/writings",
       "permanent": true
