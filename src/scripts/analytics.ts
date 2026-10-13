@@ -11,11 +11,15 @@ function chart(host: HTMLElement, rows: DailyStat[], metric: 'visitors' | 'pageV
   svg.setAttribute('viewBox', '0 0 600 230');
   svg.setAttribute('role', 'img');
   const label = metric === 'visitors' ? 'Daily visitors' : 'Daily page views';
+  const unit = metric === 'visitors' ? 'visitors' : 'page views';
   const peak = Math.max(0, ...rows.map(row => row[metric]));
   const peakRow = rows.find(row => row[metric] === peak);
   svg.setAttribute('aria-label', `${label} over ${rows.length} days. Peak: ${format.format(peak)}${peakRow ? ` on ${dateLabel(peakRow.date)}` : ''}. Exact values are available in Daily figures.`);
   const max = Math.max(5, Math.ceil(peak / 5) * 5);
-  const x = (index: number) => 42 + (index / Math.max(1, rows.length - 1)) * 544;
+  // Budget for the larger mobile labels, including comma separators.
+  const left = Math.max(56, format.format(max).length * 15 + 22);
+  const right = 586;
+  const x = (index: number) => left + (index / Math.max(1, rows.length - 1)) * (right - left);
   const y = (value: number) => 194 - (value / max) * 164;
   const node = (tag: string, attributes: Record<string, string>) => {
     const element = document.createElementNS(ns, tag);
@@ -23,21 +27,85 @@ function chart(host: HTMLElement, rows: DailyStat[], metric: 'visitors' | 'pageV
     svg.append(element); return element;
   };
   for (const value of [0, max / 2, max]) {
-    node('line', { x1: '42', x2: '586', y1: String(y(value)), y2: String(y(value)), class: 'stats-gridline' });
-    node('text', { x: '32', y: String(y(value) + 4), 'text-anchor': 'end', class: 'stats-axis' }).textContent = format.format(Math.round(value));
+    node('line', { x1: String(left), x2: String(right), y1: String(y(value)), y2: String(y(value)), class: 'stats-gridline' });
+    node('text', { x: String(left - 14), y: String(y(value) + 4), 'text-anchor': 'end', class: 'stats-axis' }).textContent = format.format(Math.round(value));
   }
   const points = rows.map((row, index) => `${x(index)},${y(row[metric])}`).join(' ');
-  node('polygon', { points: `42,194 ${points} 586,194`, class: 'stats-area' });
+  node('polygon', { points: `${left},194 ${points} ${right},194`, class: 'stats-area' });
   node('polyline', { points, class: 'stats-line', fill: 'none' });
   rows.forEach((row, index) => {
-    const dot = node('circle', { cx: String(x(index)), cy: String(y(row[metric])), r: rows.length > 30 ? '2' : '3', class: 'stats-dot' });
-    const title = document.createElementNS(ns, 'title'); title.textContent = `${dateLabel(row.date)}: ${format.format(row[metric])}`; dot.append(title);
+    node('circle', { cx: String(x(index)), cy: String(y(row[metric])), r: rows.length > 30 ? '2' : '3', class: 'stats-dot' });
   });
-  if (rows.length) {
-    node('text', { x: '42', y: '222', class: 'stats-axis' }).textContent = dateLabel(rows[0].date);
-    node('text', { x: '586', y: '222', 'text-anchor': 'end', class: 'stats-axis' }).textContent = dateLabel(rows[rows.length - 1].date);
-  }
-  host.replaceChildren(svg);
+  if (!rows.length) { host.replaceChildren(svg); return; }
+  node('text', { x: String(left), y: '222', class: 'stats-axis' }).textContent = dateLabel(rows[0].date);
+  node('text', { x: String(right), y: '222', 'text-anchor': 'end', class: 'stats-axis' }).textContent = dateLabel(rows[rows.length - 1].date);
+
+  const guide = node('line', { y1: '30', y2: '194', class: 'stats-guide', visibility: 'hidden' });
+  const selectedDot = node('circle', { r: '5', class: 'stats-dot-active', visibility: 'hidden' });
+  const tooltip = document.createElement('div');
+  tooltip.className = 'stats-tooltip'; tooltip.hidden = true; tooltip.setAttribute('aria-hidden', 'true');
+  const tooltipDate = document.createElement('span');
+  const tooltipCount = document.createElement('strong');
+  tooltip.append(tooltipDate, tooltipCount);
+  const instructions = document.createElement('span');
+  instructions.id = `stats-chart-help-${metric}`; instructions.className = 'sr-only';
+  instructions.textContent = 'Hover or tap to inspect a day. Use the arrow keys to change the day, Home or End to jump, and Escape to dismiss. Dates are in UTC.';
+  const control = document.createElement('div');
+  control.className = 'stats-chart-control'; control.tabIndex = 0;
+  control.setAttribute('role', 'slider'); control.setAttribute('aria-label', `Explore ${label.toLowerCase()} by date`);
+  control.setAttribute('aria-orientation', 'horizontal'); control.setAttribute('aria-valuemin', '0');
+  control.setAttribute('aria-valuemax', String(rows.length - 1)); control.setAttribute('aria-describedby', instructions.id);
+  control.style.left = `${left / 600 * 100}%`; control.style.width = `${(right - left) / 600 * 100}%`;
+  control.style.top = `${30 / 230 * 100}%`; control.style.height = `${164 / 230 * 100}%`;
+  host.replaceChildren(svg, control, tooltip, instructions);
+
+  let selected = rows.length - 1;
+  const fullDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const describe = () => {
+    const row = rows[selected];
+    const date = fullDate.format(new Date(`${row.date}T00:00:00Z`));
+    control.setAttribute('aria-valuenow', String(selected));
+    control.setAttribute('aria-valuetext', `${date}: ${format.format(row[metric])} ${unit}`);
+    tooltipDate.textContent = date; tooltipCount.textContent = `${format.format(row[metric])} ${unit}`;
+  };
+  const show = (index: number) => {
+    selected = Math.max(0, Math.min(rows.length - 1, index)); describe();
+    const pointX = x(selected); const pointY = y(rows[selected][metric]);
+    guide.setAttribute('x1', String(pointX)); guide.setAttribute('x2', String(pointX)); guide.setAttribute('visibility', 'visible');
+    selectedDot.setAttribute('cx', String(pointX)); selectedDot.setAttribute('cy', String(pointY)); selectedDot.setAttribute('visibility', 'visible');
+    tooltip.hidden = false;
+    const bounds = svg.getBoundingClientRect();
+    const width = tooltip.offsetWidth; const height = tooltip.offsetHeight;
+    // CSS clamps keep the first/last day and narrow-screen tooltips inside the chart, even after resizing.
+    tooltip.style.left = `clamp(8px, calc(${pointX / 600 * 100}% - ${width / 2}px), calc(100% - ${width + 8}px))`;
+    const above = pointY / 230 * bounds.height >= height + 20;
+    tooltip.style.top = `clamp(8px, calc(${pointY / 230 * 100}% ${above ? '-' : '+'} ${above ? height + 12 : 12}px), calc(100% - ${height + 8}px))`;
+  };
+  const hide = () => {
+    tooltip.hidden = true; guide.setAttribute('visibility', 'hidden'); selectedDot.setAttribute('visibility', 'hidden');
+  };
+  const atPointer = (event: PointerEvent) => {
+    const bounds = svg.getBoundingClientRect();
+    if (!bounds.width) return;
+    const position = (event.clientX - bounds.left) / bounds.width * 600;
+    show(Math.round((position - left) / (right - left) * (rows.length - 1)));
+  };
+  control.addEventListener('pointermove', event => { if (event.pointerType !== 'touch') atPointer(event); });
+  control.addEventListener('pointerdown', atPointer);
+  control.addEventListener('pointerleave', event => { if (event.pointerType !== 'touch') hide(); });
+  control.addEventListener('focus', () => show(selected));
+  control.addEventListener('blur', hide);
+  control.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { hide(); return; }
+    let index = selected;
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') index--;
+    else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') index++;
+    else if (event.key === 'Home') index = 0;
+    else if (event.key === 'End') index = rows.length - 1;
+    else return;
+    event.preventDefault(); show(index);
+  });
+  describe();
 }
 
 async function mountAnalytics() {

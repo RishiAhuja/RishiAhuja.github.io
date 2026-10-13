@@ -72,3 +72,79 @@ assert.equal(active.label.textContent,'10,424 visitors');
 for(const options of [{privacy:true},{storageBlocked:true}]) {const state=browser(options);await flush();assert.equal(state.requests.some(r=>r.method==='POST'),false);assert.equal(state.label.textContent,'10,424 visitors');}
 const fallback=browser({failedPost:true});await flush();await flush();assert.equal(fallback.requests.at(-1).method,'GET');assert.equal(fallback.label.textContent,'10,424 visitors');
 console.log('Browser tracking checks passed: session reuse, one recording per page, navigation, privacy preferences, restricted storage, and read fallback.');
+
+// Exercise the real chart renderer with measured site fonts and pointer/keyboard events.
+const fontkit = await import('fontkit');
+const axisFont = fontkit.openSync('public/fonts/athletics/Athletics-Regular.woff2');
+class ChartElement extends EventTarget {
+  constructor(tag) { super(); this.tag = tag; this.attributes = {}; this.style = {}; this.children = []; this.hidden = false; this.textContent = ''; }
+  setAttribute(name, value) { this.attributes[name] = String(value); }
+  getAttribute(name) { return this.attributes[name] ?? null; }
+  append(...children) { for (const child of children) { child.parent = this; this.children.push(child); } }
+  replaceChildren(...children) { this.children = []; this.append(...children); }
+  getBoundingClientRect() { return this.bounds ?? this.parent?.getBoundingClientRect() ?? {left: 0, width: 500, height: 500 * 230 / 600}; }
+  get offsetWidth() { return 180; }
+  get offsetHeight() { return 60; }
+}
+const chartDocument = Object.assign(new EventTarget(), {readyState: 'loading', createElement: tag => new ChartElement(tag), createElementNS: (_, tag) => new ChartElement(tag)});
+const chartContext = {document: chartDocument, Intl};
+runInNewContext(script, chartContext);
+const sample = [{date:'2026-09-14',visitors:12,pageViews:20},{date:'2026-10-12',visitors:2720,pageViews:3725},{date:'2026-10-13',visitors:97,pageViews:105}];
+function dispatch(target, type, properties = {}) {
+  const event = Object.assign(new Event(type, {cancelable: true}), properties);
+  target.dispatchEvent(event); return event;
+}
+for (const metric of ['visitors', 'pageViews']) {
+  for (const peak of [0, 2720, 3725, 10424, 1234567, 2147483647]) {
+    const host = new ChartElement('div');
+    chartContext.chart(host, sample.map(row => ({...row, [metric]: peak})), metric);
+    const svg = host.children[0];
+    const labels = svg.children.filter(node => node.tag === 'text');
+    for (const size of [14, 24]) {
+      for (const label of labels) {
+        const width = axisFont.layout(label.textContent).advanceWidth / axisFont.unitsPerEm * size;
+        const x = Number(label.getAttribute('x'));
+        const start = label.getAttribute('text-anchor') === 'end' ? x - width : x;
+        assert.ok(start >= 0 && start + width <= 600, `Entire ${label.textContent} label must fit at ${size}px, including large counts`);
+      }
+    }
+  }
+  for (const width of [343, 500, 900]) {
+    const host = new ChartElement('div'); host.bounds = {left: 100, width, height: width * 230 / 600};
+    chartContext.chart(host, sample, metric);
+    const [svg, control, tooltip] = host.children;
+    const dots = svg.children.filter(node => node.getAttribute('class') === 'stats-dot');
+    const point = index => host.bounds.left + Number(dots[index].getAttribute('cx')) / 600 * width;
+    assert.equal(tooltip.hidden, true);
+    assert.equal(control.getAttribute('role'), 'slider');
+    dispatch(control, 'pointermove', {clientX: point(1) + 4, pointerType: 'mouse'});
+    assert.equal(tooltip.hidden, false, 'Hover near a day shows a tooltip without hitting its tiny dot');
+    assert.equal(tooltip.children[0].textContent, 'Oct 12, 2026');
+    assert.equal(tooltip.children[1].textContent, metric === 'visitors' ? '2,720 visitors' : '3,725 page views');
+    assert.equal(control.getAttribute('aria-valuenow'), '1');
+    assert.equal(svg.children.find(node => node.getAttribute('class') === 'stats-guide').getAttribute('visibility'), 'visible');
+    dispatch(control, 'pointerleave', {pointerType: 'mouse'}); assert.equal(tooltip.hidden, true);
+    dispatch(control, 'focus'); assert.equal(tooltip.hidden, false);
+    assert.equal(dispatch(control, 'keydown', {key: 'Home'}).defaultPrevented, true);
+    assert.equal(control.getAttribute('aria-valuenow'), '0');
+    dispatch(control, 'keydown', {key: 'ArrowLeft'}); assert.equal(control.getAttribute('aria-valuenow'), '0');
+    dispatch(control, 'keydown', {key: 'End'}); assert.equal(control.getAttribute('aria-valuenow'), '2');
+    dispatch(control, 'keydown', {key: 'ArrowRight'}); assert.equal(control.getAttribute('aria-valuenow'), '2');
+    dispatch(control, 'keydown', {key: 'ArrowLeft'}); assert.match(control.getAttribute('aria-valuetext'), /^Oct 12, 2026: /);
+    dispatch(control, 'keydown', {key: 'Escape'}); assert.equal(tooltip.hidden, true);
+    dispatch(control, 'pointerdown', {clientX: point(0), pointerType: 'touch'});
+    assert.equal(control.getAttribute('aria-valuenow'), '0'); assert.equal(tooltip.hidden, false, 'Tap shows a value');
+    dispatch(control, 'pointerleave', {pointerType: 'touch'}); assert.equal(tooltip.hidden, false, 'Touch value stays readable after finger lifts');
+    dispatch(control, 'pointermove', {clientX: point(2), pointerType: 'touch'});
+    assert.equal(control.getAttribute('aria-valuenow'), '0', 'Vertical touch scrolling must not scrub the chart');
+    dispatch(control, 'blur'); assert.equal(tooltip.hidden, true);
+    dispatch(control, 'pointermove', {clientX: point(2), pointerType: 'mouse'});
+    assert.match(tooltip.style.left, /^clamp\(8px, /, 'Tooltip stays within the chart at its right edge');
+    assert.match(tooltip.style.top, /^clamp\(8px, /, 'Tooltip stays within the chart vertically');
+    chartContext.chart(host, sample.slice(0, 1), metric);
+    dispatch(host.children[1], 'pointermove', {clientX: 100, pointerType: 'mouse'});
+    assert.equal(host.children[1].getAttribute('aria-valuenow'), '0', 'Single-day series remains usable');
+    chartContext.chart(host, [], metric); assert.equal(host.children.length, 1, 'Empty series has no invalid interactive range');
+  }
+}
+console.log('Chart checks passed: measured large axis labels, full-plot hover, touch, keyboard, edge placement, and empty/single-day series.');

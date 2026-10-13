@@ -1946,13 +1946,19 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .stats-totals small { font-size: 14px; color: var(--text-muted); }
 .stats-charts { display: grid; gap: 36px; }
 .stats-charts h2 { font-size: 24px; margin: 0 0 20px; }
-.stats-chart { max-width: 100%; }
+.stats-chart { position: relative; max-width: 100%; }
 .stats-chart svg { display: block; width: 100%; height: auto; }
 .stats-gridline { stroke: var(--rule); stroke-width: 1; }
 .stats-axis { fill: var(--text-muted); font: 14px Athletics, sans-serif; }
 .stats-line { vector-effect: non-scaling-stroke; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .stats-dot { fill: var(--accent); }
 .stats-area { fill: var(--accent); opacity: .065; }
+.stats-chart-control { position: absolute; cursor: crosshair; touch-action: pan-y; border-radius: 2px; }
+.stats-guide { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 3 4; opacity: .35; vector-effect: non-scaling-stroke; }
+.stats-dot-active { fill: var(--bg); stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.stats-tooltip { position: absolute; z-index: 1; display: grid; gap: 4px; width: max-content; max-width: calc(100% - 16px); padding: 10px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.35; box-shadow: 0 2px 8px rgb(0 0 0 / .06); pointer-events: none; font-variant-numeric: tabular-nums; }
+.stats-tooltip span { color: var(--text-muted); }
+.stats-tooltip strong { font-weight: 600; }
 .stats-history { border-block: 1px solid var(--rule); margin-top: 36px; }
 .stats-history summary { cursor: pointer; padding-block: 18px; min-height: 44px; font-size: 17px; font-weight: 600; }
 .stats-table-scroll { overflow-x: auto; }
