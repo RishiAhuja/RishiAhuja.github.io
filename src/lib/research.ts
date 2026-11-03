@@ -1,7 +1,7 @@
 export const FEATURED_SLUGS = [
+  'ahuja2027doubtbench',
   'ahuja2026icfd31k',
   'ahuja2026scopebenchpr',
-  'ahuja2026retrieval',
 ] as const;
 
 type AwardEntry = {
