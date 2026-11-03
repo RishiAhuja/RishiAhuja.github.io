@@ -25,7 +25,7 @@ authors:
     affiliations: [1]
 affiliations:
   - id: 1
-    name: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
+    name: "Department of Information Technology, National Institute of Technology Jalandhar"
 awards:
   - label: "Awarded Best Paper Presentation"
   - label: "Three Minute Thesis (3MT)"

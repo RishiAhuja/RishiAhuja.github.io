@@ -26,7 +26,7 @@ authors:
     affiliations: [1]
 affiliations:
   - id: 1
-    name: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
+    name: "Department of Information Technology, National Institute of Technology Jalandhar"
 award: "Awarded IJCAI–AIJ grant"
 event:
   announcement: "Presented at IJCAI–ECAI 2026 in Bremen. Now published in the IJCAI proceedings."

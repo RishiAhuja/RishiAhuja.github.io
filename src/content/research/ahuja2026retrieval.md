@@ -29,7 +29,7 @@ authors:
     affiliations: [1]
 affiliations:
   - id: 1
-    name: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
+    name: "Department of Information Technology, National Institute of Technology Jalandhar"
 award: "Awarded ICLR 2026 grant"
 award_amount: "$2,025"
 event:
