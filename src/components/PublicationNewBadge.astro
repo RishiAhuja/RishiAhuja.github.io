@@ -5,13 +5,33 @@
   <span>New</span>
 </span>
 
+<script>
+  const armSparkles = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('.publication-new').forEach((badge) => {
+      if (!(badge instanceof HTMLElement) || badge.dataset.sparkleBound) return;
+      badge.dataset.sparkleBound = 'true';
+      badge.addEventListener('mouseenter', () => {
+        const icon = badge.querySelector('.publication-new-sparkle');
+        if (!(icon instanceof SVGElement)) return;
+        icon.classList.remove('is-sparkling');
+        void icon.getBoundingClientRect();
+        icon.classList.add('is-sparkling');
+      });
+    });
+  };
+
+  armSparkles();
+  document.addEventListener('astro:page-load', armSparkles);
+</script>
+
 <style>
   .publication-new {
     display: inline-flex;
     align-items: center;
     gap: 0.3em;
-    margin-inline-start: 0.65em;
-    vertical-align: 0.25em;
+    margin: 0;
     color: var(--text-muted);
     font-size: 0.55em;
     font-weight: 600;
@@ -30,22 +50,12 @@
     transform-origin: 50% 65%;
   }
 
+  .publication-new-sparkle.is-sparkling {
+    animation: publication-sparkle 200ms ease-out 1;
+  }
+
   @keyframes publication-sparkle {
     0%, 100% { transform: rotate(0deg) scale(1); }
     45% { transform: rotate(-8deg) scale(1.1); }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.project-tile:focus-within) .publication-new-sparkle,
-    :global(.research-record:focus-within) .publication-new-sparkle {
-      animation: publication-sparkle 200ms ease-out 1;
-    }
-  }
-
-  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    :global(.project-tile:hover) .publication-new-sparkle,
-    :global(.research-record:hover) .publication-new-sparkle {
-      animation: publication-sparkle 200ms ease-out 1;
-    }
   }
 </style>
