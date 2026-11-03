@@ -1,6 +1,7 @@
 ---
 title: "DoubtBench: Does Self-Doubt Help Language Models—or Just Make Them Check?"
 short_name: "DoubtBench"
+is_new: true
 cover: "lavender"
 blurb: "Separating the effect of self-doubt wording from direct instructions to check."
 lede: "When a prompt asks a language model to doubt itself and check its answer, which instruction changes its performance? DoubtBench holds the task fixed and separates the two components to measure what self-doubt adds beyond checking."

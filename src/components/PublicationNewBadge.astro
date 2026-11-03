@@ -1,0 +1,51 @@
+<span class="publication-new">
+  <span class="publication-new-sparkle" aria-hidden="true">✨︎</span>
+  <span>New</span>
+</span>
+
+<style>
+  .publication-new {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    margin-inline-start: 0.65em;
+    vertical-align: 0.25em;
+    color: var(--text-muted);
+    font-size: 0.55em;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .publication-new-sparkle {
+    display: inline-block;
+    color: inherit;
+    filter: grayscale(1) brightness(0.55);
+    font-family: 'Apple Symbols', 'Segoe UI Symbol', sans-serif;
+    font-size: 1.3em;
+    font-variant-emoji: text;
+    letter-spacing: 0;
+    transform-origin: 50% 65%;
+  }
+
+  @keyframes publication-sparkle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    45% { transform: rotate(-8deg) scale(1.1); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.project-tile:focus-within) .publication-new-sparkle,
+    :global(.research-record:focus-within) .publication-new-sparkle {
+      animation: publication-sparkle 200ms ease-out 1;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    :global(.project-tile:hover) .publication-new-sparkle,
+    :global(.research-record:hover) .publication-new-sparkle {
+      animation: publication-sparkle 200ms ease-out 1;
+    }
+  }
+</style>

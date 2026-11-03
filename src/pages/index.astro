@@ -10,6 +10,7 @@ import { FEATURED_SLUGS, paperCardAward, pubPath } from '../lib/research';
 import { getWritings, writingPath } from '../lib/blogs';
 import { paperArtwork, writingArtwork } from '../lib/artwork';
 import CoverArt from '../components/CoverArt.astro';
+import PublicationNewBadge from '../components/PublicationNewBadge.astro';
 import ExperienceList from '../components/ExperienceList.astro';
 import { updates } from '../data/updates';
 
@@ -137,6 +138,7 @@ const schema = {
             <div class="project-copy">
               <h3>
                 <a class="project-name" href={pubPath(paper.slug)}>{paper.data.short_name}</a>
+                {paper.data.is_new && <PublicationNewBadge />}
               </h3>
               {awardLine && (
                 <p class="project-award-line">★ {awardLine}</p>

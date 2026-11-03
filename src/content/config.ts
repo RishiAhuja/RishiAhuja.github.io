@@ -5,6 +5,7 @@ const researchCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     short_name: z.string(),
+    is_new: z.boolean().default(false),
     cover: z.enum(['blue', 'rose', 'sand', 'lavender']),
     blurb: z.string(),
     lede: z.string(),
