@@ -5,7 +5,7 @@ const researchCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     short_name: z.string(),
-    cover: z.enum(['blue', 'rose', 'sand']),
+    cover: z.enum(['blue', 'rose', 'sand', 'lavender']),
     blurb: z.string(),
     lede: z.string(),
     description: z.string(),
@@ -22,8 +22,15 @@ const researchCollection = defineCollection({
         is_me: z.boolean().default(false),
         is_corresponding: z.boolean().default(false),
         profile: z.string().url().optional(),
+        affiliations: z.array(z.number().int().positive()).default([]),
       })
     ),
+    affiliations: z.array(z.object({
+      id: z.number().int().positive(),
+      name: z.string(),
+      detail: z.string().optional(),
+      url: z.string().url().optional(),
+    })).default([]),
     affiliation_note: z.string().optional(),
     award: z.string().optional(),
     award_amount: z.string().optional(),

@@ -50,6 +50,16 @@ const awardMarks = paperAwardMarks(paper.data);
         '@type': 'Person',
         name: author.name,
         ...(author.profile ? { url: author.profile } : {}),
+        ...(author.affiliations.length ? {
+          affiliation: author.affiliations.flatMap((id) => {
+            const affiliation = paper.data.affiliations.find((entry) => entry.id === id);
+            return affiliation ? [{
+              '@type': 'Organization',
+              name: [affiliation.name, affiliation.detail].filter(Boolean).join(', '),
+              ...(affiliation.url ? { url: affiliation.url } : {}),
+            }] : [];
+          }),
+        } : {}),
       })),
       url: pageUrl,
       sameAs: paper.data.same_as,
@@ -82,9 +92,26 @@ const awardMarks = paperAwardMarks(paper.data);
                     >{author.name}</a>
                   ) : (
                     <span class={author.is_me ? 'author-me' : undefined}>{author.name}</span>
+                  )}{paper.data.affiliations.length > 0 && (
+                    <sup class="author-affiliations">
+                      {author.affiliations.map((id, affiliationIndex) => <>{affiliationIndex > 0 && ','}<a href={`#affiliation-${id}`} aria-label={`Affiliation ${id}`}>{id}</a></>)}{author.is_corresponding && '*'}
+                    </sup>
                   )}{index < paper.data.authors.length - 1 && <span class="author-comma">, </span>}</span>
               ))}
             </p>
+            {paper.data.affiliations.length > 0 && (
+              <>
+                <ol class="project-affiliations" aria-label="Author affiliations">
+                  {paper.data.affiliations.map((affiliation) => (
+                    <li id={`affiliation-${affiliation.id}`}>
+                      <span class="project-affiliation-number">{affiliation.id}</span>
+                      <span>{affiliation.url ? <a href={affiliation.url} target="_blank" rel="noopener noreferrer">{affiliation.name}</a> : affiliation.name}{affiliation.detail && <>, {affiliation.detail}</>}</span>
+                    </li>
+                  ))}
+                </ol>
+                {paper.data.authors.some((author) => author.is_corresponding) && <p class="project-corresponding">* Corresponding author</p>}
+              </>
+            )}
             <p class="project-lede">{paper.data.lede}</p>
             {awardMarks.length > 0 && (
               <ul class="hero-awards">

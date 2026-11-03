@@ -65,6 +65,7 @@
   --accent: #174ea6;
   --page-accent: var(--accent);
   --cover-fill: var(--cover-sand);
+  --cover-lavender: #e5ddf2;
   --cover-blue: #d7e8f4;
   --cover-rose: #f3dce3;
   --cover-sand: #efe4d2;
@@ -415,6 +416,8 @@ img {
   transform: scale(1.01);
 }
 
+.project-cover.lavender,
+.project-hero-cover.lavender { background: var(--cover-lavender); }
 .project-cover.blue,
 .project-hero-cover.blue { background: var(--cover-blue); }
 .project-cover.rose,
@@ -691,9 +694,20 @@ img {
   font-weight: 500;
 }
 
+.project-affiliations { margin: 0.65em 0 0; padding: 0; list-style: none; font-size: 0.72em; line-height: 1.6; color: var(--text-muted); }
+.project-affiliations li { display: flex; align-items: baseline; gap: 0.55em; margin-top: 0.25em; scroll-margin-top: 2rem; }
+.project-affiliations a { text-decoration: underline; text-underline-offset: 0.16em; }
+.project-affiliations a:hover { color: var(--page-accent); }
+.project-affiliation-number { font-size: 0.85em; }
+.author-affiliations { font-size: 0.6em; margin-left: 0.18em; font-style: normal; white-space: nowrap; }
+.author-affiliations a { text-decoration: none; }
+.project-corresponding { font-size: 0.65em; color: var(--text-muted); margin: 0.4em 0 0; }
+
 .author-item {
   display: inline;
 }
+
+.author-item:has(.author-affiliations) { display: inline-block; margin-right: 0.2em; }
 
 .author-me {
   font-weight: 700;
@@ -780,6 +794,7 @@ body.cover-prismer { --page-accent: #8f3e3e; --cover-fill: var(--cover-prismer);
 body.cover-rose { --page-accent: #8a4458; --cover-fill: var(--cover-rose); }
 body.cover-sand { --page-accent: #7a5c32; --cover-fill: var(--cover-sand); }
 body.cover-reco { --page-accent: #8a4450; --cover-fill: var(--cover-reco); }
+body.cover-lavender { --page-accent: #66547f; --cover-fill: var(--cover-lavender); }
 body.cover-lilac { --page-accent: #7a4470; --cover-fill: var(--cover-lilac); }
 body.cover-clay { --page-accent: #8a4a42; --cover-fill: var(--cover-clay); }
 body.cover-sage { --page-accent: #4a6a44; --cover-fill: var(--cover-sage); }

@@ -22,6 +22,7 @@ const coverSet = (stem: string): CoverSet => ({
 });
 
 const RESEARCH_ARTWORK: Record<string, CoverSet> = {
+  ahuja2027doubtbench: coverSet('research-doubtbench'),
   ahuja2026icfd31k: coverSet('research-icfd31k'),
   ahuja2026scopebenchpr: coverSet('research-scopebench-pr'),
   ahuja2026retrieval: coverSet('research-temporal-retrieval'),

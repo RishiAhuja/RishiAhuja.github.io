@@ -27,6 +27,7 @@ const original: Update[] = [
   ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
 ];
 const additions: Update[] = [
+  ['Nov 2026', '<a href="/pub/ahuja2027doubtbench">DoubtBench</a> accepted to Findings of WSDM 2027.'],
   ['Oct 2026', 'Selected for the Undergraduate Forum at IndoML 2026.'],
   ['Oct 2026', 'Selected for a CODS 2026 student travel grant; declined due to academic commitments.'],
   ['Apr 2026', 'Selected for and attended YC Startup School India 2026 in Bengaluru.'],
