@@ -16,12 +16,17 @@ authors:
   - name: "Rishi Ahuja"
     is_me: true
     profile: "https://openreview.net/profile?id=~Rishi_Ahuja1"
+    affiliations: [1]
   - name: "Kumar Prateek"
     profile: "https://openreview.net/profile?id=~Kumar_Prateek1"
+    affiliations: [1]
   - name: "Simranjit Singh"
     is_corresponding: true
     profile: "https://openreview.net/profile?id=~Simranjit_Singh4"
-affiliation_note: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
+    affiliations: [1]
+affiliations:
+  - id: 1
+    name: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
 award: "Awarded IJCAI–AIJ grant"
 event:
   announcement: "Presented at IJCAI–ECAI 2026 in Bremen. Now published in the IJCAI proceedings."

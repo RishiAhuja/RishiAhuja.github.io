@@ -16,14 +16,20 @@ authors:
   - name: "Rishi Ahuja"
     is_me: true
     profile: "https://openreview.net/profile?id=~Rishi_Ahuja1"
+    affiliations: [1]
   - name: "Kumar Prateek"
     profile: "https://openreview.net/profile?id=~Kumar_Prateek1"
+    affiliations: [1]
   - name: "Simranjit Singh"
     is_corresponding: true
     profile: "https://openreview.net/profile?id=~Simranjit_Singh4"
+    affiliations: [1]
   - name: "Vijay Kumar"
     profile: "https://openreview.net/profile?id=~Dr_Vijay_Kumar1"
-affiliation_note: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
+    affiliations: [1]
+affiliations:
+  - id: 1
+    name: "Department of Information Technology, Dr. B.R. Ambedkar National Institute of Technology Jalandhar"
 award: "Awarded ICLR 2026 grant"
 award_amount: "$2,025"
 event:
