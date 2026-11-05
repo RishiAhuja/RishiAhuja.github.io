@@ -45,11 +45,15 @@ event:
     - label: "Visual Data Computing Group (VisDom)"
       url: "https://visdomlab.github.io/"
 links:
+  - label: "Code"
+    url: "https://github.com/RishiAhuja/ahuja2027doubtbench"
   - label: "Conference"
     url: "https://www.wsdm-conference.org/2027/"
     primary: true
   - label: "Lab"
     url: "https://visdomlab.github.io/"
+same_as:
+  - "https://github.com/RishiAhuja/ahuja2027doubtbench"
 bibtex: |
   @inproceedings{ahuja2027doubtbench,
     title     = {DoubtBench: Does Self-Doubt Help Language Models---or Just Make Them Check?},
