@@ -15,13 +15,13 @@ sort_date: 2026-11-03
 authors:
   - name: "Rishi Ahuja"
     is_me: true
+    is_corresponding: true
     profile: "https://openreview.net/profile?id=~Rishi_Ahuja1"
     affiliations: [1]
   - name: "Rajeev Ranjan Dwivedi"
     profile: "https://rajeev-dw9.github.io/"
     affiliations: [2]
   - name: "Dr. Vinod K. Kurmi"
-    is_corresponding: true
     profile: "https://vinodkkurmi.github.io/"
     affiliations: [2]
 affiliations:
