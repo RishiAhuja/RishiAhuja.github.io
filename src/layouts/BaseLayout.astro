@@ -27,7 +27,7 @@ const {
   imageHeight = OG_HEIGHT,
   imageType = 'image/png',
   imageAlt = title,
-  ogType = /^\/(?:pub|blurb|writings)\/[^/]+/.test(Astro.url.pathname) ? 'article' : 'website',
+  ogType = /^\/(?:pub|blurb|writings|work)\/[^/]+/.test(Astro.url.pathname) ? 'article' : 'website',
   cover, canonical, indexable = true,
 } = Astro.props;
 

@@ -39,7 +39,7 @@ for (const file of pages) {
   assert.ok(get('og:image:alt').trim(), `${file}: missing image description`);
   assert.equal(get('twitter:image:alt'), get('og:image:alt'));
   const segments = canonical.pathname.split('/').filter(Boolean);
-  const article = segments.length > 1 && ['pub', 'blurb', 'writings'].includes(segments[0]);
+  const article = segments.length > 1 && ['pub', 'blurb', 'writings', 'work'].includes(segments[0]);
   assert.equal(get('og:type'), article ? 'article' : 'website');
   const info = await sharp(join(dist, decodeURIComponent(image.pathname))).metadata();
   assert.equal(info.format, 'png');

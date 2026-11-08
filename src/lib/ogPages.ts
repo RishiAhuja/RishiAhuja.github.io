@@ -7,6 +7,7 @@ import { getWritings } from './blogs';
 import { publishedBlurbs } from './blurbs';
 import { COURSE } from '../data/teaching';
 import type { OgCard } from './og';
+import { workEntries } from '../data/work';
 
 const dateLabel = (date: Date) =>
   new Intl.DateTimeFormat('en-US', {
@@ -57,6 +58,7 @@ export async function getOgCards(): Promise<OgCard[]> {
     { path: '/machine', kind: 'index', title: 'Machine', eyebrow: 'Rishi Ahuja', subtitle: 'A readable profile with current research, experience, teaching, and links.', metadata: 'Profile · Research · Experience · Teaching', cover: 'mist' },
     { path: '/stats', kind: 'index', title: 'Statistics', eyebrow: 'Rishi Ahuja', subtitle: 'Visitor counts and daily activity across the history of this portfolio.', metadata: 'Visitors · Page views · Daily history', cover: 'blue' },
     { path: '/404', kind: 'index', title: 'This address couldn’t be found.', eyebrow: 'Rishi Ahuja', subtitle: 'Head home to explore my work.', metadata: '404' },
+    ...workEntries.map((work): OgCard => ({ path: work.path, kind: 'work', title: work.name, eyebrow: 'Work · Rishi Ahuja', subtitle: work.tagline, metadata: 'OpenSSH · systemd · Python', cover: work.cover, artwork: work.artwork })),
     ...papers.map((paper: CollectionEntry<'research'>): OgCard => ({
       path: pubPath(paper.slug), kind: 'research', eyebrow: 'Research',
       title: paper.data.short_name,

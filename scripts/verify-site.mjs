@@ -106,6 +106,17 @@ assert.ok(!locations.some((path) => /^\/writings\//.test(path)), 'Mirrored artic
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
 assert.equal((feed.match(/<item>/g) || []).length, blogFiles.length + publishedSlugs.length, 'RSS must match published articles and blurbs');
 assert.ok(index.get('/404').includes('noindex, follow'));
+// Work pages are direct-share destinations, without a promoted directory.
+for (const [workPath] of index) {
+  if (!workPath.startsWith('/work/')) continue;
+  assert.ok(!locations.includes(workPath), `${workPath}: unlisted work must stay out of the sitemap`);
+  assert.ok(!feed.includes(workPath), `${workPath}: unlisted work must stay out of RSS`);
+  for (const [otherPath, html] of index) {
+    if (otherPath.startsWith('/work/')) continue;
+    assert.ok(!html.includes(`href="${workPath}"`), `${otherPath}: unexpected promotion of ${workPath}`);
+  }
+}
+
 
 // Blogs retain their original published estimates on detail and archive pages.
 const writingArchive = index.get('/writings');

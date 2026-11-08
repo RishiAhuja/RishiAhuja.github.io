@@ -3,7 +3,7 @@ export const OG_HEIGHT = 630;
 
 export type OgCard = {
   path: string;
-  kind: 'home' | 'index' | 'research' | 'writing' | 'blurb';
+  kind: 'home' | 'index' | 'research' | 'writing' | 'blurb' | 'work';
   title: string;
   subtitle: string;
   eyebrow: string;

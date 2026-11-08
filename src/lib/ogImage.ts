@@ -36,7 +36,12 @@ export async function renderOgImage(card: OgCard, site: URL): Promise<Buffer> {
   };
 
   if (hasArtwork) {
-    if (card.kind === 'home') {
+    if (card.kind === 'work') {
+      const frame = await sharp({ create: { width: 344, height: 344, channels: 4, background: cover } }).png().toBuffer();
+      layers.push({ input: frame, left: 792, top: 110 });
+      const art = await sharp(join(root, 'public', card.artwork!.slice(1))).resize(300, 300, { fit: 'contain', background: {r:0,g:0,b:0,alpha:0} }).png().toBuffer();
+      layers.push({ input: art, left: 814, top: 132 });
+    } else if (card.kind === 'home') {
       const portrait = await sharp(join(root, 'public', card.artwork!.slice(1)))
         .resize(316, 398, { fit: 'cover', position: 'attention' }).png().toBuffer();
       layers.push({ input: portrait, left: 820, top: 86 });
@@ -63,7 +68,7 @@ export async function renderOgImage(card: OgCard, site: URL): Promise<Buffer> {
     await addText('Trustworthy AI evaluation, temporal retrieval, and conversational fraud detection.', margin, 344, {
       size: 30, width: 630, height: 124, face: 'RegularItalic', color: muted,
     });
-  } else if (card.kind === 'research' || card.kind === 'index') {
+  } else if (card.kind === 'research' || card.kind === 'index' || card.kind === 'work') {
     const titleHeight = await addText(card.title, margin, 138, {
       size: card.kind === 'index' ? 82 : 64, minSize: 48, width, height: 154,
     });

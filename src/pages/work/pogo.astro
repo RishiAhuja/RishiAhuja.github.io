@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import InlineIcon from '../../components/InlineIcon.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import PogoRoute from '../../components/work/PogoRoute.astro';
+import { POGO } from '../../data/work';
+
+const decisions = [
+  { title: 'Let the campus machine call out.', text: 'The laptop opens an outbound reverse SSH tunnel to a public relay. That avoids needing an inbound connection to the campus network. The client reaches the private host through the relay and campus laptop using ordinary SSH jumps.' },
+  { title: 'Recover the network before the tunnel.', text: 'A NetworkManager watchdog reconnects the saved Wi-Fi profile. Systemd restarts the SSH tunnel separately. An optional adapter handles the NITJ Sophos portal, with a shared lock and minimum login interval so overlapping triggers do not repeatedly hit the gateway.' },
+  { title: 'Keep the destination key on the client.', text: 'The relay’s tunnel account is limited to the configured reverse listener, bound to loopback. Host keys are pinned. Authentication to the destination stays on the client, without agent forwarding.' },
+];
+---
+<BaseLayout title="Pogo · Rishi Ahuja" description={POGO.description} cover="blue">
+  <JsonLd data={{ '@context': 'https://schema.org', '@type': 'SoftwareSourceCode', name: POGO.name, description: POGO.description, url: new URL(POGO.path, Astro.site).href, codeRepository: POGO.repository, programmingLanguage: ['Python', 'Shell'], runtimePlatform: 'Ubuntu 24.04 · systemd · OpenSSH', license: `${POGO.repository}/blob/main/LICENSE`, author: { '@type': 'Person', name: 'Rishi Ahuja', url: new URL('/', Astro.site).href } }} />
+  <main id="main-content" tabindex="-1">
+    <section class="pogo-hero">
+      <div class="wrap">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
+        <div class="pogo-intro">
+          <div>
+            <p class="pogo-eyebrow">Personal infrastructure · 2026</p>
+            <h1>Pogo</h1>
+            <p class="pogo-tagline">The scenic route<br class="desktop-break" /> to your cluster.</p>
+          </div>
+          <div class="pogo-hero-copy">
+            <p>A spare laptop stays on campus. You take yours with you. Pogo keeps a route back to the compute cluster, through a reverse SSH tunnel that can recover when the connection drops.</p>
+            <div class="pogo-actions"><a class="button" href={POGO.repository} target="_blank" rel="noopener noreferrer">Source code <InlineIcon name="arrow-up-right" /></a><a class="pogo-text-link" href={POGO.design} target="_blank" rel="noopener noreferrer">Design notes <InlineIcon name="arrow-up-right" /></a></div>
+            <p class="pogo-command"><span aria-hidden="true">$</span> <code>ssh hpc</code><span class="command-caption">The route gets out of the way.</span></p>
+          </div>
+        </div>
+        <PogoRoute />
+      </div>
+    </section>
+
+    <div class="wrap">
+      <dl class="pogo-facts"><div><dt>Built with</dt><dd>OpenSSH, systemd, Python</dd></div><div><dt>Built for</dt><dd>Campus compute, from away</dd></div><div><dt>Available as</dt><dd>Open source · MIT</dd></div></dl>
+
+      <section class="pogo-section pogo-story" aria-labelledby="pogo-problem">
+        <div><p class="pogo-section-number">01 / The problem</p><h2 id="pogo-problem">The cluster is on campus.<br /> I’m not always there.</h2></div>
+        <div class="pogo-prose"><p>Experiments can keep running long after I leave campus. Checking a job, collecting results, or submitting the next run should not depend on being physically connected to the university network.</p><p>The useful starting point was a spare Linux laptop that could stay there. But a working SSH tunnel was only part of the problem: Wi-Fi could disconnect, the captive portal could expire, and an interrupted connection needed to recover without someone opening the laptop.</p></div>
+      </section>
+
+      <section class="pogo-section pogo-engineering" aria-labelledby="pogo-decisions">
+        <div class="pogo-section-heading"><p class="pogo-section-number">02 / The engineering</p><h2 id="pogo-decisions">A small route.<br /> Several things to get right.</h2></div>
+        <div class="pogo-engineering-content">
+        <div class="pogo-decisions">{decisions.map((decision, index) => <article><span class="decision-number" aria-hidden="true">0{index + 1}</span><div><h3>{decision.title}</h3><p>{decision.text}</p></div></article>)}</div>
+        <details class="pogo-detail"><summary>Why more than one reconnect loop?</summary><div class="pogo-prose"><p>The network, portal, and SSH process can fail independently. The SSH service restarts after 20 seconds, while a separate watchdog checks the network and inactive tunnel on a 30-second timer. Portal login attempts share a lock and rate limit across callers.</p><p>Each piece can recover its own part of the connection. The portal helper is optional, and specific to the NITJ setup; the reverse tunnel works without it.</p><a class="pogo-text-link" href={POGO.design} target="_blank" rel="noopener noreferrer">Read the recovery design <InlineIcon name="arrow-up-right" /></a></div></details>
+        </div>
+      </section>
+
+      <section class="pogo-section" aria-labelledby="pogo-status">
+        <div class="pogo-story"><div><p class="pogo-section-number">03 / Making it observable</p><h2 id="pogo-status">A status page<br /> I can read at a glance.</h2></div><div class="pogo-prose"><p>The relay checks for a complete SSH banner from the campus laptop, rather than treating an open port as proof that the connection works. It records history, recent interruptions, and uptime across the checks it has actually observed.</p><p>If a check is more than 90 seconds old, the state becomes unknown. A missing sample should not quietly become another minute of healthy uptime.</p></div></div>
+        <figure class="pogo-status-figure"><img src="/images/work/pogo/status-1600.webp" srcset="/images/work/pogo/status-800.webp 800w, /images/work/pogo/status-1600.webp 1600w" sizes="(max-width: 760px) 88vw, 80vw" width="1600" height="1000" loading="lazy" decoding="async" alt="Pogo’s dark status page showing an up connection, recent interruption history, and the route from client to relay, campus laptop, and HPC. All displayed statistics are sample data." /><figcaption>Interface preview with sample monitoring data. The probe measures the campus laptop’s SSH reachability; it does not measure cluster or job health.</figcaption></figure>
+      </section>
+
+      <section class="pogo-section pogo-story" aria-labelledby="pogo-scope"><div><p class="pogo-section-number">04 / Scope</p><h2 id="pogo-scope">Built around<br /> a real constraint.</h2></div><div class="pogo-prose"><p>Pogo packages this setup for Ubuntu 24.04, systemd, OpenSSH, and NetworkManager. The same route can reach a lab workstation or home server behind NAT, provided the bastion can reach the private host and connect out to the relay.</p><p>The campus portal adapter is specific to one Sophos setup. Other networks may need a different adapter. The monitoring service is intentionally small: a Python standard-library server and a page with no frontend package dependency.</p></div></section>
+
+      <section class="pogo-end"><h2>Follow the route.</h2><p>The source, setup guide, and operational notes are on GitHub.</p><div class="pogo-actions"><a class="button" href={POGO.repository} target="_blank" rel="noopener noreferrer">Explore Pogo <InlineIcon name="arrow-up-right" /></a><a class="pogo-text-link" href={POGO.setup} target="_blank" rel="noopener noreferrer">Setup guide <InlineIcon name="arrow-up-right" /></a></div></section>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .pogo-hero { background: var(--cover-blue); padding: 1.5rem 0 2.5rem; }
+  .pogo-intro { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 5rem; align-items: center; margin-top: 2.6rem; }
+  .pogo-eyebrow, .pogo-section-number { margin: 0 0 1rem; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; font-weight: 600; }
+  .pogo-intro h1 { margin: 0; font-size: clamp(4.4rem,7.5vw,7rem); font-weight: 500; line-height: 1; letter-spacing: -0.055em; }
+  .pogo-tagline { margin: 0.6rem 0 0; font-size: clamp(1.65rem,2.6vw,2.75rem); line-height: 1.2; letter-spacing: -0.025em; }
+  .pogo-hero-copy > p:first-child { margin: 0; max-width: 32em; font-size: 1.05rem; line-height: 1.7; }
+  .pogo-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1.4rem; margin-top: 1.5rem; }
+  .pogo-actions :global(.button) { font-size: 0.78rem; }
+  .pogo-text-link { display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: underline; text-underline-offset: 0.2em; }
+  .pogo-text-link:hover { color: var(--accent); }
+  .pogo-command { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0 0; font-size: 0.9rem; }
+  .pogo-command > span:first-child { color: var(--accent); }
+  .pogo-command code { font-family: ui-monospace,SFMono-Regular,Consolas,monospace; font-size: 0.92em; }
+  .command-caption { color: var(--text-muted); font-size: 0.72rem; margin-left: 0.35rem; }
+  .pogo-facts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem; margin: 0; padding: 2rem 0; border-bottom: 1px solid var(--rule); }
+  .pogo-facts dt { color: var(--text-muted); font-size: 0.75rem; }
+  .pogo-facts dd { margin: 0.3rem 0 0; font-size: 0.95rem; }
+  .pogo-section { padding: 4.5rem 0; border-bottom: 1px solid var(--rule); }
+  .pogo-story, .pogo-engineering { display: grid; grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr); gap: 4rem; }
+  .pogo-section-number { color: var(--text-muted); }
+  .pogo-section h2, .pogo-end h2 { margin: 0; font-size: clamp(1.5rem,2.4vw,2.35rem); line-height: 1.25; font-weight: 500; letter-spacing: -0.025em; }
+  .pogo-prose p { margin: 0; }
+  .pogo-prose p + p { margin-top: 1rem; }
+  .pogo-decisions { margin-top: 0; }
+  .pogo-decisions article { display: grid; grid-template-columns: 2.3rem 1fr; gap: 0.75rem; max-width: 48rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); }
+  .decision-number { color: var(--text-muted); font-size: 0.75rem; padding-top: 0.15rem; }
+  .pogo-decisions h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; }
+  .pogo-decisions p { margin: 0; }
+  .pogo-detail { max-width: 48rem; margin-top: 1rem; border-block: 1px solid var(--rule); padding: 1rem 0; }
+  .pogo-detail summary { cursor: pointer; font-weight: 500; }
+  .pogo-detail .pogo-prose { padding: 1rem 0 0.3rem; }
+  .pogo-detail .pogo-text-link { margin-top: 1rem; }
+  .pogo-status-figure { margin: 2.5rem 0 0; }
+  .pogo-status-figure img { display: block; width: 100%; height: auto; border: 1px solid #202020; }
+  .pogo-status-figure figcaption { margin-top: 0.8rem; max-width: 48rem; color: var(--text-muted); font-size: 0.8rem; }
+  .pogo-end { padding: 3.5rem 0 4.5rem; }
+  .pogo-end > p { margin: 0.75rem 0 0; }
+  @media (max-width: 760px) {
+    .pogo-hero { padding-top: 1rem; padding-bottom: 2rem; }
+    .pogo-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.75rem; }
+    .pogo-intro h1 { font-size: 4.5rem; }
+    .pogo-eyebrow { font-size: 0.65rem; margin-bottom: 0.7rem; }
+    .pogo-tagline { font-size: 1.8rem; }
+    .desktop-break { display: none; }
+    .pogo-hero-copy > p:first-child { font-size: 1rem; }
+    .pogo-actions { gap: 1.15rem; }
+    .pogo-facts { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 0; }
+    .pogo-facts > div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; }
+    .pogo-facts dd { margin: 0; }
+    .pogo-section { padding: 2.8rem 0; }
+    .pogo-story, .pogo-engineering { grid-template-columns: 1fr; gap: 1.25rem; }
+    .pogo-decisions article { grid-template-columns: 1.8rem 1fr; gap: 0.4rem; }
+    .pogo-status-figure { margin-top: 1.75rem; }
+    .pogo-end { padding-block: 2.8rem; }
+  }
+</style>
