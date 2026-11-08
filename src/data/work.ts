@@ -2,10 +2,9 @@ export const POGO = {
   path: '/work/pogo',
   name: 'Pogo',
   tagline: 'The scenic route to your cluster.',
-  description: 'A personal infrastructure project for reaching campus compute from away: reverse SSH, Wi-Fi recovery, and a small, honest status page.',
+  description: 'Pogo keeps a way back to campus compute open, so I can check experiments, collect results, and keep working from wherever I am.',
+  metadata: 'Campus compute, from anywhere',
   repository: 'https://github.com/RishiAhuja/pogo',
-  design: 'https://github.com/RishiAhuja/pogo/blob/main/docs/design.md',
-  setup: 'https://github.com/RishiAhuja/pogo/blob/main/docs/setup.md',
   artwork: '/images/work/pogo/bastion.webp',
   cover: 'blue',
 } as const;

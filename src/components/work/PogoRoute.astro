@@ -1,24 +1,19 @@
 ---
 const stops = [
-  { name: 'Your laptop', detail: 'Wherever you are.', image: 'client', hop: 'SSH' },
-  { name: 'Public relay', detail: 'A small rendezvous.', image: 'relay', hop: 'Reverse SSH', reverse: true },
-  { name: 'Campus laptop', detail: 'Holding the fort.', image: 'bastion', hop: 'Campus SSH' },
-  { name: 'HPC cluster', detail: 'Doing the heavy lifting.', image: 'hpc' },
+  { name: 'Your laptop', detail: 'Wherever you are.', image: 'client' },
+  { name: 'Relay', detail: 'The meeting point.', image: 'relay' },
+  { name: 'Campus laptop', detail: 'Holding the fort.', image: 'bastion' },
+  { name: 'Compute cluster', detail: 'Your experiments.', image: 'hpc' },
 ];
 ---
-<figure class="pogo-route" aria-label="How Pogo reaches the cluster">
+<figure class="pogo-route" aria-label="The connection from your laptop, through a relay and campus laptop, to the compute cluster">
   <ol class="route-stops">
     {stops.map((stop, index) => <li class="route-stop">
-      <span class="route-number" aria-hidden="true">0{index + 1}</span>
       <img src={`/images/work/pogo/${stop.image}.webp`} width="360" height="300" alt="" decoding="async" />
       <div class="route-copy"><strong>{stop.name}</strong><span>{stop.detail}</span></div>
-      {stop.hop && <span class="route-hop" aria-hidden="true">
-        <svg viewBox="0 0 120 14" fill="none" preserveAspectRatio="none"><path d={stop.reverse ? 'M120 7H2m6-5L2 7l6 5' : 'M0 7h118m-6-5 6 5-6 5'} /></svg>
-        <span>{stop.hop}</span>
-      </span>}
+      {index < stops.length - 1 && <span class="route-hop" aria-hidden="true" />}
     </li>)}
   </ol>
-  <figcaption>The campus laptop opens the reverse tunnel <em>outbound</em> to the relay. Your SSH connection uses that existing path to reach the cluster.</figcaption>
 </figure>
 <style>
   .pogo-route { margin: 3rem 0 0; }
@@ -27,25 +22,22 @@ const stops = [
   .route-stop img { display: block; width: min(100%,170px); height: 142px; object-fit: contain; margin: 0 auto 0.65rem; }
   .route-copy strong { display: block; font-size: 1rem; font-weight: 600; }
   .route-copy > span { display: block; margin-top: 0.15rem; color: var(--text-muted); font-size: 0.8rem; }
-  .route-number { position: absolute; top: 0; left: 1rem; font-size: 0.65rem; color: var(--page-accent); }
-  .route-hop { position: absolute; left: calc(50% + 76px); top: 65px; width: calc(100% - 152px); color: var(--page-accent); }
-  .route-hop svg { display: block; width: 100%; height: 12px; overflow: visible; stroke: currentColor; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
-  .route-hop > span { display: block; margin-top: 0.3rem; font-size: 0.63rem; white-space: nowrap; text-align: center; }
-  figcaption { max-width: 42rem; margin: 1.8rem auto 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+  .route-hop { position: absolute; left: calc(50% + 76px); top: 71px; width: calc(100% - 152px); height: 1px; background: color-mix(in srgb,var(--accent) 55%,transparent); }
   @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
     .route-stop img { transition: transform 160ms ease-out; }
     .route-stop:hover img { transform: translateY(-3px); }
   }
+  @media (min-width: 761px) and (max-width: 1000px) {
+    .route-stop img { width: 120px; height: 100px; }
+    .route-hop { top: 52px; left: calc(50% + 56px); width: calc(100% - 112px); }
+  }
   @media (max-width: 760px) {
     .pogo-route { margin-top: 2rem; }
-    .route-stops { display: block; padding-left: 0.25rem; }
-    .route-stop { display: grid; grid-template-columns: 1.5rem 82px 1fr; align-items: center; gap: 0.7rem; text-align: left; min-height: 92px; }
-    .route-stop:not(:last-child)::before { content: ''; position: absolute; width: 1px; height: 100%; top: 50%; left: 0.55rem; background: color-mix(in srgb,var(--accent) 25%,transparent); }
-    .route-number { position: relative; top: auto; left: auto; width: 1.2rem; padding: 0.2rem 0; background: var(--cover-blue); z-index: 1; }
+    .route-stops { display: block; }
+    .route-stop { display: grid; grid-template-columns: 82px 1fr; align-items: center; gap: 0.9rem; text-align: left; min-height: 88px; }
     .route-stop img { width: 82px; height: 76px; margin: 0; }
     .route-copy strong { font-size: 0.95rem; }
     .route-copy > span { font-size: 0.78rem; }
     .route-hop { display: none; }
-    figcaption { margin-top: 1.25rem; text-align: left; font-size: 0.78rem; }
   }
 </style>
