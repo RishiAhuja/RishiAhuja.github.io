@@ -16,6 +16,7 @@ export const LINKS = {
   LINKEDIN: 'https://www.linkedin.com/in/rishi-ahuja-b1a224310',
   GOOGLE_SCHOLAR: 'https://scholar.google.com/citations?hl=en&user=EZff3KsAAAAJ',
   OPENREVIEW: 'https://openreview.net/profile?id=~Rishi_Ahuja1',
+  ORCID: 'https://orcid.org/0009-0000-3403-010X',
   EMAIL: 'mailto:rishia2220@gmail.com',
   MHI: 'https://bagcilab.com/people/rishi-ahuja/',
 } as const;

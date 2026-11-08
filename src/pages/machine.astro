@@ -16,6 +16,7 @@ const generatedAt = new Date().toISOString();
 const generatedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(generatedAt));
 const profileLinks = [
   { label: 'Google Scholar', href: LINKS.GOOGLE_SCHOLAR },
+  { label: 'ORCID', href: LINKS.ORCID },
   { label: 'OpenReview', href: LINKS.OPENREVIEW },
   { label: 'MHI profile', href: LINKS.MHI },
   { label: 'GitHub', href: LINKS.GITHUB },
