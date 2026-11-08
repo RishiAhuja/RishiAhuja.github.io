@@ -23,14 +23,14 @@ import { POGO } from '../../data/work';
         <PogoRoute />
       </div>
     </section>
-    <section class="pogo-story wrap" aria-labelledby="pogo-story-title">
-      <h2 id="pogo-story-title">Campus compute,<br /> from wherever I am.</h2>
+    <article class="pogo-story wrap" aria-label="About Pogo">
       <div class="pogo-prose">
-        <p>The university’s compute cluster is available from the campus network. That is inconvenient when an experiment is still running and I’m somewhere else.</p>
-        <p>I built Pogo around a spare laptop that could stay on campus. It keeps a way back to the cluster open, so I can check jobs, collect results, or submit the next run from my own laptop.</p>
-        <p>Pogo also helps the connection recover when campus Wi-Fi drops. Less time tending a connection, more time getting back to the experiment.</p>
+        <p>If I’m away from campus and an experiment is running, I still want to check whether it has finished, collect the results, or start the next run. At NIT Jalandhar, the compute cluster is reached through the campus network. That makes a quick check harder than it should be once I leave campus.</p>
+        <p>I built Pogo around a spare laptop that stays on campus. It acts as the way back to the cluster. My own laptop connects through a small relay to the campus laptop, which can reach the cluster from inside the network. The experiments still run on the cluster; I’m just connecting to them from somewhere else.</p>
+        <p>The laptop also needs to stay connected while I’m away. Campus Wi-Fi can drop, and its login session can expire even when the machine is still running. Pogo takes care of reconnecting to the network and bringing the route back when it can. That reduces the need to ask someone on campus to open the laptop and fix the connection.</p>
+        <p>For me, this means I can go home or travel with my normal laptop and still get back to the same work. The setup can also be adapted for a lab workstation or a home server behind a private network. I’ve shared the code and setup instructions on GitHub for anyone who wants to see how it works or use it themselves.</p>
       </div>
-    </section>
+    </article>
   </main>
   <SiteFooter />
 </BaseLayout>
@@ -41,10 +41,10 @@ import { POGO } from '../../data/work';
   .pogo-tagline { margin: 0.6rem 0 0; font-size: clamp(1.65rem,2.6vw,2.75rem); line-height: 1.2; letter-spacing: -0.025em; }
   .pogo-hero-copy p { margin: 0; max-width: 32em; font-size: 1.05rem; line-height: 1.7; }
   .pogo-hero-copy .button { margin-top: 1.5rem; font-size: 0.78rem; }
-  .pogo-story { display: grid; grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr); gap: 4rem; padding-block: 4rem; }
-  .pogo-story h2 { margin: 0; font-size: clamp(1.5rem,2.4vw,2.35rem); line-height: 1.25; font-weight: 500; letter-spacing: -0.025em; }
+  .pogo-story { padding-block: 4rem; }
+  .pogo-prose { max-width: 42em; margin-inline: auto; line-height: 1.8; }
   .pogo-prose p { margin: 0; }
-  .pogo-prose p + p { margin-top: 1rem; }
+  .pogo-prose p + p { margin-top: 1.25em; }
   @media (max-width: 760px) {
     .pogo-hero { padding-top: 1rem; padding-bottom: 2rem; }
     .pogo-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.75rem; }
@@ -52,6 +52,6 @@ import { POGO } from '../../data/work';
     .pogo-tagline { font-size: 1.8rem; }
     .desktop-break { display: none; }
     .pogo-hero-copy p { font-size: 1rem; }
-    .pogo-story { grid-template-columns: 1fr; gap: 1.25rem; padding-block: 2.8rem; }
+    .pogo-story { padding-block: 2.8rem; }
   }
 </style>
