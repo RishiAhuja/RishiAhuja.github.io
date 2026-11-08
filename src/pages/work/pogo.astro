@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import InlineIcon from '../../components/InlineIcon.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import PogoRoute from '../../components/work/PogoRoute.astro';
@@ -12,7 +11,6 @@ import { POGO } from '../../data/work';
   <main id="main-content" tabindex="-1">
     <section class="pogo-hero">
       <div class="wrap">
-        <Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
         <div class="pogo-intro">
           <div><h1>Pogo</h1><p class="pogo-tagline">The scenic route<br class="desktop-break" /> to your cluster.</p></div>
           <div class="pogo-hero-copy">
