@@ -14,17 +14,21 @@ sort_date: 2026-03-02
 published_date: 2026-03-02
 authors:
   - name: "Rishi Ahuja"
+    email: "rishia.it.24@nitj.ac.in"
     is_me: true
     profile: "https://openreview.net/profile?id=~Rishi_Ahuja1"
     affiliations: [1]
   - name: "Kumar Prateek"
+    email: "kumarprateek@nitj.ac.in"
     profile: "https://openreview.net/profile?id=~Kumar_Prateek1"
     affiliations: [1]
   - name: "Simranjit Singh"
+    email: "singhsimranjit@nitj.ac.in"
     is_corresponding: true
     profile: "https://openreview.net/profile?id=~Simranjit_Singh4"
     affiliations: [1]
   - name: "Vijay Kumar"
+    email: "vijayk@nitj.ac.in"
     profile: "https://openreview.net/profile?id=~Dr_Vijay_Kumar1"
     affiliations: [1]
 affiliations:

@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type Author = CollectionEntry<'research'>['data']['authors'][number];
+interface Props { authors: Author[]; }
+const { authors } = Astro.props;
+const correspondingAuthors = authors.filter((author) => author.is_corresponding);
+const groups = new Map<string, { name: string; email: string; localPart: string }[]>();
+for (const author of authors) {
+  if (!author.email) continue;
+  const [localPart, domain] = author.email.split('@');
+  const members = groups.get(domain) ?? [];
+  members.push({ name: author.name, email: author.email, localPart });
+  groups.set(domain, members);
+}
+---
+
+{(groups.size > 0 || correspondingAuthors.length > 0) && (
+  <div class="project-contact-details">
+    {groups.size > 0 && <div class="project-author-emails" aria-label="Author email addresses">
+      {[...groups].map(([domain, members]) => (
+        <p class="project-email-group">
+          {members.length === 1 ? (
+            <a href={`mailto:${members[0].email}`} aria-label={`Email ${members[0].name} at ${members[0].email}`} title={members[0].email}>{members[0].email}</a>
+          ) : <>{'{'}{members.map((member, index) => <>
+            {index > 0 && ', '}
+            {index === members.length - 1 ? (
+              <span class="project-email-tail"><a href={`mailto:${member.email}`} aria-label={`Email ${member.name} at ${member.email}`} title={member.email}>{member.localPart}</a>{`}@${domain}`}</span>
+            ) : <a href={`mailto:${member.email}`} aria-label={`Email ${member.name} at ${member.email}`} title={member.email}>{member.localPart}</a>}
+          </>)}</>}
+        </p>
+      ))}
+    </div>}
+    {correspondingAuthors.length > 0 && (
+      <p class="project-corresponding" id="corresponding-author">
+        * Corresponding {correspondingAuthors.length > 1 ? 'authors' : 'author'}:
+        {correspondingAuthors.map((author, index) => <>{index > 0 && ', '}<span class="project-corresponding-name">{author.name}</span></>)}
+      </p>
+    )}
+  </div>
+)}
+
+<style>
+  .project-contact-details {
+    margin-top: 0.65em;
+    color: var(--text-muted);
+    font-size: 0.72em;
+    font-style: normal;
+    line-height: 1.7;
+  }
+  .project-email-group { margin: 0; overflow-wrap: anywhere; }
+  .project-email-group + .project-email-group { margin-top: 0.15em; }
+  .project-email-group a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+  .project-email-group a:hover { color: var(--page-accent); text-decoration-color: currentColor; }
+  .project-email-tail, .project-corresponding-name { white-space: nowrap; }
+  .project-corresponding { margin: 0.4em 0 0; scroll-margin-top: 2rem; }
+</style>

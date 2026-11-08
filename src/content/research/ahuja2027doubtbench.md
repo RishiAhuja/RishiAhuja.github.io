@@ -14,14 +14,17 @@ status: "accepted"
 sort_date: 2026-11-03
 authors:
   - name: "Rishi Ahuja"
+    email: "rishia.it.24@nitj.ac.in"
     is_me: true
     is_corresponding: true
     profile: "https://openreview.net/profile?id=~Rishi_Ahuja1"
     affiliations: [1]
   - name: "Rajeev Ranjan Dwivedi"
+    email: "rajeev22@iiserb.ac.in"
     profile: "https://rajeev-dw9.github.io/"
     affiliations: [2]
   - name: "Dr. Vinod K. Kurmi"
+    email: "vinodkk@iiserb.ac.in"
     profile: "https://vinodkkurmi.github.io/"
     affiliations: [2]
 affiliations:

@@ -23,6 +23,7 @@ const researchCollection = defineCollection({
         is_me: z.boolean().default(false),
         is_corresponding: z.boolean().default(false),
         profile: z.string().url().optional(),
+        email: z.string().email().optional(),
         affiliations: z.array(z.number().int().positive()).default([]),
       })
     ),

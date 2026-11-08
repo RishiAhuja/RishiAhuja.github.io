@@ -706,7 +706,6 @@ img {
 .project-affiliation-number { font-size: 0.85em; }
 .author-affiliations { font-size: 0.6em; margin-left: 0.18em; font-style: normal; white-space: nowrap; }
 .author-affiliations a { text-decoration: none; }
-.project-corresponding { font-size: 0.65em; color: var(--text-muted); margin: 0.4em 0 0; }
 
 .author-item {
   display: inline;

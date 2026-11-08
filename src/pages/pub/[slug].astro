@@ -10,6 +10,7 @@ import { paperArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
 import { publishedBlurbs, paperBlurbs, blurbPath } from '../../lib/blurbs';
 import CoverPreload from '../../components/CoverPreload.astro';
+import PublicationAuthorContacts from '../../components/PublicationAuthorContacts.astro';
 
 export async function getStaticPaths() {
   const papers = await getCollection('research');
@@ -50,6 +51,7 @@ const awardMarks = paperAwardMarks(paper.data);
         '@type': 'Person',
         name: author.name,
         ...(author.profile ? { url: author.profile } : {}),
+        ...(author.email ? { email: author.email } : {}),
         ...(author.affiliations.length ? {
           affiliation: author.affiliations.flatMap((id) => {
             const affiliation = paper.data.affiliations.find((entry) => entry.id === id);
@@ -92,9 +94,9 @@ const awardMarks = paperAwardMarks(paper.data);
                     >{author.name}</a>
                   ) : (
                     <span class={author.is_me ? 'author-me' : undefined}>{author.name}</span>
-                  )}{paper.data.affiliations.length > 0 && (
+                  )}{(author.affiliations.length > 0 || author.is_corresponding) && (
                     <sup class="author-affiliations">
-                      {author.affiliations.map((id, affiliationIndex) => <>{affiliationIndex > 0 && ','}<a href={`#affiliation-${id}`} aria-label={`Affiliation ${id}`}>{id}</a></>)}{author.is_corresponding && '*'}
+                      {author.affiliations.map((id, affiliationIndex) => <>{affiliationIndex > 0 && ','}<a href={`#affiliation-${id}`} aria-label={`Affiliation ${id}`}>{id}</a></>)}{author.is_corresponding && <a href="#corresponding-author" aria-label={`${author.name}, corresponding author`}>*</a>}
                     </sup>
                   )}{index < paper.data.authors.length - 1 && <span class="author-comma">, </span>}</span>
               ))}
@@ -109,9 +111,9 @@ const awardMarks = paperAwardMarks(paper.data);
                     </li>
                   ))}
                 </ol>
-                {paper.data.authors.some((author) => author.is_corresponding) && <p class="project-corresponding">* Corresponding author</p>}
               </>
             )}
+            <PublicationAuthorContacts authors={paper.data.authors} />
             <p class="project-lede">{paper.data.lede}</p>
             {awardMarks.length > 0 && (
               <ul class="hero-awards">
