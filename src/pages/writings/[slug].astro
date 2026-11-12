@@ -12,6 +12,8 @@ import { writingArtwork } from '../../lib/artwork';
 import TableOfContents from '../../components/TableOfContents.astro';
 import CoverArt from '../../components/CoverArt.astro';
 import CoverPreload from '../../components/CoverPreload.astro';
+import { ogImagePath } from '../../lib/og';
+import { authorSchema } from '../../lib/constants';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
 
@@ -35,7 +37,7 @@ const related = (await getCollection('blogs'))
   .slice(0, 2);
 ---
 
-<BaseLayout title={`${post.data.title} · Rishi Ahuja`} description={post.data.brief} cover={post.data.cover} canonical={post.data.hashnodeUrl}>
+<BaseLayout title={`${post.data.title} · Rishi Ahuja`} description={post.data.brief} cover={post.data.cover} publishedTime={post.data.dateAdded.toISOString()}>
   <CoverPreload slot="head" cover={writingArtwork(post.slug)} variant="hero" />
 
   <JsonLd
@@ -45,10 +47,14 @@ const related = (await getCollection('blogs'))
       headline: post.data.title,
       description: post.data.brief,
       datePublished: post.data.dateAdded.toISOString(),
-      author: { '@type': 'Person', name: post.data.author },
+      image: new URL(ogImagePath(writingPath(post.slug)), Astro.site).toString(),
+      author: authorSchema(Astro.site!),
       url: pageUrl,
-      mainEntityOfPage: post.data.hashnodeUrl,
+      mainEntityOfPage: pageUrl,
       sameAs: [post.data.hashnodeUrl],
+      inLanguage: 'en',
+      ...(post.data.tags.length ? { keywords: post.data.tags.join(', ') } : {}),
+      timeRequired: `PT${post.data.readTimeInMinutes}M`,
     }}
   />
 
@@ -63,6 +69,7 @@ const related = (await getCollection('blogs'))
                   { label: 'Home', href: '/' },
                   { label: 'Writing', href: '/writings' },
                 ]}
+                current={post.data.title}
               />
               <h1>{post.data.title}</h1>
             </div>

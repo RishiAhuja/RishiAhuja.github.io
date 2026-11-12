@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { paperAwardMarks, pubPath, resourceLabel } from '../../lib/research';
+import { paperAwardMarks, paperYear, pubPath, resourceLabel } from '../../lib/research';
 import { paperArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
 import PublicationNewBadge from '../../components/PublicationNewBadge.astro';
@@ -21,7 +21,7 @@ const papers = (await getCollection('research')).sort((a, b) => b.data.sort_date
             <div class={`project-cover ${paper.data.cover}`}>{paperArtwork(paper.slug) && <CoverArt cover={paperArtwork(paper.slug)!} priority={index === 0} />}</div>
           </a>
           <div class="research-record-content">
-            <p class="research-status">{paper.data.status === 'published' ? 'Published' : 'Accepted'} · {paper.data.sort_date.getUTCFullYear()}</p>
+            <p class="research-status">{paper.data.status === 'published' ? 'Published' : 'Accepted'} · {paperYear(paper.data)}</p>
             <h2><a href={pubPath(paper.slug)}>{paper.data.title}</a>{paper.data.is_new && <PublicationNewBadge />}</h2>
             <p class="research-authors">{paper.data.authors.map((author, index) => <><span class={author.is_me ? 'author-me' : undefined}>{author.name}</span>{index < paper.data.authors.length - 1 ? ', ' : ''}</>)}</p>
             <p class="research-venue">{paper.data.venue}</p>

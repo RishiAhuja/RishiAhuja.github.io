@@ -51,6 +51,7 @@ export function mountCitation(scope: MotionScope) {
   const label = button?.querySelector('.copy-label');
   const feedback = document.getElementById('copy-feedback');
   if (!button || !code || !label) return;
+  const idleLabel = label.textContent;
   const { signal } = scope;
   let timer = 0, request = 0;
   button.addEventListener('click', async () => {
@@ -60,7 +61,7 @@ export function mountCitation(scope: MotionScope) {
     try { await navigator.clipboard.writeText(code.textContent); }
     catch {
       if (!signal.aborted && current === request) {
-        label.textContent = 'Copy';
+        label.textContent = idleLabel;
         if (feedback) feedback.textContent = 'Select and copy the citation below.';
       }
       return;
@@ -69,7 +70,7 @@ export function mountCitation(scope: MotionScope) {
     if (feedback) feedback.textContent = '';
     label.textContent = '✓ Copied';
     scope.play(label, [{ opacity: .6 }, { opacity: 1 }], 110);
-    timer = window.setTimeout(() => { label.textContent = 'Copy'; }, 1500);
+    timer = window.setTimeout(() => { label.textContent = idleLabel; }, 1500);
   }, { signal });
   scope.onCleanup(() => clearTimeout(timer));
 }

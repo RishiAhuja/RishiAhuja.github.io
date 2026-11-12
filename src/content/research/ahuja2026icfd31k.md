@@ -71,6 +71,13 @@ bibtex: |
     doi       = {10.24963/ijcai.2026/786},
     url       = {https://doi.org/10.24963/ijcai.2026/786},
   }
+citation:
+  doi: "10.24963/ijcai.2026/786"
+  booktitle: "Proceedings of the Thirty-Fifth International Joint Conference on Artificial Intelligence, IJCAI-26"
+  publisher: "International Joint Conferences on Artificial Intelligence Organization"
+  isbn: "978-1-956792-09-6"
+  first_page: 7065
+  last_page: 7073
 primary_url: "https://www.ijcai.org/proceedings/2026/786"
 same_as:
   - "https://www.ijcai.org/proceedings/2026/786"

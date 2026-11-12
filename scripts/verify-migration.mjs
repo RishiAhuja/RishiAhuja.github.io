@@ -42,8 +42,11 @@ for (const source of ['/:path*', '/blurb/:path*', '/blurb/:slug', '/_astro/:path
 const home = await readFile('dist/index.html', 'utf8');
 for (const id of ['blog','education','contact']) assert.ok(home.includes(`id="${id}"`), `Missing legacy fragment: ${id}`);
 const resume = await readFile('dist/resume/index.html', 'utf8');
-assert.ok(resume.includes(`href="${ARCHIVE_ORIGIN}/resume"`), 'Engineering PDF link must use the old resolver, not the listing itself');
-assert.ok(resume.includes(`href="${ARCHIVE_ORIGIN}/research/resume"`), 'Research PDF link must retain its resolver');
+// PDF links stay first-party and are forwarded to the archive's live resolvers.
+for (const [source, resolver] of [['/engineering/resume', '/resume'], ['/research/resume', '/research/resume']]) {
+  assert.ok(resume.includes(`href="${SITE_ORIGIN}${source}"`), `${source}: résumé link must use its first-party URL, not the listing itself`);
+  assert.equal(bySource.get(source)?.destination, `${ARCHIVE_ORIGIN}${resolver}`, `${source}: must forward to the archive resolver`);
+}
 const sitemap = await readFile('dist/sitemap.xml', 'utf8');
 assert.ok(sitemap.includes(`${SITE_ORIGIN}/resume`), 'Resume listing must remain discoverable');
 assert.ok(sitemap.includes(SITE_ORIGIN), 'Sitemap must use the configured site origin');

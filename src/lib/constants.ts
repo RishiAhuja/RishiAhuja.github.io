@@ -1,12 +1,30 @@
-import { ARCHIVE_ORIGIN } from './siteConfig.mjs';
+import { ARCHIVE_ORIGIN, SITE_ORIGIN } from './siteConfig.mjs';
 
 export const PORTRAIT = '/images/rishi-ahuja.jpg';
+// Responsive copies of PORTRAIT; the JPEG stays the OG card source.
+export const PORTRAIT_WIDTHS = [480, 800, 1268] as const;
+export const portraitSrcset = (format: 'avif' | 'webp') =>
+  PORTRAIT_WIDTHS.map((width) => `/images/portrait/rishi-ahuja-${width}.${format} ${width}w`).join(', ');
+export const PORTRAIT_SIZES = '(min-width: 769px) 42vw, 100vw';
+
+export const TWITTER_HANDLE = '@Rishi2220';
+
+// The site owner as a schema.org author, tied to the homepage Person entity.
+export const authorSchema = (site: URL) => ({
+  '@type': 'Person',
+  '@id': personId(site),
+  name: 'Rishi Ahuja',
+  url: new URL('/', site).href,
+});
+export const personId = (site: URL) => new URL('/#person', site).href;
 
 export const LINKS = {
   RESUME: '/resume',
   ARCHIVE: ARCHIVE_ORIGIN,
-  RESEARCH_RESUME: `${ARCHIVE_ORIGIN}/research/resume`,
-  ENGINEERING_RESUME: `${ARCHIVE_ORIGIN}/resume`,
+  // First-party URLs; vercel.json forwards them to the archive's live resolvers,
+  // so moving the resolvers later only changes those two redirects.
+  RESEARCH_RESUME: `${SITE_ORIGIN}/research/resume`,
+  ENGINEERING_RESUME: `${SITE_ORIGIN}/engineering/resume`,
   CAL_COM: 'https://cal.com/rishi2220',
   HASHNODE: 'https://rishi2220.hashnode.dev/',
   YOUTUBE: 'https://www.youtube.com/@rishi2220',

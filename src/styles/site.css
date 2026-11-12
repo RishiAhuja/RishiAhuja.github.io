@@ -295,6 +295,8 @@ img {
   width: 100%;
 }
 
+.hero-profile picture { display: block; }
+
 .hero-photo {
   height: auto;
   aspect-ratio: 510 / 457;
@@ -578,6 +580,7 @@ img {
 
 .inline-tag.blue { background: var(--cover-blue); }
 .inline-tag.rose { background: var(--cover-rose); }
+.inline-tag.lavender { background: var(--cover-lavender); }
 
 .project-hero {
   background: var(--bg-soft);
@@ -817,6 +820,25 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
 .project-prose {
   max-width: 42em;
 }
+
+.project-tldr {
+  max-width: 42em;
+  margin: 0 0 2em;
+  padding: 1em 1.2em;
+  border-left: 3px solid var(--page-accent);
+  background: var(--bg-soft);
+}
+
+.project-tldr h2 {
+  margin: 0 0 0.35em;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.project-tldr p { margin: 0; }
 
 .project-prose h2 {
   margin: 1.6em 0 0.55em;
@@ -1153,6 +1175,29 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
   text-transform: uppercase;
   color: var(--text-muted);
 }
+
+.project-cite-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.project-cite-doi { margin: 0 0 1em; font-size: 0.9em; }
+.project-cite-doi a { margin-left: 0.35em; }
+
+.project-cite-formats { margin: 0 0 1.2em; }
+.project-cite-formats div {
+  display: grid;
+  grid-template-columns: 3.5em minmax(0, 1fr);
+  gap: 0.8em;
+  padding: 0.7em 0;
+  border-top: 1px solid var(--rule);
+}
+.project-cite-formats div:last-child { border-bottom: 1px solid var(--rule); }
+.project-cite-formats dt {
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 2;
+  color: var(--text-muted);
+}
+.project-cite-formats dd { margin: 0; font-size: 0.9em; overflow-wrap: anywhere; }
 
 .project-cite pre {
   margin: 0;

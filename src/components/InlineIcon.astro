@@ -1,13 +1,12 @@
 ---
-import { ArrowUpRightIcon, HeartIcon } from '@heroicons/react/24/outline';
+import OutlineIcon from './OutlineIcon.astro';
 
 interface Props { name: 'arrow-up-right' | 'heart'; class?: string; }
 const { name, class: className } = Astro.props;
-const Icon = { 'arrow-up-right': ArrowUpRightIcon, heart: HeartIcon }[name];
 ---
 
 <span class:list={['inline-icon', className]} aria-hidden="true">
-  <Icon />
+  <OutlineIcon name={name} />
 </span>
 
 <style>

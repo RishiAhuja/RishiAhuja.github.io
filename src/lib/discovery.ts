@@ -10,9 +10,10 @@ export async function canonicalPages() {
   return [
     { path: '/' }, { path: '/research' }, { path: '/writings' }, { path: '/blurb' },
     { path: '/community' }, { path: '/flutter-bootcamp' }, { path: '/flutter-bootcamp/curriculum' }, { path: '/colophon' }, { path: '/archive' }, { path: '/links' }, { path: '/resume' }, { path: '/machine' }, { path: '/stats' },
-    ...papers.map((paper) => ({path: pubPath(paper.slug)})),
-    ...publishedBlurbs().map((note) => ({path: blurbPath(note.slug)})),
-  ];
+    ...papers.map((paper) => ({path: pubPath(paper.slug), lastmod: paper.data.published_date ?? paper.data.sort_date})),
+    ...publishedBlurbs().map((note) => ({path: blurbPath(note.slug), lastmod: new Date(`${note.publishedDate}T00:00:00Z`)})),
+    ...(await getWritings()).map((post) => ({path: writingPath(post.slug), lastmod: post.data.dateAdded})),
+  ] as { path: string; lastmod?: Date }[];
 }
 
 export async function feedEntries() {

@@ -4,13 +4,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import JsonLd from '../../components/JsonLd.astro';
-import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
-import { isResourceLink, paperAwardMarks, pubPath, resourceLabel } from '../../lib/research';
+import OutlineIcon from '../../components/OutlineIcon.astro';
+import { acmCitation, apaCitation, bibPath, citationName, containerTitle, isResourceLink, paperAwardMarks, paperYear, pubPath, resourceLabel } from '../../lib/research';
 import { paperArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
 import { publishedBlurbs, paperBlurbs, blurbPath } from '../../lib/blurbs';
 import CoverPreload from '../../components/CoverPreload.astro';
 import PublicationAuthorContacts from '../../components/PublicationAuthorContacts.astro';
+import { ogImagePath } from '../../lib/og';
 
 export async function getStaticPaths() {
   const papers = await getCollection('research');
@@ -32,24 +33,62 @@ const resources = paper.data.links.filter((link) => isResourceLink(link.label, l
 const pageUrl = new URL(pubPath(paper.slug), Astro.site).toString();
 const relatedBlurbs = publishedBlurbs().filter((note) => paperBlurbs[paper.slug]?.includes(note.slug));
 const awardMarks = paperAwardMarks(paper.data);
+const publicationDate = paper.data.published_date ?? paper.data.sort_date;
+// Without a publication date, cite the proceedings year alone.
+const citedDate = paper.data.published_date?.toISOString().slice(0, 10) ?? String(paperYear(paper.data));
+const pdfUrl = paper.data.links.find((link) => link.label.toLowerCase() === 'pdf')?.url;
+const imageUrl = new URL(ogImagePath(pubPath(paper.slug)), Astro.site).toString();
+const citation = paper.data.citation;
+const venueTitle = containerTitle(paper.data);
+// Highwire Press tags, read by Google Scholar, Zotero and Mendeley.
+const citationMeta = [
+  ['citation_title', paper.data.title],
+  ...paper.data.authors.map((author) => ['citation_author', citationName(author.name)]),
+  ['citation_publication_date', citedDate.replaceAll('-', '/')],
+  ['citation_conference_title', venueTitle],
+  ...(citation?.publisher ? [['citation_publisher', citation.publisher]] : []),
+  ...(citation?.isbn ? [['citation_isbn', citation.isbn]] : []),
+  ...(citation?.first_page ? [['citation_firstpage', String(citation.first_page)]] : []),
+  ...(citation?.last_page ? [['citation_lastpage', String(citation.last_page)]] : []),
+  ...(citation?.doi ? [['citation_doi', citation.doi]] : []),
+  ['citation_abstract_html_url', pageUrl],
+  ...(pdfUrl ? [['citation_pdf_url', pdfUrl]] : []),
+  ['citation_language', 'en'],
+];
 ---
 
 <BaseLayout
   title={`${paper.data.short_name} · Rishi Ahuja`}
   description={paper.data.description}
   cover={paper.data.cover}
+  publishedTime={publicationDate.toISOString()}
 >
   <CoverPreload slot="head" cover={paperArtwork(paper.slug)} variant="hero" />
+  {citationMeta.map(([name, content]) => <meta slot="head" name={name} content={content} />)}
   <JsonLd
     data={{
       '@context': 'https://schema.org',
-      '@type': paper.data.status === 'published' ? 'ScholarlyArticle' : 'CreativeWork',
+      '@type': 'ScholarlyArticle',
       headline: paper.data.title,
+      name: paper.data.title,
+      alternateName: paper.data.short_name,
       description: paper.data.description,
       abstract: paper.data.abstract,
+      datePublished: citedDate,
+      creativeWorkStatus: paper.data.status === 'published' ? 'Published' : 'Accepted',
+      inLanguage: 'en',
+      image: imageUrl,
+      isPartOf: citation?.isbn
+        ? { '@type': 'Book', name: venueTitle, isbn: citation.isbn }
+        : { '@type': 'CreativeWork', name: venueTitle },
+      ...(citation?.publisher ? { publisher: { '@type': 'Organization', name: citation.publisher } } : {}),
+      ...(citation?.doi ? { identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: citation.doi } } : {}),
+      ...(citation?.first_page ? { pageStart: citation.first_page } : {}),
+      ...(citation?.last_page ? { pageEnd: citation.last_page } : {}),
+      ...(pdfUrl ? { encoding: { '@type': 'MediaObject', contentUrl: pdfUrl, encodingFormat: 'application/pdf' } } : {}),
       author: paper.data.authors.map((author) => ({
         '@type': 'Person',
-        name: author.name,
+        name: citationName(author.name),
         ...(author.profile ? { url: author.profile } : {}),
         ...(author.email ? { email: author.email } : {}),
         ...(author.affiliations.length ? {
@@ -79,6 +118,7 @@ const awardMarks = paperAwardMarks(paper.data);
                   { label: 'Home', href: '/' },
                   { label: 'Research', href: '/research' },
                 ]}
+                current={paper.data.short_name}
               />
               <h1>{paper.data.title}</h1>
             </div>
@@ -132,7 +172,7 @@ const awardMarks = paperAwardMarks(paper.data);
                 {resources.map((link) => (
                   <a class="button" href={link.url} target="_blank" rel="noopener noreferrer">
                     {resourceLabel(link.label)}
-                    <ArrowUpRightIcon aria-hidden="true" />
+                    <OutlineIcon name="arrow-up-right" />
                   </a>
                 ))}
               </div>
@@ -149,6 +189,10 @@ const awardMarks = paperAwardMarks(paper.data);
     </section>
 
     <article class="project-body wrap">
+      <aside class="project-tldr" aria-label="Summary">
+        <h2>TL;DR</h2>
+        <p>{paper.data.tldr}</p>
+      </aside>
       {hasBody ? (
         <div class="project-prose">
           <Content />
@@ -159,16 +203,30 @@ const awardMarks = paperAwardMarks(paper.data);
         </div>
       )}
 
-      {paper.data.bibtex && (
-        <section class="project-cite">
-          <div class="project-cite-head">
-            <h2>Cite</h2>
-            <button class="button copy-button" type="button" id="copy-bibtex"><span class="copy-label" aria-live="polite" aria-atomic="true">Copy</span></button>
-          </div>
-          <p id="copy-feedback" class="copy-feedback" role="status" />
-          <pre><code id="bibtex-code">{paper.data.bibtex}</code></pre>
-        </section>
-      )}
+      <section class="project-cite" id="cite">
+        <div class="project-cite-head">
+          <h2>Cite</h2>
+          {paper.data.bibtex && (
+            <div class="project-cite-actions">
+              <a class="button" href={bibPath(paper.slug)} download={`${paper.slug}.bib`}>Download .bib</a>
+              <button class="button copy-button" type="button" id="copy-bibtex"><span class="copy-label" aria-live="polite" aria-atomic="true">Copy BibTeX</span></button>
+            </div>
+          )}
+        </div>
+        {citation?.doi && (
+          <p class="project-cite-doi">DOI <a href={`https://doi.org/${citation.doi}`} target="_blank" rel="noopener noreferrer">{citation.doi}</a></p>
+        )}
+        <dl class="project-cite-formats">
+          <div><dt>ACM</dt><dd>{acmCitation(paper.data)}</dd></div>
+          <div><dt>APA</dt><dd>{apaCitation(paper.data)}</dd></div>
+        </dl>
+        {paper.data.bibtex && (
+          <>
+            <p id="copy-feedback" class="copy-feedback" role="status" />
+            <pre><code id="bibtex-code">{paper.data.bibtex}</code></pre>
+          </>
+        )}
+      </section>
     </article>
 
     {relatedBlurbs.length > 0 && <section class="section wrap"><h2 class="section-title">Behind the research</h2><div class="related-grid">{relatedBlurbs.map((note) => <a class="related-card" href={blurbPath(note.slug)}><h3>{note.title}</h3><p>{note.subtitle || note.description}</p></a>)}</div></section>}

@@ -1,10 +1,18 @@
 ---
+import JsonLd from './JsonLd.astro';
+import { normalizePagePath } from '../lib/og';
+
 interface Crumb {
   label: string;
   href?: string;
 }
 
-const { items } = Astro.props as { items: Crumb[] };
+// `current` names this page for search results; it is not shown in the trail.
+const { items, current } = Astro.props as { items: Crumb[]; current?: string };
+const trail = current ? [
+  ...items.filter((item) => item.href).map((item) => ({ name: item.label, url: new URL(item.href!, Astro.site).href })),
+  { name: current, url: new URL(normalizePagePath(Astro.url.pathname), Astro.site).href },
+] : [];
 ---
 
 <nav class="crumbs" aria-label="Breadcrumb">
@@ -15,3 +23,12 @@ const { items } = Astro.props as { items: Crumb[] };
     </>
   ))}
 </nav>
+{trail.length > 0 && (
+  <JsonLd
+    data={{
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: trail.map((crumb, index) => ({ '@type': 'ListItem', position: index + 1, name: crumb.name, item: crumb.url })),
+    }}
+  />
+)}

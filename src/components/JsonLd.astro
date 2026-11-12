@@ -6,4 +6,5 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(data)} />
+<!-- Escaping < keeps text such as "</script>" from ending the element early. -->
+<script type="application/ld+json" set:html={JSON.stringify(data).replaceAll('<', '\\u003c')} />

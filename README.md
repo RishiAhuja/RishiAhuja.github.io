@@ -1,6 +1,6 @@
 # Rishi Ahuja
 
-Personal site: [rishiahuja.github.io](https://rishiahuja.github.io), with the custom-domain migration prepared for [rishia.in](https://rishia.in).
+Personal site: [rishia.in](https://rishia.in), mirrored on [rishiahuja.github.io](https://rishiahuja.github.io). The mirror builds with `PORTFOLIO_SITE_URL=https://rishia.in`, so its canonical URLs credit rishia.in.
 
 
 ## Open Graph images
@@ -23,14 +23,17 @@ with `status: 'published'` receive a route, appear in the footer-linked Blurbs a
 social cards. Draft blurbs stay out of those outputs. The `/blurb/` paths remain
 stable so existing links keep working.
 
-Writing mirrors the author’s Hashnode articles. Each local article links quietly
-to its original and declares the Hashnode URL as its canonical URL. The Writing
-archive remains discoverable, and RSS links to the local reading experience with
-original-source attribution. Mirrored article URLs are intentionally omitted from
-the local sitemap. Research metadata distinguishes workshop papers from main
+Writing is cross-posted to Hashnode. Each local article is its own canonical URL,
+appears in the sitemap, and links quietly to the Hashnode copy. Set each Hashnode
+post's canonical URL (“Are you republishing?”) to its rishia.in address so search
+engines credit this site. RSS links to the local reading experience with
+original-source attribution. Research metadata distinguishes workshop papers from main
 conference publications and only exposes resources present in the source data.
 
-`/feed.xml`, `/sitemap.xml`, `/robots.txt`, and `/404.html` are built statically.
+`/feed.xml`, `/sitemap.xml`, `/robots.txt`, `/llms.txt`, and `/404.html` are built statically.
+Canonical and `og:url` values never end in a slash, matching Vercel's `trailingSlash: false`.
+Research pages carry Google Scholar `citation_*` tags and `ScholarlyArticle` data;
+articles and blurbs carry `BlogPosting` data, and detail pages a `BreadcrumbList`.
 Social cards are generated from the same content as the pages, including Blurbs.
 
 ## Reading and media
@@ -66,8 +69,9 @@ course from 18 December 2025 to 14 January 2026; its 14 published videos and
 13 available slide links are preserved in `src/data/teaching.ts`. Lecture artwork
 is generated individually and served as AVIF/WebP. Final prompts live in
 `docs/teaching-artwork-prompts.json`. Colophon, Archive, Links, and Résumés are
-first-party supporting pages. Résumé links continue to use the existing live
-version resolvers on rishia.in.
+first-party supporting pages. Résumé links use first-party URLs
+(`/research/resume`, `/engineering/resume`) that `vercel.json` forwards to the live
+version resolvers on archive.rishia.in.
 
 ## Vercel and domain migration
 
@@ -76,10 +80,8 @@ contains the permanent compatibility redirects for old publication, blog,
 journey, and archive-only URLs. `/resume` remains the new listing page.
 
 Build origins are configured with `PORTFOLIO_SITE_URL` and
-`PORTFOLIO_ARCHIVE_ORIGIN`. Vercel production and previews use
-`https://rishia.in` and `https://archive.rishia.in`. Without these variables,
-GitHub Pages continues to use its current origin and the current live résumé
-resolvers on rishia.in. Uploaded PDFs and media remain on artifacts.rishia.in.
+`PORTFOLIO_ARCHIVE_ORIGIN`, which default to `https://rishia.in` and
+`https://archive.rishia.in`. Uploaded PDFs and media remain on artifacts.rishia.in.
 
 Run `npm run verify:migration` after building. To check the real deployed HTTP
 routes, pass `-- --url https://<deployment-host>` with the same origin environment

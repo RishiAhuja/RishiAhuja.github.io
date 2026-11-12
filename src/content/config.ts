@@ -73,6 +73,15 @@ const researchCollection = defineCollection({
       )
       .default([]),
     bibtex: z.string().optional(),
+    // The publisher's official record, for Scholar tags and structured data.
+    citation: z.object({
+      doi: z.string().regex(/^10\.\d{4,}\/\S+$/).optional(),
+      booktitle: z.string().optional(),
+      publisher: z.string().optional(),
+      isbn: z.string().optional(),
+      first_page: z.number().int().positive().optional(),
+      last_page: z.number().int().positive().optional(),
+    }).optional(),
     primary_url: z.string().url().optional(),
     same_as: z.array(z.string().url()).default([]),
   }),

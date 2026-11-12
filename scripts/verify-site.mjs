@@ -44,8 +44,17 @@ for (const [path, html] of index) {
   assert.equal(canonicals.length, 1, `${path}: canonical missing or duplicated`);
   const canonical = new URL(attributes(canonicals[0][0]).href);
   assert.equal(canonical.protocol, 'https:');
-  if (/^\/writings\/[^/]+/.test(path)) assert.equal(canonical.hostname, 'rishi2220.hashnode.dev', `${path}: mirror must credit original canonical`);
-  else assert.equal(canonical.origin, SITE_ORIGIN, `${path}: first-party content must use the configured canonical origin`);
+  assert.equal(canonical.origin, SITE_ORIGIN, `${path}: pages must use the configured canonical origin`);
+  // Vercel strips trailing slashes, so a slashed canonical would point at a redirect.
+  assert.equal(canonical.pathname, path, `${path}: canonical must be the served path, without a trailing slash`);
+  const ogUrl = html.match(/<meta property="og:url" content="([^"]+)"/)?.[1];
+  assert.equal(ogUrl, canonical.href, `${path}: og:url must match the canonical URL`);
+  if (/^\/writings\/[^/]+/.test(path)) assert.ok(html.includes('rishi2220.hashnode.dev'), `${path}: article must still link to its Hashnode original`);
+  if (/^\/pub\/[^/]+/.test(path)) {
+    for (const name of ['citation_title', 'citation_author', 'citation_publication_date', 'citation_conference_title']) assert.ok(html.includes(`name="${name}"`), `${path}: missing ${name}`);
+    assert.ok(html.includes('"@type":"ScholarlyArticle"'), `${path}: missing ScholarlyArticle schema`);
+  }
+  if (/^\/(writings|blurb)\/[^/]+/.test(path)) assert.ok(html.includes('"@type":"BlogPosting"'), `${path}: missing BlogPosting schema`);
   if (path.startsWith('/blurb/')) assert.ok(!/<meta[^>]*content="[^"]*noindex/.test(html), `${path}: published blurb unexpectedly hidden`);
   for (const match of html.matchAll(/<img\b[^>]*>/g)) {
     const attrs = attributes(match[0]);
@@ -63,7 +72,7 @@ for (const [path, html] of index) {
     if (!href || !/^(\/[^/]|#)/.test(href)) continue;
     const target = new URL(href, `${SITE_ORIGIN}${path === '/' ? '/' : path + '/'}`);
     const targetPath = target.pathname.replace(/\/$/, '') || '/';
-    if (targetPath.endsWith('.xml') || targetPath.endsWith('.txt')) {
+    if (/\.(xml|txt|bib)$/.test(targetPath)) {
       assert.ok((await stat(join(dist, targetPath))).isFile(), `${path}: missing ${href}`);
       continue;
     }
@@ -80,7 +89,25 @@ assert.equal(figures, expectedFigures, 'Every article figure must be described a
 // Author-written blank lines must become separate semantic paragraphs.
 const bremen = index.get('/blurb/my-ijcai-ecai-2026-and-germany-experience-in-bremen');
 assert.match(bremen, /<p>João turned out to be a full-time engineer at Amazon\./, 'Bremen paragraph breaks must survive rendering');
+// A paper with an official DOI must expose it to Scholar and citation managers.
+for (const file of paperFiles) {
+  const doi = (await readFile(join('src/content/research', file), 'utf8')).match(/^citation:\n(?:\s+.*\n)*?\s+doi:\s*"([^"]+)"/m)?.[1];
+  if (doi) assert.ok(index.get(`/pub/${file.replace(/\.md$/, '')}`).includes(`name="citation_doi" content="${doi}"`), `${file}: DOI missing from citation tags`);
+}
+// Every paper offers plain-text citations; papers with BibTeX also offer the file.
+for (const file of paperFiles) {
+  const slug = file.replace(/\.md$/, '');
+  const html = index.get(`/pub/${slug}`);
+  assert.ok(html.includes('<dt>ACM</dt>') && html.includes('<dt>APA</dt>'), `${slug}: missing plain-text citations`);
+  assert.ok(!/<dd>[^<]*\bDr\./.test(html), `${slug}: citations must omit honorifics`);
+  if (html.includes('id="bibtex-code"')) {
+    assert.ok(html.includes(`href="/pub/${slug}.bib"`), `${slug}: missing BibTeX download`);
+    assert.ok((await readFile(join(dist, 'pub', `${slug}.bib`), 'utf8')).includes('@'), `${slug}: empty BibTeX file`);
+  }
+}
 const home = index.get('/');
+assert.ok(home.includes('data-age-from="2007-10-03"'), 'Homepage age must be computed from the birth date');
+assert.ok(home.includes('href="mailto:'), 'Footer must offer email');
 const machine = index.get('/machine');
 assert.ok(machine, 'Structured profile page must be built');
 for (const file of paperFiles) {
@@ -100,9 +127,10 @@ assert.equal(rows.length, updates.length - 8, 'Homepage must show the latest eig
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
-assert.equal(locations.length, 13 + paperFiles.length + publishedSlugs.length, 'Sitemap must match canonical published content');
+assert.equal(locations.length, 13 + paperFiles.length + publishedSlugs.length + blogFiles.length, 'Sitemap must match canonical published content');
+assert.ok(locations.every((path) => path === '/' || !path.endsWith('/')), 'Sitemap URLs must not have trailing slashes');
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
-assert.ok(!locations.some((path) => /^\/writings\//.test(path)), 'Mirrored articles should not claim a local sitemap canonical');
+assert.deepEqual(locations.filter((path) => /^\/writings\//.test(path)).sort(), blogFiles.map((file) => `/writings/${file.replace(/\.md$/, '')}`).sort(), 'Every article must be in the sitemap');
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
 assert.equal((feed.match(/<item>/g) || []).length, blogFiles.length + publishedSlugs.length, 'RSS must match published articles and blurbs');
 assert.ok(index.get('/404').includes('noindex, follow'));

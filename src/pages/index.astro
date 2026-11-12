@@ -4,8 +4,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import JsonLd from '../components/JsonLd.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import DecorativeArt from '../components/DecorativeArt.astro';
-import { ArrowDownIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
-import { LINKS, PORTRAIT } from '../lib/constants';
+import OutlineIcon from '../components/OutlineIcon.astro';
+import { LINKS, PORTRAIT, PORTRAIT_SIZES, personId, portraitSrcset } from '../lib/constants';
 import { FEATURED_SLUGS, paperCardAward, pubPath } from '../lib/research';
 import { getWritings, writingPath } from '../lib/blogs';
 import { paperArtwork, writingArtwork } from '../lib/artwork';
@@ -13,6 +13,9 @@ import CoverArt from '../components/CoverArt.astro';
 import PublicationNewBadge from '../components/PublicationNewBadge.astro';
 import ExperienceList from '../components/ExperienceList.astro';
 import { updates } from '../data/updates';
+import { BIRTH_DATE, ageOn } from '../lib/age';
+
+const age = ageOn(BIRTH_DATE, new Date());
 
 const papers = (await getCollection('research')).sort(
   (a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime()
@@ -35,6 +38,7 @@ const monthDate = (label: string) => {
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': personId(Astro.site!),
   name: 'Rishi Ahuja',
   url: new URL('/', Astro.site).href,
   image: new URL(PORTRAIT, Astro.site).toString(),
@@ -67,7 +71,7 @@ const schema = {
   title="Rishi Ahuja"
   description="Undergraduate researcher pursuing a B.Tech. with Research in Information Technology at NIT Jalandhar, working on trustworthy AI evaluation, temporal retrieval, and conversational fraud detection."
 >
-  <link slot="head" rel="preload" as="image" href={PORTRAIT} fetchpriority="high" />
+  <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset={portraitSrcset('avif')} imagesizes={PORTRAIT_SIZES} fetchpriority="high" />
   <JsonLd data={schema} />
   <noscript slot="head"><style is:inline>[data-extra-update] { display: grid !important; }</style></noscript>
 
@@ -77,7 +81,7 @@ const schema = {
         <div>
           <h1>Hello 👋</h1>
           <p>
-            I am <a class="intro-link" href="#about">Rishi Ahuja</a>, a 19-year-old undergraduate researcher pursuing a B.Tech. with
+            I am <a class="intro-link" href="#about">Rishi Ahuja</a>, a <span data-age-from={BIRTH_DATE}>{age}</span>-year-old undergraduate researcher pursuing a B.Tech. with
             Research in Information Technology at <a class="intro-link" href="https://www.nitj.ac.in/" target="_blank" rel="noopener noreferrer">NIT Jalandhar</a>, and an incoming
             intern at <a class="intro-link" href="/blurb/cisco-interview">Cisco</a>.
             {/*
@@ -96,24 +100,28 @@ const schema = {
         <div class="hero-actions">
           <a class="button" href="/research">
             View research
-            <ArrowUpRightIcon aria-hidden="true" />
+            <OutlineIcon name="arrow-up-right" />
           </a>
           <a class="button" href={LINKS.RESEARCH_RESUME} target="_blank" rel="noopener noreferrer">
             CV
-            <ArrowDownIcon className="arrow-down" aria-hidden="true" />
+            <OutlineIcon name="arrow-down" class="arrow-down" />
           </a>
         </div>
       </div>
       <div class="hero-profile">
-        <img
-          class="hero-photo"
-          src={PORTRAIT}
-          alt="Rishi Ahuja"
-          width="1268"
-          height="1241"
-          fetchpriority="high"
-          decoding="async"
-        />
+        <picture>
+          <source type="image/avif" srcset={portraitSrcset('avif')} sizes={PORTRAIT_SIZES} />
+          <source type="image/webp" srcset={portraitSrcset('webp')} sizes={PORTRAIT_SIZES} />
+          <img
+            class="hero-photo"
+            src={PORTRAIT}
+            alt="Rishi Ahuja"
+            width="1268"
+            height="1241"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
     </section>
 
@@ -154,7 +162,7 @@ const schema = {
       <p class="writing-more">
         <a class="button" href="/research">
           All research
-          <ArrowUpRightIcon aria-hidden="true" />
+          <OutlineIcon name="arrow-up-right" />
         </a>
       </p>
     </section>
@@ -212,7 +220,7 @@ const schema = {
       <p class="writing-more">
         <a class="button" href="/writings">
           All writing
-          <ArrowUpRightIcon aria-hidden="true" />
+          <OutlineIcon name="arrow-up-right" />
         </a>
       </p>
     </section>
@@ -235,7 +243,7 @@ const schema = {
             <p class="info-label">01 / Background</p>
             <div>
               <p>
-                I am a 19-year-old undergraduate researcher pursuing a B.Tech. with Research
+                I am a <span data-age-from={BIRTH_DATE}>{age}</span>-year-old undergraduate researcher pursuing a B.Tech. with Research
                 in Information Technology at NIT Jalandhar. I study how AI systems
                 can be evaluated reliably against the claims made about them.
                 {/*
@@ -251,7 +259,9 @@ const schema = {
             <p class="info-label">02 / Research</p>
             <div>
               <p>
-                My current work spans three projects:
+                My current work spans four projects:
+                <a class="inline-tag lavender" href={pubPath('ahuja2027doubtbench')}>DoubtBench</a> in language-model
+                evaluation,
                 <a class="inline-tag blue" href={pubPath('ahuja2026icfd31k')}>ICFD-31k</a> in conversational fraud
                 detection,
                 <a class="inline-tag rose" href={pubPath('ahuja2026scopebenchpr')}>ScopeBench-PR</a> in scope fairness

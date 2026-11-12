@@ -10,9 +10,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "isolatedModules": true
   },
   "include": ["src/**/*", ".astro/**/*"],
   "exclude": ["node_modules", "dist"]

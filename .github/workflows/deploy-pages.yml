@@ -24,7 +24,12 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # The mirror must declare rishia.in as canonical, or it competes with the
+      # primary site as duplicate content.
       - run: npm run build
+        env:
+          PORTFOLIO_SITE_URL: https://rishia.in
+          PORTFOLIO_ARCHIVE_ORIGIN: https://archive.rishia.in
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

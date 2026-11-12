@@ -6,7 +6,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { experiences } from '../data/experience';
 import { COURSE, lectures } from '../data/teaching';
-import { LINKS } from '../lib/constants';
+import { LINKS, personId } from '../lib/constants';
 import { getWritings, writingPath, formatPostDate } from '../lib/blogs';
 import { paperAwardMarks, pubPath } from '../lib/research';
 
@@ -39,10 +39,12 @@ const sitePages = [
   { label: 'Archive', href: '/archive' },
   { label: 'RSS', href: '/feed.xml' },
   { label: 'Sitemap', href: '/sitemap.xml' },
+  { label: 'llms.txt', href: '/llms.txt' },
 ];
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': personId(Astro.site!),
   name: 'Rishi Ahuja',
   url: new URL('/', Astro.site).href,
   jobTitle: 'Undergraduate Researcher',

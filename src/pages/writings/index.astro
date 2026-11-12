@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import OutlineIcon from '../../components/OutlineIcon.astro';
 import { getWritings, writingPath } from '../../lib/blogs';
 import { writingArtwork } from '../../lib/artwork';
 import CoverArt from '../../components/CoverArt.astro';
@@ -51,7 +51,7 @@ const posts = await getWritings();
       <p class="writing-hashnode">
         <a class="button" href="https://rishi2220.hashnode.dev" target="_blank" rel="noopener noreferrer">
           Hashnode
-          <ArrowUpRightIcon aria-hidden="true" />
+          <OutlineIcon name="arrow-up-right" />
         </a>
       </p>
     </section>

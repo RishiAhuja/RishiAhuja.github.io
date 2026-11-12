@@ -8,5 +8,5 @@ function origin(value) {
   return url.origin;
 }
 
-export const SITE_ORIGIN = origin(process.env.PORTFOLIO_SITE_URL || 'https://rishiahuja.github.io');
+export const SITE_ORIGIN = origin(process.env.PORTFOLIO_SITE_URL || 'https://rishia.in');
 export const ARCHIVE_ORIGIN = origin(process.env.PORTFOLIO_ARCHIVE_ORIGIN || 'https://archive.rishia.in');

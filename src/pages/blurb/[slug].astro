@@ -16,6 +16,9 @@ import { blurbArtwork } from '../../lib/artwork';
 import { formatPostDate } from '../../lib/blogs';
 import { hasWritingToc } from '../../lib/blogMarkdown';
 import { blurbHeadings } from '../../lib/blurbToc.ts';
+import JsonLd from '../../components/JsonLd.astro';
+import { ogImagePath } from '../../lib/og';
+import { authorSchema } from '../../lib/constants';
 
 
 export const getStaticPaths = (() => {
@@ -38,8 +41,22 @@ const relatedBlurbs = publishedBlurbs().filter((note) => note.slug !== post.slug
 const hasTwitter = post.content.some((item) => item.type === 'twitter' && item.tweetId && item.tweetId.length >= 15);
 ---
 
-<BaseLayout title={`${post.title} · Rishi Ahuja`} description={post.description} cover={cover}>
+<BaseLayout title={`${post.title} · Rishi Ahuja`} description={post.description} cover={cover} publishedTime={`${post.publishedDate}T00:00:00Z`}>
   <CoverPreload slot="head" cover={artwork} variant="hero" />
+  <JsonLd
+    data={{
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.description,
+      datePublished: post.publishedDate,
+      image: new URL(ogImagePath(blurbPath(post.slug)), Astro.site).toString(),
+      author: authorSchema(Astro.site!),
+      url: new URL(blurbPath(post.slug), Astro.site).toString(),
+      mainEntityOfPage: new URL(blurbPath(post.slug), Astro.site).toString(),
+      inLanguage: 'en',
+    }}
+  />
   {hasTwitter && <script is:inline slot="head" async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>}
 
   <main id="main-content" tabindex="-1">
@@ -48,7 +65,7 @@ const hasTwitter = post.content.some((item) => item.type === 'twitter' && item.t
         <div class="project-intro">
           <div>
             <div class="page-path">
-              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blurbs', href: '/blurb' }]} />
+              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Blurbs', href: '/blurb' }]} current={post.title} />
               <h1>{post.title}</h1>
             </div>
             <p class="project-authors">Rishi Ahuja</p>
