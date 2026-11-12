@@ -67,7 +67,7 @@ export async function renderOgImage(card: OgCard, site: URL): Promise<Buffer> {
   if (card.kind === 'home') {
     await addText(card.title, margin, 148, { size: 82, width, height: 104 });
     await addText(card.subtitle, margin, 272, { size: 32, width, height: 46 });
-    await addText('Trustworthy AI evaluation, temporal retrieval, and conversational fraud detection.', margin, 344, {
+    await addText('Building and evaluating reliable AI systems.', margin, 344, {
       size: 30, width: 630, height: 124, face: 'RegularItalic', color: muted,
     });
   } else if (card.kind === 'research' || card.kind === 'index' || card.kind === 'work') {

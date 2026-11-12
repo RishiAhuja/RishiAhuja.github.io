@@ -14,7 +14,7 @@ export const GET: APIRoute = async ({ site }) => {
   const lines = [
     '# Rishi Ahuja',
     '',
-    '> Undergraduate researcher at NIT Jalandhar working on trustworthy AI evaluation, temporal retrieval, and conversational fraud detection.',
+    '> Undergraduate researcher at NIT Jalandhar, building and evaluating reliable AI systems, and an incoming intern at Cisco.',
     '',
     `The complete structured profile, with abstracts, experience, teaching, and contact details, is at ${url('/machine')}.`,
     '',

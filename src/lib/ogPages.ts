@@ -31,7 +31,7 @@ export async function getOgCards(): Promise<OgCard[]> {
     {
       path: '/research', kind: 'index', title: 'Research', eyebrow: 'Rishi Ahuja',
       subtitle: 'Benchmarks and papers on evaluating AI systems against the claims they actually make.',
-      metadata: `${papers.length} papers · Trustworthy AI`,
+      metadata: `${papers.length} papers`,
       cover: papers[0]?.data.cover,
       artwork: papers[0] && paperArtwork(papers[0].slug)?.heroWebp,
     },

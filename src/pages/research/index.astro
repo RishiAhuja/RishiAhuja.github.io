@@ -10,7 +10,7 @@ import CoverArt from '../../components/CoverArt.astro';
 import PublicationNewBadge from '../../components/PublicationNewBadge.astro';
 const papers = (await getCollection('research')).sort((a, b) => b.data.sort_date.getTime() - a.data.sort_date.getTime());
 ---
-<BaseLayout title="Research · Rishi Ahuja" description="Papers and benchmarks on trustworthy evaluation, temporal retrieval, and conversational fraud detection.">
+<BaseLayout title="Research · Rishi Ahuja" description="Benchmarks and papers on evaluating AI systems against the claims they actually make.">
   <main id="main-content" tabindex="-1">
     <section class="section wrap">
       <div class="page-path"><Breadcrumbs items={[{ label: 'Home', href: '/' }]} /><h1 class="page-title">Research</h1></div>

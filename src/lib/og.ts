@@ -22,6 +22,6 @@ export const ogSlug = (pathname: string) =>
 
 // Chat apps cache preview images by URL; bump this when the card design
 // changes so they fetch the new one.
-const OG_VERSION = 2;
+const OG_VERSION = 3;
 
 export const ogImagePath = (pathname: string) => `/og/${ogSlug(pathname)}.png?v=${OG_VERSION}`;
