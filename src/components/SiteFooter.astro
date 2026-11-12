@@ -1,6 +1,7 @@
 ---
 import InlineIcon from './InlineIcon.astro';
 import { LINKS } from '../lib/constants';
+import { ARCHIVE_ORIGIN } from '../lib/siteConfig.mjs';
 ---
 
 <footer class="site-footer" id="contact">
@@ -21,7 +22,8 @@ import { LINKS } from '../lib/constants';
           <li><a href="/research">Research</a></li>
           <li><a href="/writings">Writing</a></li>
           <li><a href="/community">Community &amp; teaching</a></li>
-          <li><a class="footer-blurbs" href="/blurb">Blurbs <InlineIcon name="arrow-up-right" /><small>Trips, conferences &amp; personal stories</small></a></li>
+          <li><a class="footer-feature" href="/blurb">Blurbs <InlineIcon name="arrow-up-right" /><small>Trips, conferences &amp; personal stories</small></a></li>
+          <li><a class="footer-feature" href={`${ARCHIVE_ORIGIN}/gallery`}>Gallery <InlineIcon name="arrow-up-right" /><small>Photos, a roll a month</small></a></li>
         </ul>
       </nav>
       <nav class="footer-group" aria-label="Elsewhere">

@@ -1179,7 +1179,7 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
 .project-cite-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .project-cite-doi { margin: 0 0 1em; font-size: 0.9em; }
-.project-cite-doi a { margin-left: 0.35em; }
+.project-cite-doi a { margin-left: 0.35em; color: var(--page-accent); text-decoration: underline; text-underline-offset: 0.16em; }
 
 .project-cite-formats { margin: 0 0 1.2em; }
 .project-cite-formats div {
@@ -1206,7 +1206,8 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
   background: var(--bg-soft);
   font-size: 0.82em;
   line-height: 1.6;
-  white-space: pre-wrap;
+  /* BibTeX is column-aligned; wrapping would break its fields mid-line. */
+  white-space: pre;
 }
 
 .related-grid {
@@ -1294,7 +1295,7 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
 .footer-group ul { margin: 0; padding: 0; list-style: none; }
 .footer-group a { display: inline-block; min-height: 44px; padding: 8px 0; transition: color 110ms ease-out; }
 .footer-group a:is(:hover, :focus-visible) { color: var(--accent); text-decoration: underline; text-underline-offset: .2em; }
-.footer-blurbs small { display: block; max-width: 24ch; margin-top: 2px; color: var(--text-muted); font-size: 13px; line-height: 1.5; }
+.footer-feature small { display: block; max-width: 24ch; margin-top: 2px; color: var(--text-muted); font-size: 13px; line-height: 1.5; }
 .signoff { margin: 0; border-top: 1px solid var(--rule); padding-top: 18px; color: var(--text-muted); font-size: 14px; }
 .signoff .heart { color: #c45c6a; }
 

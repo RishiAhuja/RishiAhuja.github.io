@@ -41,7 +41,7 @@ type CitationFields = {
   sort_date: Date;
   published_date?: Date;
   bibtex?: string;
-  citation?: { doi?: string; booktitle?: string; publisher?: string; first_page?: number; last_page?: number };
+  citation?: { doi?: string; booktitle?: string; publisher?: string; publisher_short?: string; first_page?: number; last_page?: number };
   event?: { label: string };
 };
 
@@ -64,10 +64,11 @@ const isForthcoming = (paper: CitationFields) => paper.status === 'accepted' && 
 const isPresentation = (paper: CitationFields) => paper.status === 'accepted' && !isForthcoming(paper);
 // Official proceedings title when published; otherwise the venue as displayed.
 export const containerTitle = (paper: CitationFields) => paper.citation?.booktitle ?? paper.venue.replaceAll(' · ', ', ');
+const citedPublisher = (paper: CitationFields) => paper.citation?.publisher_short ?? paper.citation?.publisher;
 const doiUrl = (paper: CitationFields) => (paper.citation?.doi ? `https://doi.org/${paper.citation.doi}` : undefined);
 
 export const acmCitation = (paper: CitationFields) => {
-  const details = [paper.citation?.publisher, pageRange(paper)].filter(Boolean).join(', ');
+  const details = [citedPublisher(paper), pageRange(paper)].filter(Boolean).join(', ');
   return [
     sentence(joinNames(paper.authors.map((author) => citationName(author.name)), 'and')),
     `${paperYear(paper)}.`,
@@ -95,7 +96,7 @@ export const apaCitation = (paper: CitationFields) => {
     `(${isForthcoming(paper) ? 'in press' : paperYear(paper)}).`,
     sentence(paper.title),
     sentence(`${isPresentation(paper) ? 'Paper presented at' : 'In'} ${container}`),
-    paper.citation?.publisher && sentence(paper.citation.publisher),
+    citedPublisher(paper) && sentence(citedPublisher(paper)!),
     doiUrl(paper),
   ].filter(Boolean).join(' ');
 };

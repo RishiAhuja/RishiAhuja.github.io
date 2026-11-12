@@ -75,6 +75,7 @@ citation:
   doi: "10.24963/ijcai.2026/786"
   booktitle: "Proceedings of the Thirty-Fifth International Joint Conference on Artificial Intelligence, IJCAI-26"
   publisher: "International Joint Conferences on Artificial Intelligence Organization"
+  publisher_short: "IJCAI"
   isbn: "978-1-956792-09-6"
   first_page: 7065
   last_page: 7073

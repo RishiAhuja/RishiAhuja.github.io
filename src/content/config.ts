@@ -78,6 +78,8 @@ const researchCollection = defineCollection({
       doi: z.string().regex(/^10\.\d{4,}\/\S+$/).optional(),
       booktitle: z.string().optional(),
       publisher: z.string().optional(),
+      // How the publisher's own citations name it, e.g. "IJCAI".
+      publisher_short: z.string().optional(),
       isbn: z.string().optional(),
       first_page: z.number().int().positive().optional(),
       last_page: z.number().int().positive().optional(),
