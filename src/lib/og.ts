@@ -20,4 +20,8 @@ export const normalizePagePath = (pathname: string) =>
 export const ogSlug = (pathname: string) =>
   normalizePagePath(pathname).slice(1) || 'index';
 
-export const ogImagePath = (pathname: string) => `/og/${ogSlug(pathname)}.png`;
+// Chat apps cache preview images by URL; bump this when the card design
+// changes so they fetch the new one.
+const OG_VERSION = 2;
+
+export const ogImagePath = (pathname: string) => `/og/${ogSlug(pathname)}.png?v=${OG_VERSION}`;

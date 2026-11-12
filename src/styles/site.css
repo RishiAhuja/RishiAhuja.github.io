@@ -1206,9 +1206,13 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
   background: var(--bg-soft);
   font-size: 0.82em;
   line-height: 1.6;
-  /* BibTeX is column-aligned; wrapping would break its fields mid-line. */
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
+
+/* A long field wraps under its value, not back at the left margin, so the
+   column alignment of "name = {value}" survives on narrow screens. */
+.bib-line { display: block; padding-left: 15ch; text-indent: -15ch; }
 
 .related-grid {
   display: grid;
@@ -1831,7 +1835,7 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .carousel-dot[aria-current]::after { width: 7px; height: 7px; transform: translate(-50%, -50%) scale(1.25); }
 .blurb-page figure .carousel-outgoing { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; z-index: 1; }
 .carousel-counter { z-index: 2; }
-.copy-label { display: inline-block; width: 10ch; white-space: nowrap; }
+.copy-label { display: inline-block; white-space: nowrap; }
 .copy-feedback { margin: .5rem 0; font-size: .85em; }
 .copy-feedback:empty { display: none; }
 .reading-progress { position: fixed; z-index: 60; top: 0; left: 0; width: 100%; height: 2px; background: var(--page-accent); transform-origin: left; opacity: 0; pointer-events: none; transition: opacity 110ms ease-out; }

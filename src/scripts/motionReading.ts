@@ -57,8 +57,10 @@ export function mountCitation(scope: MotionScope) {
   button.addEventListener('click', async () => {
     const current = ++request;
     clearTimeout(timer);
-    if (!code.textContent) return;
-    try { await navigator.clipboard.writeText(code.textContent); }
+    // The visible block is split into lines for wrapping; copy the original.
+    const bibtex = code.dataset.bibtex || code.textContent;
+    if (!bibtex) return;
+    try { await navigator.clipboard.writeText(bibtex); }
     catch {
       if (!signal.aborted && current === request) {
         label.textContent = idleLabel;
@@ -68,9 +70,11 @@ export function mountCitation(scope: MotionScope) {
     }
     if (signal.aborted || current !== request) return;
     if (feedback) feedback.textContent = '';
+    // Hold the button's width so the shorter label doesn't shift its neighbour.
+    button.style.minWidth = `${button.getBoundingClientRect().width}px`;
     label.textContent = '✓ Copied';
     scope.play(label, [{ opacity: .6 }, { opacity: 1 }], 110);
-    timer = window.setTimeout(() => { label.textContent = idleLabel; }, 1500);
+    timer = window.setTimeout(() => { label.textContent = idleLabel; button.style.minWidth = ''; }, 1500);
   }, { signal });
   scope.onCleanup(() => clearTimeout(timer));
 }

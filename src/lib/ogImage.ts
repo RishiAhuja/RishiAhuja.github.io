@@ -42,9 +42,11 @@ export async function renderOgImage(card: OgCard, site: URL): Promise<Buffer> {
       const art = await sharp(join(root, 'public', card.artwork!.slice(1))).resize(300, 300, { fit: 'contain', background: {r:0,g:0,b:0,alpha:0} }).png().toBuffer();
       layers.push({ input: art, left: 814, top: 132 });
     } else if (card.kind === 'home') {
+      // The portrait is nearly square, so a near-square box keeps both
+      // shoulders; 'attention' cropping chased the background and cut one off.
       const portrait = await sharp(join(root, 'public', card.artwork!.slice(1)))
-        .resize(316, 398, { fit: 'cover', position: 'attention' }).png().toBuffer();
-      layers.push({ input: portrait, left: 820, top: 86 });
+        .resize(396, 398, { fit: 'cover', position: 'centre' }).png().toBuffer();
+      layers.push({ input: portrait, left: 740, top: 86 });
     } else {
       // The site's framed 3:4 abstract posters, with the same pastel backing.
       layers.push({ input: Buffer.from(

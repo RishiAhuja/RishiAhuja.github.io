@@ -223,7 +223,7 @@ const citationMeta = [
         {paper.data.bibtex && (
           <>
             <p id="copy-feedback" class="copy-feedback" role="status" />
-            <pre><code id="bibtex-code">{paper.data.bibtex}</code></pre>
+            <pre><code id="bibtex-code" data-bibtex={paper.data.bibtex.trimEnd()}>{paper.data.bibtex.trimEnd().split('\n').map((line) => <span class="bib-line">{line}</span>)}</code></pre>
           </>
         )}
       </section>
