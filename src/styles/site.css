@@ -1896,6 +1896,23 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .community-entry h2 { margin: 0 0 16px; font-size: 30px; line-height: 1.3; }
 .community-entry p { margin: 0 0 18px; }
 .community-entry .info-label { padding-top: 5px; }
+
+/* Talks: date, details, and a photo when there is one. */
+.talk-list { display: grid; gap: 40px; margin: 0; padding: 0; list-style: none; }
+.talk { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 13rem; gap: clamp(20px, 3vw, 40px); padding-bottom: 40px; border-bottom: 1px solid var(--rule); scroll-margin-top: 30px; }
+.talk:last-child { border: 0; padding-bottom: 0; }
+.talk-when .info-label { margin: 0; padding-top: 4px; }
+.talk-upcoming { display: inline-block; margin-top: 8px; padding: 2px 9px; border-radius: 999px; background: var(--cover-blue); color: #2a5f7a; font-size: 12px; font-weight: 500; }
+.talk-formats { margin: 0 0 6px; color: var(--text-muted); font-size: 13px; letter-spacing: .02em; }
+.talk h2 { margin: 0 0 8px; font-size: 22px; font-weight: 500; line-height: 1.35; }
+.talk h2 a { color: inherit; }
+.talk h2 a:hover { color: var(--accent); }
+.talk-event { margin: 0 0 10px; color: var(--text-muted); }
+.talk-note { margin: 0 0 4px; }
+.talk-confirm { margin: 12px 0 0; padding: 8px 12px; border-left: 3px solid #d9a441; background: #fbf4e6; color: #6b4a0e; font-size: 14px; }
+.talk-photo { margin: 0; }
+.talk-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; background: var(--bg-soft); }
+
 .text-link { display: inline-flex; align-items: center; gap: .6em; min-height: 44px; }
 .course-hero { background: var(--cover-blue); padding: 48px 0 56px; }
 .course-hero .crumbs { margin-bottom: 34px; }
@@ -1953,6 +1970,10 @@ main:focus, [tabindex='-1']:focus { outline: none; }
   .community-entry { grid-template-columns: 1fr; gap: 10px; }
   .community-entry h2 { font-size: 25px; }
   .community-entry .info-label { font-size: 12px; }
+  .talk { grid-template-columns: 1fr; gap: 10px; }
+  .talk h2 { font-size: 20px; }
+  .talk-photo { order: -1; }
+  .talk-photo img { aspect-ratio: 16 / 10; }
   .course-hero { padding-block: 30px 38px; }
   .course-subtitle { font-size: 22px; }
   .lecture-grid, .link-groups, .resume-list { grid-template-columns: 1fr; }

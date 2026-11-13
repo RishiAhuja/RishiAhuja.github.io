@@ -1,0 +1,52 @@
+---
+import InlineIcon from '../components/InlineIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SupportingIntro from '../components/SupportingIntro.astro';
+import { talks } from '../data/talks';
+
+// A talk is upcoming until its date has passed; month-only dates count the whole month.
+const today = new Date().toISOString().slice(0, 10);
+const isUpcoming = (date: string) => (date.length === 7 ? `${date}-31` : date) >= today;
+const sorted = [...talks].sort((a, b) => b.date.localeCompare(a.date));
+const external = (url: string) => /^https?:/.test(url);
+---
+<BaseLayout title="Talks · Rishi Ahuja" description="Talks, posters, and lectures: where I have presented my research and taught.">
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <SupportingIntro title="Talks" description="Talks, posters, and lectures: where I have presented my research and taught." />
+      <ol class="talk-list">
+        {sorted.map((talk) => (
+          <li class="talk" id={talk.id}>
+            <div class="talk-when">
+              <p class="info-label">{talk.display}</p>
+              {isUpcoming(talk.date) && <span class="talk-upcoming">Upcoming</span>}
+            </div>
+            <div class="talk-body">
+              <p class="talk-formats">{talk.formats.join(' · ')}</p>
+              <h2>{talk.paper ? <a href={talk.paper}>{talk.title}</a> : talk.title}</h2>
+              <p class="talk-event">{talk.event} · {talk.place}</p>
+              {talk.award && <p class="project-award-line"><span aria-hidden="true">★</span> {talk.award}</p>}
+              {talk.note && <p class="talk-note">{talk.note}</p>}
+              {(talk.links.length > 0 || talk.story) && (
+                <ul class="project-links" aria-label={`Links for ${talk.title}`}>
+                  {talk.links.map((link) => (
+                    <li><a href={link.url} {...(external(link.url) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label} {external(link.url) ? <InlineIcon name="arrow-up-right" /> : <span aria-hidden="true">→</span>}</a></li>
+                  ))}
+                  {talk.story && <li><a href={talk.story.url}>{talk.story.label} <span aria-hidden="true">→</span></a></li>}
+                </ul>
+              )}
+              {talk.confirm && <p class="talk-confirm"><strong>To confirm:</strong> {talk.confirm}</p>}
+            </div>
+            {talk.photo && (
+              <figure class="talk-photo">
+                <img src={talk.photo.src} alt={talk.photo.alt} width={talk.photo.width} height={talk.photo.height} loading="lazy" decoding="async" />
+              </figure>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

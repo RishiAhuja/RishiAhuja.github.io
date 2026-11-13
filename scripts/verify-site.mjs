@@ -127,7 +127,7 @@ assert.equal(rows.length, updates.length - 8, 'Homepage must show the latest eig
 assert.ok(rows.every((row) => /\bhidden\b/.test(row[0])), 'Older updates must begin collapsed');
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
-assert.equal(locations.length, 13 + paperFiles.length + publishedSlugs.length + blogFiles.length, 'Sitemap must match canonical published content');
+assert.equal(locations.length, 14 + paperFiles.length + publishedSlugs.length + blogFiles.length, 'Sitemap must match canonical published content');
 assert.ok(locations.every((path) => path === '/' || !path.endsWith('/')), 'Sitemap URLs must not have trailing slashes');
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
 assert.deepEqual(locations.filter((path) => /^\/writings\//.test(path)).sort(), blogFiles.map((file) => `/writings/${file.replace(/\.md$/, '')}`).sort(), 'Every article must be in the sitemap');
