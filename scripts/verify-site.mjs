@@ -72,7 +72,7 @@ for (const [path, html] of index) {
     if (!href || !/^(\/[^/]|#)/.test(href)) continue;
     const target = new URL(href, `${SITE_ORIGIN}${path === '/' ? '/' : path + '/'}`);
     const targetPath = target.pathname.replace(/\/$/, '') || '/';
-    if (/\.(xml|txt|bib)$/.test(targetPath)) {
+    if (/\.(xml|txt|bib|pdf)$/.test(targetPath)) {
       assert.ok((await stat(join(dist, targetPath))).isFile(), `${path}: missing ${href}`);
       continue;
     }
@@ -105,6 +105,10 @@ for (const file of paperFiles) {
     assert.ok((await readFile(join(dist, 'pub', `${slug}.bib`), 'utf8')).includes('@'), `${slug}: empty BibTeX file`);
   }
 }
+// Unconfirmed talk or place details must not ship. Set ALLOW_UNCONFIRMED=1
+// for a local preview while they are being checked.
+const unconfirmed = ['/talks', '/places'].flatMap((path) => [...index.get(path).matchAll(/<strong>To confirm:<\/strong>/g)].map(() => path));
+if (!process.env.ALLOW_UNCONFIRMED) assert.equal(unconfirmed.length, 0, `${unconfirmed.length} talk or place details still need confirming (${[...new Set(unconfirmed)].join(', ')})`);
 const home = index.get('/');
 assert.ok(home.includes('data-age-from="2007-10-03"'), 'Homepage age must be computed from the birth date');
 assert.ok(home.includes('href="mailto:'), 'Footer must offer email');
