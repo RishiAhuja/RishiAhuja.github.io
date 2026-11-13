@@ -49,6 +49,7 @@ export async function getOgCards(): Promise<OgCard[]> {
       artwork: blurbArtwork(publishedBlurbs()[0]?.slug)?.heroWebp,
     },
     { path: '/talks', kind: 'index', title: 'Talks', eyebrow: 'Rishi Ahuja', subtitle: 'Talks, posters, and lectures: where I have presented my research and taught.', metadata: 'ICLR · IJCAI–ECAI · WSDM', cover: 'lavender' },
+    { path: '/places', kind: 'index', title: 'Places', eyebrow: 'Rishi Ahuja', subtitle: 'Where research, hackathons, and work have taken me.', metadata: 'Bremen · Rio de Janeiro · India', cover: 'sage' },
     { path: '/community', kind: 'index', title: 'Community', eyebrow: 'Rishi Ahuja', subtitle: 'Teaching, mentoring, and building developer communities.', metadata: 'GDGC · HackMol · Flutter', cover: 'mint' },
     { path: '/flutter-bootcamp', kind: 'index', title: 'Applied Mobile Engineering', eyebrow: 'Flutter Bootcamp', subtitle: 'Fourteen lectures, from your first widgets to signed releases.', metadata: `${COURSE.date} · 23+ hours`, cover: 'blue', artwork: '/images/teaching/lecture-01.webp' },
     { path: COURSE.curriculum, kind: 'index', title: 'Course curriculum', eyebrow: 'Applied Mobile Engineering', subtitle: 'Flutter, Dart, mobile systems, and the assignments across fourteen sessions.', metadata: `${COURSE.date} · Flutter Bootcamp`, cover: 'blue', artwork: '/images/teaching/lecture-01.webp' },

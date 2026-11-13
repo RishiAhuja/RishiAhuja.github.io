@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SupportingIntro from '../components/SupportingIntro.astro';
+import PlacesMap from '../components/PlacesMap.astro';
+import PlaceCard from '../components/PlaceCard.astro';
+import { places } from '../data/places';
+
+const stays = places.filter((place) => !place.layover);
+const layovers = places.filter((place) => place.layover);
+const visited = stays.filter((place) => place.visits.some((visit) => !visit.upcoming));
+const countryCount = new Set(visited.map((place) => place.country)).size;
+const groups = [
+  { id: 'research-work', title: 'Research & work', key: 'work' },
+  { id: 'trips-concerts', title: 'Trips & concerts', key: 'trips' },
+  { id: 'home-study', title: 'Home & study', key: 'home' },
+] as const;
+const description = `Where research, hackathons, work, and a few trips have taken me: ${visited.length} cities in ${countryCount} countries so far.`;
+---
+<BaseLayout title="Places · Rishi Ahuja" description={description}>
+  <main id="main-content" tabindex="-1">
+    <section class="section wrap supporting-page">
+      <SupportingIntro title="Places" description={description} />
+      <PlacesMap />
+      <div class="places-list">
+        {groups.map((group) => (
+          <section class="places-group" id={group.id} aria-labelledby={`${group.id}-title`}>
+            <h2 id={`${group.id}-title`}>{group.title}</h2>
+            <div class="places-cards">
+              {stays.filter((place) => place.group === group.key).map((place) => <PlaceCard place={place} />)}
+            </div>
+          </section>
+        ))}
+        <section class="places-layovers" id="layovers" aria-labelledby="layovers-title">
+          <h2 id="layovers-title">Layovers</h2>
+          <ul class="layover-list">
+            {layovers.map((place) => (
+              <li id={place.id}><strong>{place.city}</strong><span>{place.visits[0].display}</span></li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

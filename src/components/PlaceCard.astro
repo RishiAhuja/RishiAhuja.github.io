@@ -1,0 +1,36 @@
+---
+import InlineIcon from './InlineIcon.astro';
+import type { Place } from '../data/places';
+
+interface Props { place: Place; }
+const { place } = Astro.props;
+const upcoming = place.visits.every((visit) => visit.upcoming);
+const links = [...new Map(place.visits.flatMap((visit) => visit.links ?? []).map((link) => [link.url, link])).values()];
+const external = (url: string) => /^https?:/.test(url);
+---
+
+<article class="place" id={place.id}>
+  <header class="place-heading">
+    <h3>{place.city}</h3>
+    {upcoming && <span class="talk-upcoming">Upcoming</span>}
+    {place.city !== place.country && <p class="place-country">{place.country}</p>}
+  </header>
+  <div class="place-visits">
+    {place.visits.map((visit) => (
+      <div>
+        <p class="info-label">{visit.display}</p>
+        <p>{visit.what}</p>
+        {visit.confirm && <p class="talk-confirm"><strong>To confirm:</strong> {visit.confirm}</p>}
+      </div>
+    ))}
+  </div>
+  <div class="place-links">
+    {links.length > 0 && (
+      <ul class="project-links" aria-label={`More from ${place.city}`}>
+        {links.map((link) => (
+          <li><a href={link.url} {...(external(link.url) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label} <InlineIcon name={external(link.url) ? 'arrow-up-right' : 'arrow-right'} /></a></li>
+        ))}
+      </ul>
+    )}
+  </div>
+</article>

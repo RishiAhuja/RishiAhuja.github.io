@@ -1913,6 +1913,33 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .talk-photo { margin: 0; }
 .talk-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; background: var(--bg-soft); }
 
+/* Places: one short entry per city, grouped by why I went. */
+.places-list { display: grid; gap: 36px; }
+.places-group h2 { margin: 0 0 16px; font-size: 26px; }
+.places-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 16px; }
+.place { display: flex; flex-direction: column; min-width: 0; min-height: 232px; padding: 18px 20px 12px; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg); scroll-margin-top: 30px; }
+.place:target { outline: 2px solid var(--accent); outline-offset: 2px; }
+.place-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-content: start; align-items: center; gap: 4px 10px; min-height: 48px; margin-bottom: 12px; }
+.place-heading h3 { margin: 0; font-size: 19px; font-weight: 500; line-height: 1.35; }
+.place-heading .talk-upcoming { margin: 0; }
+.place-country { grid-column: 1 / -1; margin: 0; color: var(--text-muted); font-size: 12px; line-height: 1.5; }
+.place-visits { display: grid; gap: 10px; font-size: 15px; line-height: 1.6; }
+.place-visits p { margin: 0; }
+.place-visits .info-label { margin: 0 0 4px; font-size: 11px; }
+.place-links { min-height: 44px; margin-top: auto; padding-top: 8px; }
+.place-links .project-links { margin: 0; gap: 0 18px; }
+.places-layovers { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+.places-layovers h2 { margin: 0; font-size: 16px; font-weight: 500; }
+.layover-list { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; list-style: none; color: var(--text-muted); font-size: 13px; }
+.layover-list li { display: flex; flex-wrap: wrap; gap: 8px; scroll-margin-top: 30px; }
+.layover-list strong { color: var(--text); font-weight: 500; }
+.layover-list li:target { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 1100px) { .places-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .places-cards { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; gap: 12px; }
+  .place { min-height: 0; }
+  .places-group h2 { font-size: 23px; }
+}
 .text-link { display: inline-flex; align-items: center; gap: .6em; min-height: 44px; }
 .course-hero { background: var(--cover-blue); padding: 48px 0 56px; }
 .course-hero .crumbs { margin-bottom: 34px; }
