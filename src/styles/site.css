@@ -1968,11 +1968,19 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .colophon-swatches { display: flex; flex-wrap: wrap; gap: 16px 24px; margin-top: 26px; font-size: 14px; color: var(--text-muted); }
 .colophon-swatches span { display: flex; align-items: center; gap: 9px; }
 .colophon-swatches i { display: block; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--rule); }
-.archive-list { display: grid; }
-.archive-list > a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--rule); color: var(--text); text-decoration: none; }
-.archive-list > a:hover strong { color: var(--accent); }
-.archive-list strong { font-size: 22px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
-.archive-list .quiet-meta { display: block; margin-top: 5px; }
+/* Archive museum: one screenshot per version, newest first. */
+.archive-heading { margin: 0 0 24px; font-size: 26px; }
+.museum { display: grid; gap: 44px; margin: 0 0 72px; padding: 0; list-style: none; }
+.museum-item { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: center; scroll-margin-top: 30px; }
+.museum-shot { display: block; overflow: hidden; border: 1px solid var(--rule); border-radius: 10px; background: var(--bg-soft); box-shadow: 0 1px 0 rgb(0 0 0 / .03), 0 12px 32px -18px rgb(0 0 0 / .25); }
+.museum-shot img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; transition: transform 300ms ease-out; }
+.museum-shot:is(:hover, :focus-visible) img { transform: scale(1.02); }
+.museum-copy h3 { margin: 4px 0 8px; font-size: 24px; font-weight: 500; }
+.museum-copy h3 a { display: inline-flex; align-items: center; gap: .3em; color: inherit; }
+.museum-copy h3 a:hover { color: var(--accent); }
+.museum-copy p { margin: 0 0 8px; }
+.archive-resumes { margin-top: 0; }
+@media (prefers-reduced-motion: reduce) { .museum-shot img { transition: none; } }
 .link-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; }
 .plain-link-list { list-style: none; padding: 0; margin: 0; }
 .plain-link-list a { display: inline-flex; gap: 10px; flex-wrap: wrap; align-items: center; min-height: 44px; padding: 7px 0; }
@@ -1998,6 +2006,7 @@ main:focus, [tabindex='-1']:focus { outline: none; }
   .community-entry h2 { font-size: 25px; }
   .community-entry .info-label { font-size: 12px; }
   .talk { grid-template-columns: 1fr; gap: 10px; }
+  .museum-item { grid-template-columns: 1fr; gap: 14px; }
   .talk h2 { font-size: 20px; }
   .talk-photo { order: -1; }
   .talk-photo img { aspect-ratio: 16 / 10; }

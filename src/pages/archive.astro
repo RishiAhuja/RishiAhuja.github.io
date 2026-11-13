@@ -3,23 +3,37 @@ import InlineIcon from '../components/InlineIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SupportingIntro from '../components/SupportingIntro.astro';
-import { resumeVersions } from '../data/archive';
-import { LINKS } from '../lib/constants';
+import { portfolioVersions, resumeVersions } from '../data/archive';
 
+// Newest first, so the museum opens on the site you are looking at.
+const versions = [...portfolioVersions].reverse();
+const external = (url: string) => /^https?:/.test(url);
 ---
-<BaseLayout title="Archive · Rishi Ahuja" description="Earlier portfolios, résumés, and pieces of the site’s history.">
+<BaseLayout title="Archive · Rishi Ahuja" description="Every version of this site since 2021, and earlier résumés.">
   <main id="main-content" tabindex="-1">
     <section class="section wrap supporting-page">
-      <SupportingIntro title="Archive" description="Earlier portfolios, résumés, and pieces of the site’s history." artwork="archive" />
-      <div class="prose-sections">
-        <section><h2>Previous portfolios</h2><div class="archive-list">
-          <a href="https://new-port-14-02-2021.pages.dev/" target="_blank" rel="noopener noreferrer"><span><strong>First portfolio</strong><span class="quiet-meta">14 Feb 2021</span></span><InlineIcon name="arrow-up-right" /></a>
-          <a href="https://rishiahuja.github.io/my-portfolio/" target="_blank" rel="noopener noreferrer"><span><strong>GitHub Pages portfolio</strong><span class="quiet-meta">Apr 2022–Aug 2024</span></span><InlineIcon name="arrow-up-right" /></a>
-          <a href="https://my-portfolio-462ef.web.app/" target="_blank" rel="noopener noreferrer"><span><strong>Terminal portfolio</strong><span class="quiet-meta">Feb 2025 · Hosted on Firebase</span></span><InlineIcon name="arrow-up-right" /></a>
-          <a href={LINKS.ARCHIVE} target="_blank" rel="noopener noreferrer"><span><strong>Builder and engineer portfolio</strong><span class="quiet-meta">May 2025–Oct 2026 · archive.rishia.in</span></span><InlineIcon name="arrow-up-right" /></a>
-        </div></section>
-        <section><h2>Résumés</h2><p>The <a href="/resume">latest engineering résumé and research CV</a> are available together. Earlier engineering résumé versions are preserved below.</p><div class="resume-version-list">{resumeVersions.map(resume => <a href={resume.url} target="_blank" rel="noopener noreferrer">Version {resume.version} <InlineIcon name="arrow-up-right" /></a>)}</div></section>
-      </div>
+      <SupportingIntro title="Archive" description="Every version of this site since 2021, and earlier résumés." artwork="archive" />
+      <section aria-labelledby="versions-title">
+        <h2 class="archive-heading" id="versions-title">{versions.length} versions of this site</h2>
+        <ol class="museum">
+          {versions.map((version, index) => (
+            <li class="museum-item" id={version.id}>
+              <a class="museum-shot" href={version.url} {...(external(version.url) ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={`Open ${version.name}`}>
+                <img src={`/images/archive/${version.id}.webp`} alt="" width="1200" height="750" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+              </a>
+              <div class="museum-copy">
+                <p class="info-label">v{versions.length - index} · {version.period}</p>
+                <h3><a href={version.url} {...(external(version.url) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{version.name}{external(version.url) && <InlineIcon name="arrow-up-right" />}</a></h3>
+                <p>{version.note}</p>
+                <p class="quiet-meta">Built with {version.built}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section class="prose-sections archive-resumes" aria-labelledby="resumes-title">
+        <section><h2 id="resumes-title">Résumés</h2><p>The <a href="/resume">latest engineering résumé and research CV</a> are available together. Earlier engineering résumé versions are preserved below.</p><div class="resume-version-list">{resumeVersions.map(resume => <a href={resume.url} target="_blank" rel="noopener noreferrer">Version {resume.version} <InlineIcon name="arrow-up-right" /></a>)}</div></section>
+      </section>
     </section>
   </main>
   <SiteFooter />
