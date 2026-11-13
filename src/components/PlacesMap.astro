@@ -98,16 +98,44 @@ const [nx1, ny1] = india([NORTH_INDIA[0], NORTH_INDIA[3]])!;
 const [nx2, ny2] = india([NORTH_INDIA[2], NORTH_INDIA[1]])!;
 const northDots = northern.map((place) => dot(north, place));
 
+// Phones get a taller world map cropped to where I have been, the same shape
+// as the India maps so the swipeable panels line up. Fitting to corner points
+// (not a box) avoids edges that would take the short way round the globe.
+const NARROW = { width: 420, height: 470 };
+const narrowWorld = geoNaturalEarth1()
+  .fitExtent([[12, 12], [NARROW.width - 12, NARROW.height - 12]], { type: 'MultiPoint', coordinates: [[-62, -38], [122, -38], [-62, 60], [122, 60]] } as any)
+  .clipExtent([[0, 0], [NARROW.width, NARROW.height]]);
+const narrowAll: Dot[] = [
+  ...places.filter((place) => place.country !== 'India').map((place) => dot(narrowWorld, place)),
+  // Sat slightly south (still central India) so Hong Kong's label has room beside it.
+  { id: 'india', label: `India · ${indian.length} places`, r: 8, count: indian.length, prefer: ['below'], ...point(narrowWorld, 78.5, 19.5) },
+];
+// Only places well apart from an already-named one get a name; layovers and
+// near neighbours (Cologne beside Bremen) keep just their dots.
+const narrowNamed: Dot[] = [];
+for (const d of [...narrowAll].sort((a, b) => Number(Boolean(b.count)) - Number(Boolean(a.count)) || b.x - a.x)) {
+  if (d.place?.layover || narrowNamed.some((n) => Math.hypot(n.x - d.x, n.y - d.y) < 22)) continue;
+  narrowNamed.push(d);
+}
+const narrowLabels = new Map(placeLabels(narrowNamed, 16, NARROW.width, NARROW.height).map((label, i) => [narrowNamed[i].id, label]));
+
 const maps = {
   world: { dots: worldDots, labels: placeLabels(worldDots, 18, WORLD.width, WORLD.height), path: geoPath(world)(worldLand as any) ?? '' },
+  narrow: { path: geoPath(narrowWorld)(worldLand as any) ?? '' },
   india: { dots: indiaLabelled, labels: placeLabels(indiaLabelled, 15, INDIA.width, INDIA.height), path: geoPath(india)(toLand(land50) as any) ?? '' },
   north: { dots: northDots, labels: placeLabels(northDots, 14, NORTH.width, NORTH.height), path: geoPath(north)(toLand(land10) as any) ?? '' },
 };
 const pinClass = (d: Dot) => ['map-pin', { home: d.place?.home, trip: d.place?.trip, layover: d.place?.layover, upcoming: d.place && isUpcoming(d.place), group: d.count }];
 ---
 
-<div class="places-maps">
-  <figure class="places-map places-map-world">
+<div class="places-maps" data-places-maps>
+  <nav class="places-map-tabs" aria-label="Maps">
+    <a href="#world-map" data-map-tab aria-current="true">World</a>
+    <a href="#india-map" data-map-tab>India</a>
+    <a href="#north-india-map" data-map-tab>North India</a>
+  </nav>
+  <div class="places-map-track" data-map-track>
+  <figure class="places-map places-map-world" id="world-map">
     <svg viewBox={`0 0 ${WORLD.width} ${WORLD.height}`} role="img" aria-labelledby="world-map-title">
       <title id="world-map-title">World map with markers for {worldDots.map((d) => d.label).join(', ')}</title>
       <path class="map-land" d={maps.world.path} />
@@ -116,6 +144,17 @@ const pinClass = (d: Dot) => ['map-pin', { home: d.place?.home, trip: d.place?.t
           <circle cx={d.x} cy={d.y} r={d.r} />
           {d.count && <text class="map-count" x={d.x} y={d.y + 4} text-anchor="middle">{d.count}</text>}
           <text x={maps.world.labels[i].x} y={maps.world.labels[i].y} text-anchor={maps.world.labels[i].anchor}>{d.label}</text>
+        </a>
+      ))}
+    </svg>
+    <svg class="map-narrow" viewBox={`0 0 ${NARROW.width} ${NARROW.height}`} role="img" aria-labelledby="world-map-narrow-title">
+      <title id="world-map-narrow-title">Map from Brazil to Hong Kong with markers for {narrowAll.map((d) => d.label).join(', ')}</title>
+      <path class="map-land" d={maps.narrow.path} />
+      {narrowAll.map((d) => (
+        <a href={d.count ? '#india-map' : `#${d.id}`} class:list={pinClass(d)} aria-label={d.label}>
+          <circle cx={d.x} cy={d.y} r={d.r} />
+          {d.count && <text class="map-count" x={d.x} y={d.y + 4} text-anchor="middle">{d.count}</text>}
+          {narrowLabels.has(d.id) && <text x={narrowLabels.get(d.id)!.x} y={narrowLabels.get(d.id)!.y} text-anchor={narrowLabels.get(d.id)!.anchor}>{d.label}</text>}
         </a>
       ))}
     </svg>
@@ -153,6 +192,7 @@ const pinClass = (d: Dot) => ['map-pin', { home: d.place?.home, trip: d.place?.t
     </svg>
     <figcaption>North India, enlarged</figcaption>
   </figure>
+  </div>
 
   <p class="places-legend" aria-hidden="true">
     <span><i class="key-home"></i>Home</span>
@@ -164,9 +204,12 @@ const pinClass = (d: Dot) => ['map-pin', { home: d.place?.home, trip: d.place?.t
 </div>
 
 <style>
-  .places-maps { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 28px; margin: 0 0 56px; }
+  .places-maps { display: grid; gap: 24px; margin: 0 0 56px; }
+  .places-map-track { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 28px; }
   .places-map { margin: 0; }
   .places-map-world { grid-column: 1 / -1; }
+  .places-map-tabs { display: none; }
+  .map-narrow { display: none !important; }
   .places-map svg { display: block; width: 100%; height: auto; }
   .places-map figcaption { margin-top: 6px; color: var(--text-muted); font-size: 13px; }
   .map-land { fill: #ecebe6; stroke: none; }
@@ -189,16 +232,62 @@ const pinClass = (d: Dot) => ['map-pin', { home: d.place?.home, trip: d.place?.t
   .map-pin:is(:hover, :focus-visible) :is(circle, rect) { transform: scale(1.3); }
   .map-pin:is(:hover, :focus-visible) text:not(.map-count) { fill: var(--accent); }
   .map-pin:focus-visible, .map-north-box:focus-visible { outline: none; }
-  .places-legend { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; color: var(--text-muted); font-size: 13px; }
+  .places-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; color: var(--text-muted); font-size: 13px; }
   .places-legend span { display: inline-flex; align-items: center; gap: 7px; }
   .places-legend i { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
   .places-legend .key-home { border-radius: 2px; background: #2a5f7a; }
   .places-legend .key-trip { background: #4a7a3f; }
   .places-legend .key-next { background: #fff; border: 1.5px dashed var(--accent); }
   .places-legend .key-layover { width: 8px; height: 8px; background: #fff; border: 1.5px solid #8b8b8b; }
+  /* Phones: the maps sit side by side in a row you swipe, one at a time. */
   @media (max-width: 760px) {
-    .places-maps { grid-template-columns: 1fr; }
-    .places-map-world text { font-size: 22px; stroke-width: 5px; }
+    .places-maps { gap: 14px; margin-bottom: 40px; }
+    .places-map-tabs { display: flex; gap: 6px; }
+    .places-map-tabs a { padding: 6px 12px; border-radius: 999px; background: var(--bg-soft); color: var(--text-muted); font-size: 13px; font-weight: 500; }
+    .places-map-tabs a[aria-current='true'] { background: var(--accent); color: #fff; }
+    .places-map-track {
+      display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin-inline: calc(var(--page-gutter) * -1); padding-inline: var(--page-gutter); scroll-padding-inline: var(--page-gutter);
+    }
+    .places-map-track::-webkit-scrollbar { display: none; }
+    .places-map { flex: 0 0 100%; scroll-snap-align: start; }
+    .places-map-world svg:not(.map-narrow) { display: none; }
+    .places-map-world .map-narrow { display: block !important; }
+    .places-map-world text { font-size: 16px; }
+    .places-map-india text { font-size: 17px; }
+    .places-map-north text { font-size: 16px; }
+    .places-legend { gap: 6px 14px; font-size: 12px; }
   }
   @media (prefers-reduced-motion: reduce) { .map-pin :is(circle, rect) { transition: none; } }
 </style>
+
+<script>
+  // On phones the maps scroll sideways: tabs, the India marker, and the
+  // "North, enlarged" box slide the row to their map instead of jumping the page.
+  const setup = () => {
+    const root = document.querySelector<HTMLElement>('[data-places-maps]');
+    const track = root?.querySelector<HTMLElement>('[data-map-track]');
+    if (!root || !track || root.dataset.mapsBound) return;
+    root.dataset.mapsBound = 'true';
+    const figures = [...track.querySelectorAll<HTMLElement>('figure[id]')];
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-map-tab]')];
+    const swiping = () => getComputedStyle(track).display === 'flex';
+    const mark = (id: string) => tabs.forEach((tab) => tab.setAttribute('aria-current', String(tab.hash === `#${id}`)));
+    root.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+      const figure = link && figures.find((f) => `#${f.id}` === link.getAttribute('href'));
+      if (!figure || !swiping()) return;
+      event.preventDefault();
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollTo({ left: figure.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: reduce ? 'auto' : 'smooth' });
+      mark(figure.id);
+    });
+    track.addEventListener('scroll', () => {
+      const index = Math.round(track.scrollLeft / track.clientWidth);
+      if (figures[index]) mark(figures[index].id);
+    }, { passive: true });
+  };
+  // astro:page-load fires on the first load and after each view-transition navigation.
+  document.addEventListener('astro:page-load', setup);
+</script>
