@@ -1,0 +1,204 @@
+---
+// Static SVG maps drawn at build time: the world, India, and North India up
+// close, where most places sit. Land only, without political borders.
+import { geoMercator, geoNaturalEarth1, geoPath, type GeoProjection } from 'd3-geo';
+import { feature } from 'topojson-client';
+import land110 from 'world-atlas/land-110m.json';
+import land50 from 'world-atlas/land-50m.json';
+import land10 from 'world-atlas/land-10m.json';
+import { NORTH_INDIA, places, type Place } from '../data/places';
+
+// world-atlas ships TopoJSON; topojson-client turns it into GeoJSON. The
+// world map drops Antarctica, which only adds an empty band along the bottom.
+const toLand = (topology: any, minLat = -90) => {
+  const land = feature(topology, topology.objects.land) as any;
+  const geometry = land.features?.[0]?.geometry ?? land.geometry ?? land;
+  const polygons = geometry.type === 'MultiPolygon' ? geometry.coordinates : [geometry.coordinates];
+  return { type: 'MultiPolygon', coordinates: polygons.filter((polygon: number[][][]) => polygon[0].some(([, lat]) => lat > minLat)) };
+};
+// d3 reads a ring wound anticlockwise as "everything outside it", so a box
+// must be clockwise for fitExtent to zoom into it.
+const box = ([west, south, east, north]: number[]) => ({
+  type: 'Polygon' as const,
+  coordinates: [[[west, south], [west, north], [east, north], [east, south], [west, south]]],
+});
+const inBox = (place: Place, [west, south, east, north]: number[]) => place.lon >= west && place.lon <= east && place.lat >= south && place.lat <= north;
+
+const WORLD = { width: 960, height: 420 };
+const worldLand = toLand(land110, -60);
+// Fit to the land itself: a box spanning 180° would wrap the short way round.
+const world = geoNaturalEarth1().fitExtent([[0, 0], [WORLD.width, WORLD.height]], worldLand as any);
+
+const INDIA = { width: 420, height: 470 };
+// Clipping to the frame keeps the rest of the world's coastline out of the page.
+const india = geoMercator().fitExtent([[0, 0], [INDIA.width, INDIA.height]], box([66, 6, 98, 36.5])).clipExtent([[0, 0], [INDIA.width, INDIA.height]]);
+
+const NORTH = { width: 420, height: 470 };
+const north = geoMercator().fitExtent([[0, 0], [NORTH.width, NORTH.height]], box(NORTH_INDIA)).clipExtent([[0, 0], [NORTH.width, NORTH.height]]);
+
+type Dot = { id: string; label: string; x: number; y: number; r: number; prefer: string[]; place?: Place; count?: number };
+type Label = { x: number; y: number; anchor: 'start' | 'end' | 'middle' };
+
+const point = (projection: GeoProjection, lon: number, lat: number) => {
+  const [x, y] = projection([lon, lat])!;
+  return { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
+};
+const dot = (projection: GeoProjection, place: Place, r = place.layover ? 3.5 : 5): Dot => ({
+  id: place.id, label: place.city, r, place, ...point(projection, place.lon, place.lat),
+  prefer: place.mapLabel === 'left' ? ['left', 'right'] : ['right', 'left'],
+});
+
+// Greedy label placement: try each position around a dot and keep the first
+// that overlaps no dot, no earlier label, and stays inside the map.
+const placeLabels = (dots: Dot[], fontSize: number, width: number, height: number): Label[] => {
+  const gap = 6;
+  const taken = dots.map((d) => [d.x - d.r - 2, d.y - d.r - 2, d.x + d.r + 2, d.y + d.r + 2]);
+  const overlaps = (a: number[], b: number[]) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
+  return dots.map((d) => {
+    const w = d.label.length * fontSize * 0.56;
+    const h = fontSize;
+    const at = (name: string): Label & { box: number[] } => {
+      const right = d.x + d.r + gap, left = d.x - d.r - gap;
+      const spots: Record<string, Label> = {
+        right: { x: right, y: d.y + h * 0.35, anchor: 'start' },
+        left: { x: left, y: d.y + h * 0.35, anchor: 'end' },
+        below: { x: d.x, y: d.y + d.r + gap + h * 0.8, anchor: 'middle' },
+        above: { x: d.x, y: d.y - d.r - gap, anchor: 'middle' },
+        'right-up': { x: right, y: d.y - h * 0.45, anchor: 'start' },
+        'right-down': { x: right, y: d.y + h * 1.1, anchor: 'start' },
+        'left-up': { x: left, y: d.y - h * 0.45, anchor: 'end' },
+        'left-down': { x: left, y: d.y + h * 1.1, anchor: 'end' },
+      };
+      const s = spots[name];
+      const x1 = s.anchor === 'start' ? s.x : s.anchor === 'end' ? s.x - w : s.x - w / 2;
+      return { ...s, box: [x1, s.y - h * 0.8, x1 + w, s.y + h * 0.25] };
+    };
+    const order = [...d.prefer, 'right', 'left', 'below', 'above', 'right-up', 'right-down', 'left-up', 'left-down'];
+    const options = [...new Set(order)].map(at);
+    const fits = (o: ReturnType<typeof at>) => o.box[0] >= 2 && o.box[2] <= width - 2 && o.box[1] >= 2 && o.box[3] <= height - 2 && !taken.some((t) => overlaps(o.box, t));
+    const chosen = options.find(fits) ?? options[0];
+    taken.push(chosen.box);
+    return { x: Math.round(chosen.x * 10) / 10, y: Math.round(chosen.y * 10) / 10, anchor: chosen.anchor };
+  });
+};
+
+const isUpcoming = (place: Place) => place.visits.every((visit) => visit.upcoming);
+const indian = places.filter((place) => place.country === 'India');
+const northern = indian.filter((place) => inBox(place, NORTH_INDIA));
+
+// World: everything abroad, and India as one counted marker.
+const worldDots: Dot[] = [
+  ...places.filter((place) => place.country !== 'India').map((place) => dot(world, place)),
+  { id: 'india', label: `India · ${indian.length} places`, r: 9, count: indian.length, prefer: ['below'], ...point(world, 78.9, 22.6) },
+];
+// India: labels for places outside the northern box, which is drawn as an outline.
+const indiaDots = indian.map((place) => dot(india, place, inBox(place, NORTH_INDIA) ? 3 : 5));
+const indiaLabelled = indiaDots.filter((d) => !inBox(d.place!, NORTH_INDIA));
+const [nx1, ny1] = india([NORTH_INDIA[0], NORTH_INDIA[3]])!;
+const [nx2, ny2] = india([NORTH_INDIA[2], NORTH_INDIA[1]])!;
+const northDots = northern.map((place) => dot(north, place));
+
+const maps = {
+  world: { dots: worldDots, labels: placeLabels(worldDots, 18, WORLD.width, WORLD.height), path: geoPath(world)(worldLand as any) ?? '' },
+  india: { dots: indiaLabelled, labels: placeLabels(indiaLabelled, 15, INDIA.width, INDIA.height), path: geoPath(india)(toLand(land50) as any) ?? '' },
+  north: { dots: northDots, labels: placeLabels(northDots, 14, NORTH.width, NORTH.height), path: geoPath(north)(toLand(land10) as any) ?? '' },
+};
+const pinClass = (d: Dot) => ['map-pin', { home: d.place?.home, trip: d.place?.trip, layover: d.place?.layover, upcoming: d.place && isUpcoming(d.place), group: d.count }];
+---
+
+<div class="places-maps">
+  <figure class="places-map places-map-world">
+    <svg viewBox={`0 0 ${WORLD.width} ${WORLD.height}`} role="img" aria-labelledby="world-map-title">
+      <title id="world-map-title">World map with markers for {worldDots.map((d) => d.label).join(', ')}</title>
+      <path class="map-land" d={maps.world.path} />
+      {worldDots.map((d, i) => (
+        <a href={d.count ? '#india-map' : `#${d.id}`} class:list={pinClass(d)} aria-label={d.label}>
+          <circle cx={d.x} cy={d.y} r={d.r} />
+          {d.count && <text class="map-count" x={d.x} y={d.y + 4} text-anchor="middle">{d.count}</text>}
+          <text x={maps.world.labels[i].x} y={maps.world.labels[i].y} text-anchor={maps.world.labels[i].anchor}>{d.label}</text>
+        </a>
+      ))}
+    </svg>
+  </figure>
+
+  <figure class="places-map places-map-india" id="india-map">
+    <svg viewBox={`0 0 ${INDIA.width} ${INDIA.height}`} role="img" aria-labelledby="india-map-title">
+      <title id="india-map-title">Map of India. Most places are in the north, enlarged in the next map.</title>
+      <path class="map-land" d={maps.india.path} />
+      <a href="#north-india-map" class="map-north-box" aria-label="North India, enlarged">
+        <rect x={nx1} y={ny1} width={nx2 - nx1} height={ny2 - ny1} rx="4" />
+        <text x={nx2 + 6} y={ny1 + 12}>North, enlarged →</text>
+      </a>
+      {indiaDots.filter((d) => inBox(d.place!, NORTH_INDIA)).map((d) => <circle class:list={['map-dot-tiny', { trip: d.place?.trip }]} cx={d.x} cy={d.y} r="2.2" />)}
+      {indiaLabelled.map((d, i) => (
+        <a href={`#${d.id}`} class:list={pinClass(d)} aria-label={d.label}>
+          <circle cx={d.x} cy={d.y} r={d.r} />
+          <text x={maps.india.labels[i].x} y={maps.india.labels[i].y} text-anchor={maps.india.labels[i].anchor}>{d.label}</text>
+        </a>
+      ))}
+    </svg>
+    <figcaption>India</figcaption>
+  </figure>
+
+  <figure class="places-map places-map-north" id="north-india-map">
+    <svg viewBox={`0 0 ${NORTH.width} ${NORTH.height}`} role="img" aria-labelledby="north-map-title">
+      <title id="north-map-title">North India, with markers for {northern.map((place) => place.city).join(', ')}</title>
+      <path class="map-land" d={maps.north.path} />
+      {northDots.map((d, i) => (
+        <a href={`#${d.id}`} class:list={pinClass(d)} aria-label={d.label}>
+          {d.place?.home ? <rect x={d.x - 5} y={d.y - 5} width="10" height="10" rx="2" /> : <circle cx={d.x} cy={d.y} r={d.r} />}
+          <text x={maps.north.labels[i].x} y={maps.north.labels[i].y} text-anchor={maps.north.labels[i].anchor}>{d.label}</text>
+        </a>
+      ))}
+    </svg>
+    <figcaption>North India, enlarged</figcaption>
+  </figure>
+
+  <p class="places-legend" aria-hidden="true">
+    <span><i class="key-home"></i>Home</span>
+    <span><i class="key-work"></i>Research, talks, and hackathons</span>
+    <span><i class="key-trip"></i>Trips</span>
+    <span><i class="key-next"></i>Coming up</span>
+    <span><i class="key-layover"></i>Layovers</span>
+  </p>
+</div>
+
+<style>
+  .places-maps { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 28px; margin: 0 0 56px; }
+  .places-map { margin: 0; }
+  .places-map-world { grid-column: 1 / -1; }
+  .places-map svg { display: block; width: 100%; height: auto; }
+  .places-map figcaption { margin-top: 6px; color: var(--text-muted); font-size: 13px; }
+  .map-land { fill: #ecebe6; stroke: none; }
+  .places-map-north .map-land { fill: #efeee9; }
+  .map-pin circle, .map-pin rect { fill: var(--accent); stroke: #fff; stroke-width: 2.5; transition: transform 120ms ease-out; transform-box: fill-box; transform-origin: center; }
+  .map-pin.trip circle { fill: #4a7a3f; }
+  .map-pin.home rect { fill: #2a5f7a; }
+  .map-pin.upcoming circle { fill: #fff; stroke: var(--accent); stroke-dasharray: 3 2.5; }
+  .map-pin.layover circle { fill: #fff; stroke: #8b8b8b; stroke-width: 1.5; }
+  .places-map .map-pin.layover text { fill: var(--text-muted); font-size: 14px; font-weight: 400; }
+  .map-pin text { fill: var(--text); font-size: 18px; font-weight: 500; paint-order: stroke; stroke: #fff; stroke-width: 4px; stroke-linejoin: round; }
+  .places-map-india text { font-size: 15px; }
+  .places-map-north text { font-size: 14px; }
+  .map-pin .map-count { fill: #fff; stroke: none; font-size: 11px; font-weight: 700; }
+  .map-dot-tiny { fill: var(--accent); }
+  .map-dot-tiny.trip { fill: #4a7a3f; }
+  .map-north-box rect { fill: rgb(23 78 166 / .05); stroke: var(--accent); stroke-width: 1; stroke-dasharray: 4 3; }
+  .map-north-box text { fill: var(--accent); font-size: 12px; font-weight: 500; }
+  .map-north-box:hover rect { fill: rgb(23 78 166 / .1); }
+  .map-pin:is(:hover, :focus-visible) :is(circle, rect) { transform: scale(1.3); }
+  .map-pin:is(:hover, :focus-visible) text:not(.map-count) { fill: var(--accent); }
+  .map-pin:focus-visible, .map-north-box:focus-visible { outline: none; }
+  .places-legend { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; color: var(--text-muted); font-size: 13px; }
+  .places-legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .places-legend i { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .places-legend .key-home { border-radius: 2px; background: #2a5f7a; }
+  .places-legend .key-trip { background: #4a7a3f; }
+  .places-legend .key-next { background: #fff; border: 1.5px dashed var(--accent); }
+  .places-legend .key-layover { width: 8px; height: 8px; background: #fff; border: 1.5px solid #8b8b8b; }
+  @media (max-width: 760px) {
+    .places-maps { grid-template-columns: 1fr; }
+    .places-map-world text { font-size: 22px; stroke-width: 5px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .map-pin :is(circle, rect) { transition: none; } }
+</style>
