@@ -8,5 +8,9 @@ let lenis: Lenis | null = null;
 
 document.addEventListener('astro:before-swap', () => { lenis?.destroy(); lenis = null; });
 document.addEventListener('astro:page-load', () => {
-  lenis ??= new Lenis({ autoRaf: true, allowNestedScroll: true, lerp: 0.11, stopInertiaOnNavigate: true });
+  // While the menu is open the page behind it stays put.
+  lenis ??= new Lenis({
+    autoRaf: true, allowNestedScroll: true, lerp: 0.11, stopInertiaOnNavigate: true,
+    virtualScroll: () => !document.body.classList.contains('nav-open'),
+  });
 });

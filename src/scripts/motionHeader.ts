@@ -40,10 +40,10 @@ export function mountHeader(scope: MotionScope) {
         const links = panel.querySelector('.nav-links');
         if (links) scope.play(links, [{ transform: 'translateY(-4px)' }, { transform: 'translateY(0)' }], 160);
       }
-      panel.querySelector<HTMLAnchorElement>('a')?.focus();
+      panel.querySelector<HTMLAnchorElement>('a')?.focus({ preventScroll: true });
     } else {
       restoreBackground();
-      if (restoreFocus && !desktop.matches) toggle.focus();
+      if (restoreFocus && !desktop.matches) toggle.focus({ preventScroll: true });
       const hide = () => { panel.hidden = !desktop.matches; };
       if (animate && !desktop.matches && !panel.hidden) panelAnimation = scope.play(panel, [{ opacity: 1 }, { opacity: 0 }], 120, hide);
       else hide();
@@ -67,7 +67,7 @@ export function mountHeader(scope: MotionScope) {
     if (link.hash && link.pathname === location.pathname && !event.metaKey && !event.ctrlKey) {
       const destination = document.getElementById(decodeURIComponent(link.hash.slice(1)));
       if (destination) { destination.tabIndex = -1; destination.focus({ preventScroll: true }); }
-    } else toggle.focus();
+    } else toggle.focus({ preventScroll: true });
   }, { signal }));
   const measureIndicator = (animate = true) => {
     measureFrame = 0;
@@ -117,21 +117,6 @@ export function mountHeader(scope: MotionScope) {
   measureIndicator(false);
   window.addEventListener('resize', resizeIndicator, { signal });
   desktop.addEventListener('change', () => { hoveredLink = null; focusedLink = null; setOpen(false, false, false); resizeIndicator(); }, { signal });
-  if (location.pathname === '/') {
-    const sections = ['home', 'research', 'writings', 'about'].map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
-    const observer = new IntersectionObserver((entries) => {
-      const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.target.id;
-      if (!current) return;
-      nav.querySelectorAll<HTMLElement>('[data-nav-id]').forEach((link) => {
-        const selected = link.dataset.navId === current;
-        link.dataset.active = String(selected);
-        if (selected) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
-      });
-      requestMeasure();
-    }, { rootMargin: '-20% 0px -55% 0px', threshold: 0 });
-    sections.forEach((section) => observer.observe(section));
-    scope.onCleanup(() => observer.disconnect());
-  }
   document.fonts.ready.then(() => { if (!signal.aborted) resizeIndicator(); });
   scope.onCleanup(() => {
     cancelAnimationFrame(measureFrame);
@@ -141,4 +126,35 @@ export function mountHeader(scope: MotionScope) {
     toggle.setAttribute('aria-expanded', 'false');
   });
   return () => setOpen(false, false, false);
+}
+
+// Keeps the header in reach: it slides away while you scroll down and comes
+// back as soon as you scroll up, at the top of the page, or when a key moves
+// focus into it. Exposes its shown height as --header-shown for sticky
+// sidebars to clear it.
+export function mountHeadroom(scope: MotionScope) {
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (!header) return;
+  const root = document.documentElement;
+  let last = Math.max(0, scrollY), frame = 0, hidden = false;
+  const show = (next: boolean) => {
+    if (hidden === !next) return;
+    hidden = !next;
+    header.toggleAttribute('data-hidden', hidden);
+    root.style.setProperty('--header-shown', hidden ? '0px' : `${header.offsetHeight}px`);
+  };
+  const update = () => {
+    frame = 0;
+    const y = Math.max(0, scrollY), delta = y - last;
+    header.toggleAttribute('data-scrolled', y > 4);
+    // Small movements accumulate until they add up to a deliberate scroll.
+    if (y <= header.offsetHeight || document.body.classList.contains('nav-open')) { show(true); last = y; }
+    else if (delta > 8) { show(false); last = y; }
+    else if (delta < -8) { show(true); last = y; }
+  };
+  hidden = true; show(true);
+  update();
+  addEventListener('scroll', () => { frame ||= requestAnimationFrame(update); }, { passive: true, signal: scope.signal });
+  header.addEventListener('focusin', () => show(true), { signal: scope.signal });
+  scope.onCleanup(() => { cancelAnimationFrame(frame); root.style.removeProperty('--header-shown'); });
 }

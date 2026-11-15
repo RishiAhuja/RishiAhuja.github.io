@@ -1,5 +1,5 @@
 import { MotionScope } from '../lib/motion';
-import { mountHeader } from './motionHeader';
+import { mountHeader, mountHeadroom } from './motionHeader';
 import { mountCarousels } from './motionCarousels';
 import { mountContents, mountUpdates } from './motionDisclosures';
 import { mountCitation, mountReadingFeedback } from './motionReading';
@@ -33,6 +33,7 @@ const mountPage = () => {
   body = document.body;
   scope = new MotionScope();
   closeMenu = mountHeader(scope);
+  mountHeadroom(scope);
   mountCarousels(scope);
   mountContents(scope);
   mountUpdates(scope);
