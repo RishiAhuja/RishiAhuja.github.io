@@ -194,3 +194,15 @@ export const places: Place[] = [
 
 // The zoomed North India map covers this box (west, south, east, north).
 export const NORTH_INDIA: [number, number, number, number] = [74.4, 28.3, 77.9, 33.3];
+
+// Journeys drawn as arcs on the footer globe, each a chain of place ids.
+// Flights abroad leave from Delhi, through the layovers on the way.
+export const routes: { stops: string[]; upcoming?: boolean }[] = [
+  { stops: ['budhlada', 'delhi'] },
+  { stops: ['delhi', 'rome', 'sao-paulo', 'rio'] },
+  { stops: ['delhi', 'istanbul', 'bremen', 'cologne'] },
+  { stops: ['delhi', 'mumbai'] },
+  { stops: ['delhi', 'bengaluru'] },
+  { stops: ['delhi', 'kolkata'], upcoming: true },
+  { stops: ['delhi', 'hong-kong'], upcoming: true },
+];

@@ -2,9 +2,19 @@
 import InlineIcon from './InlineIcon.astro';
 import { LINKS } from '../lib/constants';
 import { ARCHIVE_ORIGIN } from '../lib/siteConfig.mjs';
+import { places, routes } from '../data/places';
+
+const globe = JSON.stringify({
+  places: places.map(({ id, city, lat, lon, home, layover, visits }) => ({
+    id, city, lat, lon,
+    kind: home ? 'home' : layover ? 'layover' : visits.every((visit) => visit.upcoming) ? 'upcoming' : 'visited',
+  })),
+  routes,
+});
 ---
 
 <footer class="site-footer" id="contact">
+  <div class="footer-globe" data-footer-globe data-globe={globe} aria-hidden="true"><canvas></canvas><canvas></canvas></div>
   <div class="wrap">
     <div class="footer-heading">
       <div>
@@ -52,3 +62,17 @@ import { ARCHIVE_ORIGIN } from '../lib/siteConfig.mjs';
     <div class="footer-signoff"><p class="signoff">Made with <InlineIcon name="heart" class="heart" /><span class="sr-only">love</span> in Jalandhar.</p><a class="visitor-counter" href="/stats" data-visitor-counter><span data-visitor-label>Visitor count</span> <InlineIcon name="arrow-up-right" /></a></div>
   </div>
 </footer>
+
+<script>
+  import { mountGlobe } from '../scripts/footerGlobe';
+
+  // The footer is replaced on every navigation, so each page mounts its own.
+  let controller: AbortController | null = null;
+  document.addEventListener('astro:page-load', () => {
+    controller?.abort();
+    controller = new AbortController();
+    const host = document.querySelector<HTMLElement>('[data-footer-globe]');
+    if (host) mountGlobe(host, controller.signal);
+  });
+  document.addEventListener('astro:before-swap', () => controller?.abort());
+</script>

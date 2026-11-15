@@ -91,6 +91,10 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lenis, the smooth wheel scrolling in src/scripts/smoothScroll.ts. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
 body {
   margin: 0;
   background: var(--bg);
@@ -2057,6 +2061,16 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .attendee-links { display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 16px; }
 .attendee-links a { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; }
 @media (max-width: 700px) { .attendee-list { grid-template-columns: 1fr; } }
+
+/* The footer globe, drawn by src/scripts/footerGlobe.ts: the top of a faint
+   globe rising behind the links. The links sit above it; the space between
+   them passes pointer events through, so the globe can be dragged and clicked. */
+.site-footer { position: relative; overflow: hidden; isolation: isolate; }
+.site-footer > .wrap { position: relative; z-index: 1; pointer-events: none; }
+.site-footer > .wrap :is(a, p, h2, h3) { pointer-events: auto; }
+.footer-globe { position: absolute; inset: auto 0 0; z-index: 0; height: clamp(170px, 26vw, 330px); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.footer-globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 800ms ease-out; }
+.footer-globe[data-ready] canvas { opacity: 1; }
 
 /* Shared visitor counter and aggregate statistics. */
 .footer-signoff { border-top: 1px solid var(--rule); padding-top: 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
