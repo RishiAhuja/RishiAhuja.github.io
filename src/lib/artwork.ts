@@ -51,6 +51,7 @@ export const paperArtwork = (slug: string) => RESEARCH_ARTWORK[slug];
 export const writingArtwork = (slug: string) => WRITING_ARTWORK[slug];
 
 const BLURB_ARTWORK: Record<string, CoverSet> = {
+  'health-update': coverSet('blurb-health-update'),
   'fern': coverSet('blurb-fern'),
   'iclr-2026-rio-de-janeiro': coverSet('blurb-rio-iclr-2026'),
   'cisco-interview': coverSet('blurb-cisco-interview'),

@@ -2,7 +2,7 @@ import { BLOB_PATTERNS } from '../lib/blobStorage';
 import { calculateReadTime } from '../lib/readTime';
 
 export interface BlurbContent {
-  type: 'paragraph' | 'heading' | 'image' | 'code' | 'quote' | 'list' | 'twitter' | 'tweetImage' | 'linkEmbed' | 'carousel' | 'video';
+  type: 'paragraph' | 'heading' | 'image' | 'code' | 'quote' | 'list' | 'twitter' | 'tweetImage' | 'linkEmbed' | 'carousel' | 'video' | 'barChart';
   content?: string;
   level?: number; // for headings (h1, h2, etc.)
   alt?: string; // for images and videos
@@ -22,6 +22,10 @@ export interface BlurbContent {
   transcript?: string;
   durationSeconds?: number;
   technical?: boolean; // for video poster/thumbnail
+  subtitle?: string; // for bar charts
+  unit?: string; // for bar charts
+  bars?: { label: string; value: number; note?: string }[]; // for bar charts
+  range?: { min: number; max: number; label: string }; // reference band behind bar charts
 }
 
 export interface BlurbPost {
@@ -2221,6 +2225,294 @@ int main() {
       "content": "https://www.koelner-dom.de/en",
       "description": "visitor information for the cathedral and the South Tower climb.",
       "domain": "koelner-dom.de"
+    }
+  ]
+},
+{
+  "id": "health-update",
+  "title": "Health Update.",
+  "subtitle": "The one thing that’s done more for me than anything else.",
+  "description": "How I went from 103 kg, barely sleeping and never exercising, to lifting five days a week, and why it’s done more for me than anything else.",
+  "slug": "health-update",
+  "cover": "sage",
+  "publishedDate": "2026-11-18",
+  "tags": [
+    "Fitness",
+    "Health"
+  ],
+  "category": "reflection",
+  "status": "published",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": "I’ve got a lot of different interests. Chances are, if you’re reading this, you found this site through my research, a talk or Twitter. What you may not know is that technical stuff isn’t really my main passion at all."
+    },
+    {
+      "type": "paragraph",
+      "content": "My main passion is personal development, getting a little better at things. Technical stuff (research, writing, building things) is only one small part of that."
+    },
+    {
+      "type": "paragraph",
+      "content": "Some people get all their joy from doing one thing really well. I get almost all of mine from feeling that I’m making progress towards becoming a better person in some way, whether that’s building something useful, sharing what I’ve learned in the hope that it helps someone, or just becoming a better version of myself, even when it doesn’t show up in any number."
+    },
+    {
+      "type": "paragraph",
+      "content": "Of all the things I’ve spent my time on, one has done more for my growth than everything else by a long way, and that’s what I want to share here."
+    },
+    {
+      "type": "paragraph",
+      "content": "Two years ago, when I joined college, I was 103 kg (about 227 lbs, for my American friends). I’m around 70 kg (154 lbs) now, I lift five or six days a week, and I sleep like a normal person. A few people asked how after I [posted a recent blood test](https://x.com/Rishi2220/status/2121924948684099857), so this is the longer version."
+    },
+    {
+      "type": "paragraph",
+      "content": "The honest answer isn’t very exciting. I started lifting at the college gym on my own, lost weight, added protein, took supplements, and walked a lot. None of it was clever, and much of it was done badly at first. I’m no expert, so read this as one person’s notes, not a plan."
+    },
+    {
+      "type": "image",
+      "content": "/images/blurbs/health-update/body-2024-2026.webp",
+      "alt": "August 2024 and October 2026"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Where I started"
+    },
+    {
+      "type": "paragraph",
+      "content": "I’m not sure exactly when it started, but while preparing for JEE (India’s engineering entrance exam) I gave up every kind of physical activity so I could put all my time into studying. To be fair, I was never a very healthy person to begin with, and my genes weren’t doing me any favours either."
+    },
+    {
+      "type": "paragraph",
+      "content": "College was hard for me from the start. My first year was mostly me doing random things here and there and learning programming. I was also really, really underconfident. I remember leaving my freshers party halfway through. People were going up on stage and performing like it was nothing, and I felt I could never enjoy myself the way they did. I was very introverted back then, and I think a lot of that was really insecurity about how I looked."
+    },
+    {
+      "type": "paragraph",
+      "content": "I barely slept, a few hours a night at most. I was working alongside coursework that felt really intense for some reason, and the only way I could keep up was to cut sleep. At one point I started counting how many hours I’d slept in a whole week."
+    },
+    {
+      "type": "image",
+      "content": "/images/blurbs/health-update/sleep-jan-2025.webp",
+      "alt": "A normal night in January 2025"
+    },
+    {
+      "type": "paragraph",
+      "content": "Not only is it really hard to work out when you’re exhausted, it’s also really hard to think straight, eat well, and make decisions that are actually in your best interest."
+    },
+    {
+      "type": "paragraph",
+      "content": "On the plus side, this is when I really learned to build things. I learned mobile development, got comfortable with OOP and a bunch of other frameworks and concepts, and did two internships. More importantly, I got comfortable building bigger and bigger things on my own."
+    },
+    {
+      "type": "paragraph",
+      "content": "The downsides, however, were huge. I started to really dislike myself. I avoided going out because I was ashamed of how I looked. I avoided talking to people because I felt embarrassed just being myself. And of course, I felt sick and tired almost all the time."
+    },
+    {
+      "type": "paragraph",
+      "content": "At some point during all this, I began to think of working out and eating healthy as something counterproductive. I remember thinking that anyone who went to the gym or dieted to be “healthy” was simply wasting time that could be better spent being productive and actually building something."
+    },
+    {
+      "type": "paragraph",
+      "content": "I even started feeling a little hostile towards getting in shape. It felt vain to care about how you look or about your health, and people who cared about that stuff were obviously superficial and wasting time on things that didn’t matter."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Walking into the gym"
+    },
+    {
+      "type": "paragraph",
+      "content": "Then came the summer break at the end of my second semester. I was 17. Everyone went home for two months, but I stayed back on campus for work. One of my colleagues there was really fit, and at some point I decided to start going to the gym with him."
+    },
+    {
+      "type": "paragraph",
+      "content": "I was scared to even walk in. I kept thinking about what people would say about this fat guy who had suddenly started showing up. I was sloppy as hell and knew nothing, and apart from a few pointers from my colleague, I was figuring it out as I went. Only now do I realise how much weaker I was than pretty much anyone who walks into a gym."
+    },
+    {
+      "type": "paragraph",
+      "content": "I bench pressed 10 kg, when, from my experience, most people manage something like 35 kg on their first day. The leg press was 20 kg. I couldn’t do a proper bodyweight squat, couldn’t lift the lightest 15 kg barbell, and found the shoulder press machine hard with no weight added at all. I was that weak."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Sticking with it"
+    },
+    {
+      "type": "paragraph",
+      "content": "For the first two months I was mostly just figuring out how any of it worked. Some days I did one split, some days another, and nothing was designed as a program. I copied what other people were doing, watched videos, and got a lot of it wrong. My form was poor for a long time, and some of it probably still is."
+    },
+    {
+      "type": "paragraph",
+      "content": "Looking back, what kept me going was mostly mental. I had figured out that this was the only way out for me, and I believed it. It also helped that walking out after an hour and a half or two in the gym made me feel productive, even on days when nothing else had gone right."
+    },
+    {
+      "type": "paragraph",
+      "content": "The program kept changing slowly until it settled into what I follow now. Five or six days a week, split into push (chest and triceps), pull (back and biceps), shoulders with core, legs, and an arm day wherever it fits. During exams I go about a third as often. I used to treat that as failing. Now it’s just what exam weeks look like."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Food, and the weight"
+    },
+    {
+      "type": "paragraph",
+      "content": "The weight loss story is nothing crazy. I’m on the internet all the time, so I more or less knew what had to happen. I kept reading blogs and watching YouTube channels on how all of it works, and it was pretty clear that the way out was strength training and eating well."
+    },
+    {
+      "type": "paragraph",
+      "content": "Very early on I figured out that my protein was shit. I started counting just protein, not full macros, and found I was eating maybe 20 or 30 g a day. There was no way to fix that consistently with the food I was eating, so I started cutting junk and adding protein wherever I could."
+    },
+    {
+      "type": "paragraph",
+      "content": "At first that meant a lot of milk, until I worked out that milk isn’t great for protein per calorie. A 250 ml glass has about 8 g of protein, for roughly 150 calories if it’s toned and over 200 if it’s full cream. Two eggs give you about 12 g for under 150. Luckily eggs were easy to get in the mess, so I started eating a lot of them, along with curd and whatever else I could find. I was never strictly vegetarian, but I’d mostly avoided non-veg, so simply eating it was a big change. These days that’s about three eggs a day as omelettes, and steamed chicken maybe once a week."
+    },
+    {
+      "type": "paragraph",
+      "content": "Then I bought protein powder. The first one was MuscleBlaze, on a friend’s recommendation. It wasn’t cheap, but by then I was earning enough to pay for it myself, and that mattered more than it sounds. Asking my parents would have felt weird. They wouldn’t have said no, and money wasn’t the issue. It just felt awkward, as an introvert, to justify buying protein before I had any gains to show for it. Being able to quietly buy it myself made it easy. I’ve since gone through GNC and Avvatar and use Fuel One now, one to one and a half scoops a day at about 27 g of protein each. I doubt the brand mattered much."
+    },
+    {
+      "type": "paragraph",
+      "content": "About four months into lifting I added creatine monohydrate, 3 g a day at first and 4.5 g now. It’s cheap and among the most studied supplements there is, which is most of why I take it."
+    },
+    {
+      "type": "paragraph",
+      "content": "Cardio came along on the side. At first I wasn’t consistent with it, maybe three days a week instead of six or seven, but I was very consistent with the gym. These days I also walk a lot, usually 12,000 to 18,000 steps a day, mostly because campus life makes it easy. I never counted it as exercise, but I think it did more than I gave it credit for."
+    },
+    {
+      "type": "paragraph",
+      "content": "The funny part is that after a while I wasn’t even chasing weight loss anymore. I just wanted my lifts to go up, and the weight came off on the side. Most of it was gone within the year after that first summer."
+    },
+    {
+      "type": "paragraph",
+      "content": "Later I tracked my full macros for a week and found I was already heading the right way. I was eating below my [maintenance calories](https://en.wikipedia.org/wiki/Energy_expenditure), roughly what your body burns in a day, so I didn’t need to cut anything further."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "What it actually takes"
+    },
+    {
+      "type": "paragraph",
+      "content": "None of this is complicated, but it asks for more than people expect. You need to set aside about 75 minutes, five or six days a week, and push hard in every session and every set. You need to drink a lot of water."
+    },
+    {
+      "type": "paragraph",
+      "content": "You need proper sleep every night, not the three or four hours I used to get by on. So the real cost isn’t just 75 minutes in the gym. It’s also the extra hours of sleep every night that I never used to give it. The good news is it got much easier once training started. I get seven to eight hours now, mainly because I’m physically tired by night."
+    },
+    {
+      "type": "paragraph",
+      "content": "You have to be careful with food too, though not obsessive. Having a lot of something once in a while is fine. You don’t have to be the guy who goes out with friends and announces he can’t eat anything because he’s on a diet."
+    },
+    {
+      "type": "paragraph",
+      "content": "While none of the above is terribly difficult, it has to be done consistently, day after day and month after month, to work. Honestly, that discipline is the part I’ve come to respect most."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Where I am now"
+    },
+    {
+      "type": "paragraph",
+      "content": "A year and a half in, I weigh around 70 kg. On the shoulder press machine it’s 65 kg loaded, with 220 kg on the leg press, 95 kg squats for four reps, 60 kg on the bench press for five or six reps, and 16 easy reps with a 25 kg barbell, a step up from the 15 kg bar I once couldn’t pick up. None of these numbers are impressive in a serious gym. They only mean something next to where I started."
+    },
+    {
+      "type": "carousel",
+      "aspectRatio": 0.75,
+      "images": [
+        {
+          "src": "/images/blurbs/health-update/nov-2026.webp",
+          "alt": "In the hostel mirror"
+        },
+        {
+          "src": "/images/blurbs/health-update/gym-nov-2026.webp",
+          "alt": "At the college gym"
+        }
+      ],
+      "caption": "November 2026"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Blood tests"
+    },
+    {
+      "type": "paragraph",
+      "content": "I also got blood tests done in June and again in November, mostly out of curiosity, and most things had moved the right way. Testosterone went from 416 to 709 ng/dL, from the lower part of the lab’s range to near the top, and triglycerides, cholesterol and average blood sugar all improved too."
+    },
+    {
+      "type": "barChart",
+      "title": "Total testosterone, up 70% since June",
+      "subtitle": "Two blood tests, 8 June and 14 November 2026",
+      "unit": "ng/dL",
+      "bars": [
+        {
+          "label": "8 Jun 2026",
+          "value": 416,
+          "note": "near the low end"
+        },
+        {
+          "label": "14 Nov 2026",
+          "value": 709,
+          "note": "near the high end"
+        }
+      ],
+      "range": {
+        "min": 280,
+        "max": 800,
+        "label": "Lab reference range, 280 to 800 ng/dL"
+      }
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "Life is a lot more fun"
+    },
+    {
+      "type": "paragraph",
+      "content": "The biggest change is that life turned out to be a lot more enjoyable than I ever imagined. It’s so much more fun and exciting when you’re actually proud of yourself, of the work you’ve put in, and of sticking with it."
+    },
+    {
+      "type": "image",
+      "content": "/images/blurbs/health-update/talks-2024-2026.webp",
+      "alt": "My first talk, at a college ideathon in September 2024, and ConfAI in November 2026. Even the camera got better."
+    },
+    {
+      "type": "paragraph",
+      "content": "Confidence is the part that changed the most. I can talk to people now without overthinking it, my clothes went from XXL to S or M, and every talk on my [talks page](https://rishia.in/talks) is from the last year or so. Standing up and talking about my work doesn’t feel like something only other people do anymore. The second photo is from a flash talk at ConfAI this November, and that pair means more to me than any mirror photo."
+    },
+    {
+      "type": "paragraph",
+      "content": "Somewhere along the way I learned to respect myself. I don’t feel judged anymore when I go out, see friends, or walk into a room full of strangers. Maybe still a little, but it’s immensely lower than it used to be."
+    },
+    {
+      "type": "paragraph",
+      "content": "I feel happier most days. I have more energy, and I actually want to go out and do things."
+    },
+    {
+      "type": "paragraph",
+      "content": "Most nights I go to sleep feeling like I made a bit of progress, which is a much better way to end a day than how I used to."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "If you’re where I was"
+    },
+    {
+      "type": "paragraph",
+      "content": "Start lighter than feels respectable. Nothing bad happens. Learn form early, which I didn’t and would change first. Get enough protein in whatever way you’ll actually keep up. Walk more than you think matters. Expect bad weeks, and go less often instead of stopping. And if you get blood work done, read the whole report with a doctor, not just the number you were hoping for."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "content": "What it taught me"
+    },
+    {
+      "type": "paragraph",
+      "content": "Lifting is the most honest kind of progress I know. You can’t skip ahead to 60 kg, and you can’t tell yourself you’ll make up for it all next month. You put a little more on the bar each week, and some weeks nothing moves at all. College, research and pretty much everything else turned out to work the same way. Most days it feels like nothing is moving, and the only thing that helps is turning up again the next day."
+    },
+    {
+      "type": "paragraph",
+      "content": "But the bigger thing I figured out is that doing more work isn’t the same as getting more done in life. For my whole first year I thought every hour I wasn’t working was wasted, and I had the sleep schedule to prove it. Some of the most useful hours since have been the ones I spent on something else, in the gym, trying new things, and exploring directions I’d never have touched before. Getting better as a person turned out to matter just as much as the work, and I don’t think it’s a coincidence that most of my research happened after that first summer, not before it."
     }
   ]
 }

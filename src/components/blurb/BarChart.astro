@@ -1,0 +1,49 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  unit?: string;
+  bars: { label: string; value: number; note?: string }[];
+  range?: { min: number; max: number; label: string };
+  caption?: string;
+}
+const { title, subtitle, unit, bars, range, caption } = Astro.props;
+
+// Bars start at zero; the top tick is the first round step above every bar
+// and the reference range, leaving headroom for the value labels.
+const peak = Math.max(...bars.map((bar) => bar.value), range?.max ?? 0) * 1.08;
+const rough = peak / 3, magnitude = 10 ** Math.floor(Math.log10(rough));
+const step = [1, 2, 2.5, 3, 5, 10].map((m) => m * magnitude).find((m) => m >= rough) ?? rough;
+const top = Math.ceil(peak / step) * step;
+const ticks = Array.from({ length: Math.round(top / step) + 1 }, (_, index) => index * step);
+const pct = (value: number) => `${(value / top) * 100}%`;
+const last = bars.length - 1;
+---
+<figure class="bar-chart">
+  {(title || subtitle) && <div class="bar-chart-head">
+    {title && <p class="bar-chart-title">{title}</p>}
+    {subtitle && <p class="bar-chart-subtitle">{subtitle}</p>}
+  </div>}
+  <div class="bar-chart-body" aria-hidden="true">
+    {unit && <span class="bar-chart-unit">{unit}</span>}
+    <div class="bar-chart-plot">
+      {ticks.map((tick) => <span class="bar-chart-tick" style={`bottom: ${pct(tick)}`}><span>{tick}</span></span>)}
+      {range && <span class="bar-chart-range" style={`bottom: ${pct(range.min)}; height: ${pct(range.max - range.min)}`} />}
+      <div class="bar-chart-bars">
+        {bars.map((bar, index) => <div class="bar-chart-slot">
+          <div class:list={['bar-chart-bar', index === last && 'is-latest']} style={`height: ${pct(bar.value)}`}>
+            <span class="bar-chart-value"><strong>{bar.value}</strong>{bar.note && <span>{bar.note}</span>}</span>
+          </div>
+        </div>)}
+      </div>
+    </div>
+    <div class="bar-chart-labels">{bars.map((bar) => <span>{bar.label}</span>)}</div>
+  </div>
+  {range && <p class="bar-chart-legend"><span class="bar-chart-swatch" aria-hidden="true" />{range.label}</p>}
+  <table class="sr-only">
+    {title && <caption>{title}</caption>}
+    <thead><tr><th scope="col">Date</th><th scope="col">{unit ? `Value (${unit})` : 'Value'}</th></tr></thead>
+    <tbody>{bars.map((bar) => <tr><th scope="row">{bar.label}</th><td>{bar.value}{bar.note ? `, ${bar.note}` : ''}</td></tr>)}</tbody>
+  </table>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

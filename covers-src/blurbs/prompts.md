@@ -4,6 +4,7 @@ Generated and refined with the built-in imagegen tool. Selected covers are 3:4 p
 
 | Blurb | Asset | Header color | Meaning |
 | --- | --- | --- | --- |
+| Health Update | blurb-health-update.png | sage | Repeating weight-like forms and a winding ivory band suggest finding a rhythm; two translucent paper impressions show partial snapshots of a longer story. |
 | Building Fern | blurb-fern.png | mint | Fully pixelated graphics and branching forms: FernKit's pixel identity and a graphics system built from raw buffers. |
 | ICLR in Rio | blurb-rio-iclr-2026.png | sky | Looping routes, mountain and sea planes, and a poster-like plane: learning a city and research community through uncertainty. |
 | Cisco interview | blurb-cisco-interview.png | blue | Cisco-inspired blue bridge bars, linked thresholds, and a continuous path through the hiring rounds. |

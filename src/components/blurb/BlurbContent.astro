@@ -2,6 +2,7 @@
 import InlineIcon from '../InlineIcon.astro';
 import type { BlurbContent } from '../../data/blurb';
 import { blurbHeadings } from '../../lib/blurbToc';
+import BarChart from './BarChart.astro';
 import ImageCarousel from './ImageCarousel.astro';
 interface Props { content: BlurbContent[]; }
 const { content } = Astro.props;
@@ -39,6 +40,7 @@ const youtubeId = (url: string) => url.match(/(?:youtu\.be\/|youtube\.com\/(?:wa
       {item.alt && <figcaption>{item.alt}</figcaption>}
       {item.type === 'tweetImage' && item.tweetUrl && <p class="tweet-source"><a href={item.tweetUrl} target="_blank" rel="noopener noreferrer">View original post <InlineIcon name="arrow-up-right" /></a></p>}
     </figure>;
+    if (item.type === 'barChart') return <BarChart title={item.title} subtitle={item.subtitle} unit={item.unit} bars={item.bars || []} range={item.range} caption={item.caption} />;
     if (item.type === 'carousel') return <ImageCarousel images={item.images || []} caption={item.caption} aspectRatio={item.aspectRatio} />;
     if (item.type === 'linkEmbed') return <a class="blurb-link-card" href={item.content} target="_blank" rel="noopener noreferrer">
       {item.image && <img src={item.image} alt="" width="160" height="120" loading="lazy" decoding="async" />}

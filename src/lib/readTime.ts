@@ -18,7 +18,7 @@ export function getReadTimeBreakdown(content: BlurbContent[]) {
       case 'list': totalWords += (item.items || []).reduce((sum, text) => sum + countWords(text), 0); break;
       case 'code': codeSeconds += Math.max(15, countWords(item.content) / 80 * 60); break;
       case 'image': mediaSeconds += item.technical ? FIGURE_SECONDS : PHOTO_SECONDS; break;
-      case 'tweetImage': mediaSeconds += FIGURE_SECONDS; break;
+      case 'tweetImage': case 'barChart': mediaSeconds += FIGURE_SECONDS; break;
       case 'carousel': mediaSeconds += (item.images?.length || 0) * PHOTO_SECONDS; break;
       case 'video': mediaSeconds += item.durationSeconds ?? VIDEO_FALLBACK_SECONDS; break;
       case 'twitter': mediaSeconds += 20; break;
