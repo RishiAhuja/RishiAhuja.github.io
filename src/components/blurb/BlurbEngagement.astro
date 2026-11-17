@@ -1,0 +1,31 @@
+---
+interface Props { slug: string; }
+const { slug } = Astro.props;
+---
+<section class="blurb-engagement" data-blurb-engagement={slug} aria-labelledby="blurb-comments-title" hidden>
+  <h2 id="blurb-comments-title">Comments</h2>
+  <p class="comments-empty quiet-meta" data-comments-status>Loading comments…</p>
+  <ol class="comment-list" data-comment-list></ol>
+
+  <form class="comment-form" data-comment-form novalidate>
+    <h3>Leave a comment</h3>
+    <p class="quiet-meta">Comments appear once I’ve read them.</p>
+    <label for="comment-name">Name</label>
+    <input id="comment-name" name="name" maxlength="60" autocomplete="name" required />
+    <label for="comment-body">Comment</label>
+    <textarea id="comment-body" name="body" rows="5" maxlength="2000" required></textarea>
+    <div class="comment-trap" aria-hidden="true">
+      <label for="comment-website">Website</label>
+      <input id="comment-website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="comment-submit">
+      <button type="submit">Post comment</button>
+      <p class="quiet-meta" role="status" aria-live="polite" data-comment-feedback></p>
+    </div>
+  </form>
+</section>
+
+<script>
+  import { mountBlurbEngagement } from '../../scripts/blurbEngagement';
+  document.addEventListener('astro:page-load', mountBlurbEngagement);
+</script>

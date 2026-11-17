@@ -6,7 +6,7 @@
   "scripts": {
     "optimize:covers": "node scripts/optimize-covers.mjs",
     "dev": "node scripts/optimize-covers.mjs && astro dev --host 127.0.0.1 --port 4322",
-    "build": "node scripts/optimize-covers.mjs && astro build && node scripts/verify-og.mjs && node scripts/verify-site.mjs && node scripts/test-motion.mjs && node scripts/verify-migration.mjs && node scripts/test-analytics.mjs",
+    "build": "node scripts/optimize-covers.mjs && astro build && node scripts/verify-og.mjs && node scripts/verify-site.mjs && node scripts/test-motion.mjs && node scripts/verify-migration.mjs && node scripts/test-analytics.mjs && node scripts/test-blurbs.mjs",
     "preview": "astro preview --host 127.0.0.1 --port 4322",
     "verify:og": "node scripts/verify-og.mjs",
     "verify:site": "node scripts/verify-site.mjs",
@@ -14,7 +14,9 @@
     "verify:migration": "node scripts/verify-migration.mjs",
     "test:analytics": "node scripts/test-analytics.mjs",
     "dev:api": "node --env-file=.env.local scripts/dev-analytics.mjs",
-    "test:analytics:sql": "node scripts/test-analytics-sql.mjs"
+    "test:analytics:sql": "node scripts/test-analytics-sql.mjs",
+    "test:blurbs": "node scripts/test-blurbs.mjs",
+    "test:blurbs:sql": "node scripts/test-blurb-engagement-sql.mjs"
   },
   "dependencies": {
     "astro": "^4.16.7",
