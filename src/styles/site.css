@@ -1616,7 +1616,7 @@ main:focus, [tabindex='-1']:focus { outline: none; }
 .like-button[aria-pressed='true'] { border-color: var(--page-accent); color: var(--page-accent); }
 .like-button[aria-pressed='true'] svg { fill: currentColor; }
 .like-button:disabled { cursor: default; }
-.project-hero-meta .like-button { margin-top: .9rem; background: transparent; border-color: color-mix(in srgb, var(--text) 22%, transparent); }
+.project-hero-meta .like-button { background: transparent; border-color: color-mix(in srgb, var(--text) 22%, transparent); }
 .project-hero-meta .like-button[aria-pressed='true'], .project-hero-meta .like-button:hover:not(:disabled) { border-color: var(--page-accent); background: color-mix(in srgb, var(--bg) 55%, transparent); }
 .like-count { font-variant-numeric: tabular-nums; color: var(--text-muted); }
 .like-count:empty { display: none; }
