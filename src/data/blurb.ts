@@ -2420,15 +2420,15 @@ int main() {
       "aspectRatio": 0.75,
       "images": [
         {
-          "src": "/images/blurbs/health-update/nov-2026.webp",
-          "alt": "In the hostel mirror"
+          "src": "/images/blurbs/health-update/google-oct-2026.webp",
+          "alt": "At the Google office in Bengaluru"
         },
         {
           "src": "/images/blurbs/health-update/gym-nov-2026.webp",
           "alt": "At the college gym"
         }
       ],
-      "caption": "November 2026"
+      "caption": "October and November 2026"
     },
     {
       "type": "heading",
