@@ -1234,6 +1234,21 @@ body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
   font-size: 15px;
 }
 
+/* Links in news lines look like links: a quiet underline that darkens on hover. */
+.update-list a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.update-list a:hover,
+.update-list a:focus-visible {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
 .site-footer {
   background: var(--bg-footer);
   padding: 44px 0 36px;
