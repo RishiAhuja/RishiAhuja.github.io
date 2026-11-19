@@ -18,6 +18,8 @@ export async function canonicalPages() {
 
 export async function feedEntries() {
   return [
+    // Papers enter the feed when accepted, so subscribers hear about them first.
+    ...(await getCollection('research')).map((paper) => ({ title: paper.data.title, description: paper.data.tldr, path: pubPath(paper.slug), date: paper.data.sort_date, category: 'Research', original: undefined })),
     ...(await getWritings()).map((post) => ({ title: post.data.title, description: post.data.brief, path: writingPath(post.slug), date: post.data.dateAdded, category: 'Writing', original: post.data.hashnodeUrl })),
     ...publishedBlurbs().map((note) => ({ title: note.title, description: note.subtitle || note.description, path: blurbPath(note.slug), date: new Date(`${note.publishedDate}T00:00:00Z`), category: 'Blurbs', original: undefined })),
   ].sort((a, b) => b.date.getTime() - a.date.getTime());

@@ -136,7 +136,7 @@ assert.ok(locations.every((path) => path === '/' || !path.endsWith('/')), 'Sitem
 assert.deepEqual(locations.filter((path) => path.startsWith('/blurb/')).sort(), publishedSlugs.map((slug) => `/blurb/${slug}`).sort());
 assert.deepEqual(locations.filter((path) => /^\/writings\//.test(path)).sort(), blogFiles.map((file) => `/writings/${file.replace(/\.md$/, '')}`).sort(), 'Every article must be in the sitemap');
 const feed = await readFile(join(dist, 'feed.xml'), 'utf8');
-assert.equal((feed.match(/<item>/g) || []).length, blogFiles.length + publishedSlugs.length, 'RSS must match published articles and blurbs');
+assert.equal((feed.match(/<item>/g) || []).length, paperFiles.length + blogFiles.length + publishedSlugs.length, 'RSS must match papers, published articles and blurbs');
 assert.ok(index.get('/404').includes('noindex, follow'));
 // Work pages are direct-share destinations, without a promoted directory.
 for (const [workPath] of index) {
