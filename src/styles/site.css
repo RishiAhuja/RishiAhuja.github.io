@@ -78,6 +78,7 @@
   --cover-lilac: #e4c5dc;
   --cover-clay: #e8c4c0;
   --cover-sage: #c5d5c0;
+  --cover-citron: #eef0c5;
   --page-gutter: 6vw;
   --hero-gap: 5vw;
   --font: 'Athletics', sans-serif;
@@ -304,6 +305,10 @@ html { scroll-padding-top: 5.5rem; }
   gap: 2.5vw 2.5vw;
 }
 
+/* Featured research holds four papers: one row on wide screens, two by two below. */
+.project-grid.featured-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .project-grid.featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .project-tile {
   min-width: 0;
 }
@@ -413,6 +418,8 @@ html { scroll-padding-top: 5.5rem; }
 .project-hero-cover.clay { background: var(--cover-clay); }
 .project-cover.sage,
 .project-hero-cover.sage { background: var(--cover-sage); }
+.project-cover.citron,
+.project-hero-cover.citron { background: var(--cover-citron); }
 
 .project-award-line {
   margin: 0 0 6px;
@@ -769,6 +776,7 @@ body.cover-lavender { --page-accent: #66547f; --cover-fill: var(--cover-lavender
 body.cover-lilac { --page-accent: #7a4470; --cover-fill: var(--cover-lilac); }
 body.cover-clay { --page-accent: #8a4a42; --cover-fill: var(--cover-clay); }
 body.cover-sage { --page-accent: #4a6a44; --cover-fill: var(--cover-sage); }
+body.cover-citron { --page-accent: #5a6224; --cover-fill: var(--cover-citron); }
 body.cover-blue { --page-accent: #2a5f7a; --cover-fill: var(--cover-blue); }
 
 .writing-more,

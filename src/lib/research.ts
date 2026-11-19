@@ -1,4 +1,5 @@
 export const FEATURED_SLUGS = [
+  'ahuja2027scambranch',
   'ahuja2027doubtbench',
   'ahuja2026icfd31k',
   'ahuja2026scopebenchpr',

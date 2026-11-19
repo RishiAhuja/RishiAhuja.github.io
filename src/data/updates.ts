@@ -27,7 +27,7 @@ const original: Update[] = [
   ['Mar 2026', 'Temporal retrieval paper accepted at the ICLR 2026 TSALM Workshop.'],
 ];
 const additions: Update[] = [
-  ['Nov 2026', 'ScamBranch accepted at AAAI-27 Student Abstract. More updates to follow.'],
+  ['Nov 2026', '<a href="/pub/ahuja2027scambranch">ScamBranch</a> accepted at AAAI-27 Student Abstract.'],
   ['Nov 2026', 'Serving as a reviewer for short papers in the WSDM 2027 main conference.'],
   ['Nov 2026', '<a href="/pub/ahuja2027doubtbench">DoubtBench</a> accepted to Findings of WSDM 2027.'],
   ['Oct 2026', 'Selected for the Undergraduate Forum at IndoML 2026.'],
